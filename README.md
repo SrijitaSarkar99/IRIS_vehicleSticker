@@ -15,7 +15,7 @@ Steps to run on your system:
 
 -----
 
-### Progress so far:
+## Progress so far:
 - Express server initialized
 - React setup done
 - Updated scripts to run server and react
