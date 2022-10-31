@@ -12,3 +12,10 @@ Steps to run on your system:
 4. `npm install`
 5. `npm run dev`
 6. Open "http://localhost:3000/"
+
+-----
+
+### Progress so far:
+- Express server initialized
+- React setup done
+- Updated scripts to run server and react
