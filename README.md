@@ -19,3 +19,4 @@ Steps to run on your system:
 - Express server initialized
 - React setup done
 - Updated scripts to run server and react
+- Created page to apply
