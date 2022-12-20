@@ -1,0 +1,3 @@
+db = {}
+
+module.exports = db
