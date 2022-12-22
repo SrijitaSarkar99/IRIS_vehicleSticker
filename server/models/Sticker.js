@@ -1,8 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize')
 const { sequelize } = require('./dbInfo')
-const User = require('./User')
-const Vehicle = require('./Vehicle')
-const Department = require('./Department')
+const User = require('./user')
+const Vehicle = require('./vehicle')
+const Department = require('./department')
 
 const Sticker = sequelize.define('Sticker', {
   sid: {

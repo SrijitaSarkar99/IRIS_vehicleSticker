@@ -7,16 +7,18 @@ const sequelize = new Sequelize('iris', 'root', '', {
   dialect: 'mysql',
 })
 
+db.Sequelize = Sequelize
+db.sequelize = sequelize
+db.Department = require('./department')
+db.User = require('./user')
+db.Vehicle = require('./vehicle')
+db.Sticker = require('./sticker')
+db.sequelize.sync({ alter: true })
+
 sequelize
   .authenticate()
   .then(() => {
-    db.Sequelize = Sequelize
-    db.sequelize = sequelize
-    db.Department = require('./Department')
-    db.User = require('./User')
-    db.Vehicle = require('./Vehicle')
-    db.Sticker = require('./Sticker')
-    db.sequelize.sync()
+    console.log('Server connected to DB successfully')
   })
   .catch((error) => {
     console.log(`DB ERROR: ${error}`)

@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize')
 const { sequelize } = require('./dbInfo')
-const Department = require('./Department')
+const Department = require('./department')
 
 const User = sequelize.define('User', {
   // Model attributes are defined here
@@ -12,7 +12,6 @@ const User = sequelize.define('User', {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
   },
   aadharNumber: {
     type: DataTypes.STRING,
