@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize')
+const { DataTypes } = require('sequelize')
 const { sequelize } = require('./dbInfo')
 const User = require('./user')
 const Vehicle = require('./vehicle')

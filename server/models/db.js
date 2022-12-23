@@ -13,7 +13,7 @@ db.Department = require('./department')
 db.User = require('./user')
 db.Vehicle = require('./vehicle')
 db.Sticker = require('./sticker')
-db.sequelize.sync({ alter: true })
+db.sequelize.sync()
 
 sequelize
   .authenticate()

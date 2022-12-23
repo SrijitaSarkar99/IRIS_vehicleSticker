@@ -1,18 +1,19 @@
 const express = require('express')
-const { signUp } = require('../controllers/authentication')
+const {
+  signUp,
+  logIn,
+  logOut,
+  isAuthenticated,
+} = require('../controllers/authentication')
 const router = express.Router()
 
 //  ... AUTHENTICATION APIS ...
 //TODO: Implement this route
 router.post('/signup', signUp)
 
-router.post('/login', (req, res) => {
-  //TODO: Implement This route
-})
+router.post('/login', logIn)
 
-router.get('/logout', () => {
-  // TODO: Implement this function
-})
+router.get('/logout', logOut)
 // ... AUTHENTICATION APIS END HERE ...
 
 router.get('/user/:userid', () => {
