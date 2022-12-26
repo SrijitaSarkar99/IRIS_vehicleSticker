@@ -35,6 +35,8 @@ exports.getVehicleSticker = async (req, res) => {
     const sticker = await Sticker.findAll({
       where: { VehicleId: req.params.vehicleid },
       order: [["createdAt", "DESC"]],
+      offset: 5 * (req.query.pageNo - 1),
+      limit: 5,
     })
     if (!sticker.length) return res.status(404).json({ msg: "No stickers" })
     if (req.user && sticker[0].userId !== req.user.userId)

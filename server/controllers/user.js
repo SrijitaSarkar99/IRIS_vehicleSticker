@@ -20,6 +20,8 @@ exports.getUserVehicle = async (req, res) => {
     const vehicle = await Vehicle.findAll({
       where: { userId: req.user.userId },
       order: [["createdAt", "DESC"]],
+      offset: 4 * (req.query.pageNo - 1),
+      limit: 5,
     })
     if (!vehicle.length) return res.status(404).json({ msg: "No vehicle" })
     return res.status(200).json(vehicle)

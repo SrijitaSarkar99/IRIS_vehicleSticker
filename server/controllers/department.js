@@ -17,7 +17,11 @@ exports.getDepartmentById = async (req, res) => {
 
 exports.getAllDepartment = async (req, res) => {
   try {
-    const departments = await Department.findAll()
+    const departments = await Department.findAll({
+      order: [["createdAt", "DESC"]],
+      offset: 5 * (req.query.pageNo - 1),
+      limit: 5,
+    })
     if (!departments) {
       return res.status(404).json({ msg: "No department exists" })
     }
@@ -58,6 +62,9 @@ exports.getDepartmentUsers = async (req, res) => {
     const users = await User.findAll({
       where: { department: department.dName },
       attributes: { exclude: ["password", "updatedAt"] },
+      order: [["createdAt", "DESC"]],
+      offset: 5 * (req.query.pageNo - 1),
+      limit: 5,
     })
     if (!users) {
       return res.status(404).json({ msg: "No user exists" })

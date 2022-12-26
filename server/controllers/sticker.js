@@ -1,15 +1,18 @@
 const { Sticker } = require("../models/dbInfo")
 
 exports.getSticker = async (req, res) => {
-  // TODO: Implement the function
   // This route expect a query param "evaluationBy"
   // if evaluationBy is defined then return stickers accounding to it
   // else return all stickers
   try {
     let stickers
     if (!req.query.evaluationBy) {
-      stickers = await Sticker.findAll()
-      return res.json(stickers)
+      stickers = await Sticker.findAll({
+        order: [["createdAt", "DESC"]], // TODO: Not Working
+        offset: 5 * (req.query.pageNo - 1),
+        limit: 5,
+      })
+      return res.status(200).json(stickers)
     } else {
       stickers = await Sticker.findAll({
         attributes: { exclude: ["updatedAt"] },
@@ -18,6 +21,8 @@ exports.getSticker = async (req, res) => {
             req.query.evaluationBy === "FIC" ? "unapproved" : "approved by FIC",
         },
         order: [["createdAt", "DESC"]], // TODO: Not Working
+        offset: 5 * (req.query.pageNo - 1),
+        limit: 5,
       })
     }
     if (!stickers) return res.status(404).json({ msg: "No stickers" })
