@@ -1,34 +1,62 @@
-const express = require('express')
+const express = require("express")
+const upload = require("../multer.js")
 const {
   signUp,
   logIn,
   logOut,
-  isAuthenticated,
-} = require('../controllers/authentication')
+  setUserAuthentication,
+  setServerAuthentication,
+  setUserAuthorization,
+  isAuthorized,
+} = require("../controllers/authentication")
+const {
+  getUserById,
+  getUserVehicle,
+  updateUser,
+} = require("../controllers/user")
 const router = express.Router()
 
 //  ... AUTHENTICATION APIS ...
-//TODO: Implement this route
-router.post('/signup', signUp)
+router.post(
+  "/signup",
+  upload.fields([
+    { name: "photo", maxCount: 1 },
+    { name: "idProof", maxCount: 1 },
+  ]),
+  signUp
+)
 
-router.post('/login', logIn)
+router.post("/login", logIn)
 
-router.get('/logout', logOut)
+router.get("/logout", logOut)
 // ... AUTHENTICATION APIS END HERE ...
 
-router.get('/user/:userid', () => {
-  // TODO: Implement this function
-})
+router.get(
+  "/user/:userid",
+  setUserAuthentication,
+  setUserAuthorization,
+  setServerAuthentication,
+  isAuthorized,
+  getUserById
+)
 
-router.patch('/user/:userid', () => {
-  // TODO: Implement this function
-  // Here user can update his/her profile info expect status property
-  // which can only be updated by HOD/HOS through IRIS
-})
+// TODO: Add authorization here
+router.patch(
+  "/user/:userid",
+  setUserAuthentication,
+  setUserAuthorization,
+  setServerAuthentication,
+  isAuthorized,
+  updateUser
+)
 
-// TODO: Can be shifted to other route file
-router.get('/user/:userid/vehicle', () => {
-  // TODO: Implement the function
-})
+router.get(
+  "/user/:userid/vehicle",
+  setUserAuthentication,
+  setUserAuthorization,
+  setServerAuthentication,
+  isAuthorized,
+  getUserVehicle
+)
 
 module.exports = router

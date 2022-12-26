@@ -1,23 +1,49 @@
-const express = require('express')
+const express = require("express")
+const upload = require("../multer.js")
+const {
+  isUserAuthenticated,
+  setUserAuthentication,
+  setServerAuthentication,
+  isAuthenticated,
+} = require("../controllers/authentication")
 const router = express.Router()
+const {
+  addVehicle,
+  getVehicleById,
+  getVehicleSticker,
+  updateVehicle,
+} = require("../controllers/vehicle")
 
 // Add new vehicle
-router.post('/', () => {
-  // TODO: Implement the function
-})
+router.post(
+  "/",
+  setUserAuthentication,
+  isUserAuthenticated,
+  upload.single("RCCopy"),
+  addVehicle
+)
 
-router.get('/:vehicleid', (req, res) => {
-  // TODO: Implement the function
-  res.json({ msg: 'Working' })
-})
+router.get(
+  "/:vehicleid",
+  setUserAuthentication,
+  setServerAuthentication,
+  isAuthenticated,
+  getVehicleById
+)
 
-router.patch('/:vehicleid', () => {
-  // TODO: Implement the function
-})
+router.patch(
+  "/:vehicleid",
+  setUserAuthentication,
+  isUserAuthenticated,
+  updateVehicle
+)
 
-// TODO: Can be shifted to other router file
-router.get('/:vehicleid/sticker', () => {
-  //TODO: Implement the function
-})
+router.get(
+  "/:vehicleid/sticker",
+  setUserAuthentication,
+  setServerAuthentication,
+  isAuthenticated,
+  getVehicleSticker
+)
 
 module.exports = router

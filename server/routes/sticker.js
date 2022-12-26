@@ -1,28 +1,40 @@
-const express = require('express')
+const express = require("express")
+const {
+  setUserAuthentication,
+  isUserAuthenticated,
+  setServerAuthentication,
+  isAuthenticated,
+  isServerAuthenticated,
+} = require("../controllers/authentication")
+const {
+  getSticker,
+  addNewSticker,
+  getStickerById,
+  updateSticker,
+} = require("../controllers/sticker")
 const router = express.Router()
 
 // Return stickers based on condition
-router.get('/', (req, res) => {
-  // TODO: Implement the function
-  // This route expect a query param "evaluationBy"
-  // if evaluationBy is defined then return stickers accounding to it
-  // else return all stickers
-  res.json(req.query)
-})
+router.get("/", setServerAuthentication, isServerAuthenticated, getSticker)
 
 // Return sticker with a perticular id
-router.get('/:stickerid', () => {
-  // TODO: Implement the function
-})
+router.get(
+  "/:stickerid",
+  setUserAuthentication,
+  setServerAuthentication,
+  isAuthenticated,
+  getStickerById
+)
 
 // Create a new sticker
-router.post('/', () => {
-  // TODO: Implement the function
-})
+router.post("/", setUserAuthentication, isUserAuthenticated, addNewSticker)
 
 // Updates the status of the sticker
-router.patch('/:stickerid', () => {
-  // TODO: Implement this function
-})
+router.patch(
+  "/:stickerid",
+  setServerAuthentication,
+  isServerAuthenticated,
+  updateSticker
+)
 
 module.exports = router

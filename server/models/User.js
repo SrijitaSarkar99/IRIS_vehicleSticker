@@ -1,8 +1,8 @@
-const { DataTypes } = require('sequelize')
-const { sequelize } = require('./dbInfo')
-const Department = require('./department')
+const { DataTypes } = require("sequelize")
+const { sequelize } = require("./dbInfo")
+const { Department } = require("./dbInfo")
 
-const User = sequelize.define('User', {
+const User = sequelize.define("User", {
   // Model attributes are defined here
   userId: {
     type: DataTypes.UUID,
@@ -27,7 +27,7 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     references: {
       model: Department,
-      key: 'dName',
+      key: "dName",
     },
     allowNull: false,
   },
@@ -52,16 +52,19 @@ const User = sequelize.define('User', {
     allowNull: false,
   },
   gender: {
-    type: DataTypes.ENUM('male', 'gemale'),
+    type: DataTypes.ENUM("male", "female"),
     allowNull: false,
   },
   status: {
-    type: DataTypes.ENUM('unverified', 'verified', 'denied'),
-    defaultValue: 'unverified',
+    type: DataTypes.ENUM("unverified", "verified", "denied"),
+    defaultValue: "unverified",
   },
   type: {
-    type: DataTypes.ENUM('Student', 'Faculty', 'Non academic staff'),
+    type: DataTypes.ENUM("Student", "Faculty", "Non academic staff"),
     allowNull: false,
+  },
+  reason: {
+    type: DataTypes.STRING,
   },
   password: {
     type: DataTypes.STRING,

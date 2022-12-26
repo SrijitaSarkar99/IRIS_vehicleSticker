@@ -1,10 +1,8 @@
-const { DataTypes } = require('sequelize')
-const { sequelize } = require('./dbInfo')
-const User = require('./user')
-const Vehicle = require('./vehicle')
-const Department = require('./department')
+const { DataTypes } = require("sequelize")
+const { sequelize } = require("./dbInfo")
+const { User, Vehicle, Department } = require("./dbInfo")
 
-const Sticker = sequelize.define('Sticker', {
+const Sticker = sequelize.define("Sticker", {
   sid: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -14,7 +12,7 @@ const Sticker = sequelize.define('Sticker', {
     type: DataTypes.UUID,
     references: {
       model: User,
-      key: 'userId',
+      key: "userId",
     },
     allowNull: false,
   },
@@ -22,7 +20,7 @@ const Sticker = sequelize.define('Sticker', {
     type: DataTypes.UUID,
     references: {
       model: Vehicle,
-      key: 'id',
+      key: "id",
     },
     allowNull: false,
   },
@@ -36,19 +34,19 @@ const Sticker = sequelize.define('Sticker', {
   },
   status: {
     type: DataTypes.ENUM([
-      'unapproved',
-      'approved by FIC',
-      'denied by FIC',
-      'approved by CSO',
-      'denied by CSO',
+      "unapproved",
+      "approved by FIC",
+      "denied by FIC",
+      "approved by CSO",
+      "denied by CSO",
     ]),
-    defaultValue: 'unapproved',
+    defaultValue: "unapproved",
   },
   dName: {
     type: DataTypes.STRING,
     references: {
       model: Department,
-      key: 'dName',
+      key: "dName",
     },
     allowNull: false,
   },

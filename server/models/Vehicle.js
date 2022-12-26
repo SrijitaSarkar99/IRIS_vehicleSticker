@@ -1,8 +1,8 @@
-const { DataTypes } = require('sequelize')
-const { sequelize } = require('./dbInfo')
-const User = require('./user')
+const { DataTypes } = require("sequelize")
+const { sequelize } = require("./dbInfo")
+const { User } = require("./dbInfo")
 
-const Vehicle = sequelize.define('Vehicle', {
+const Vehicle = sequelize.define("Vehicle", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -39,7 +39,7 @@ const Vehicle = sequelize.define('Vehicle', {
     type: DataTypes.UUID,
     references: {
       model: User,
-      key: 'userId',
+      key: "userId",
     },
     allowNull: false,
   },
