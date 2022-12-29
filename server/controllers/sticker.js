@@ -8,9 +8,9 @@ exports.getSticker = async (req, res) => {
     let stickers
     if (!req.query.evaluationBy) {
       stickers = await Sticker.findAll({
-        order: [["createdAt", "DESC"]], // TODO: Not Working
-        offset: 5 * (req.query.pageNo - 1),
-        limit: 5,
+        order: [["createdAt", "DESC"]],
+        offset: req.query.records * (req.query.pageNo - 1),
+        limit: req.query.records,
       })
       return res.status(200).json(stickers)
     } else {
@@ -20,9 +20,9 @@ exports.getSticker = async (req, res) => {
           status:
             req.query.evaluationBy === "FIC" ? "unapproved" : "approved by FIC",
         },
-        order: [["createdAt", "DESC"]], // TODO: Not Working
-        offset: 5 * (req.query.pageNo - 1),
-        limit: 5,
+        order: [["createdAt", "DESC"]],
+        offset: req.query.records * (req.query.pageNo - 1),
+        limit: req.query.records,
       })
     }
     if (!stickers) return res.status(404).json({ msg: "No stickers" })
@@ -81,9 +81,10 @@ exports.updateSticker = async (req, res) => {
           where: { sid: req.params.stickerid },
         }
       )
-      if (res[0] == 0)
+      if (resp[0] == 0)
         return res.status(404).json({ msg: "Sticker not updated. Try again" })
-      return res.status(200).json({ msg: "Sticker is Updated" })
+      const updatedSticker = await Sticker.findByPk(req.params.stickerid)
+      return res.status(200).json(updatedSticker)
     } catch (error) {
       return res.status(500).json({ err: error })
     }

@@ -35,6 +35,7 @@ router.patch(
   "/:vehicleid",
   setUserAuthentication,
   isUserAuthenticated,
+  upload.single("RCCopy"),
   updateVehicle
 )
 

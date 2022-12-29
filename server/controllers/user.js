@@ -20,8 +20,8 @@ exports.getUserVehicle = async (req, res) => {
     const vehicle = await Vehicle.findAll({
       where: { userId: req.user.userId },
       order: [["createdAt", "DESC"]],
-      offset: 4 * (req.query.pageNo - 1),
-      limit: 5,
+      offset: req.query.records * (req.query.pageNo - 1),
+      limit: req.query.records,
     })
     if (!vehicle.length) return res.status(404).json({ msg: "No vehicle" })
     return res.status(200).json(vehicle)
@@ -46,6 +46,10 @@ exports.updateUser = async (req, res) => {
       }
       if (req.body[prop]) resObj[prop] = req.body[prop]
     }
+
+    for (file in req.files) {
+      resObj[file] = req.files[file][0].filename
+    }
   }
 
   try {
@@ -54,7 +58,11 @@ exports.updateUser = async (req, res) => {
     })
     if (resp[0] == 0)
       return res.status(404).json({ msg: "User not updated. Try again" })
-    return res.status(200).json({ msg: "User Updated" })
+    // return res.status(200).json({ msg: "User Updated" })
+    const user = await User.findByPk(req.params.userid, {
+      attributes: { excludes: ["password", "createdAt", "updatedAt"] },
+    })
+    return res.status(200).json(user)
   } catch (error) {
     return res.status(500).json({ err: error })
   }

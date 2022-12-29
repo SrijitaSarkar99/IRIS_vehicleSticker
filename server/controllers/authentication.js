@@ -19,12 +19,12 @@ exports.signUp = async (req, res) => {
 }
 
 exports.logIn = async (req, res) => {
-  const { aadharNumber, password } = req.body
+  const { email, password } = req.body
   let user
   try {
     user = await User.findOne({
-      attributes: ["userId", "name", "aadharNumber", "password"],
-      where: { aadharNumber: aadharNumber },
+      attributes: ["userId", "name", "email", "password"],
+      where: { email: email },
     })
     if (!user) {
       return res.status(404).json({ msg: "Invalid User" })

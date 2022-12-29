@@ -1,14 +1,10 @@
 require("dotenv").config()
 const express = require("express")
 const cors = require("cors")
-const path = require("path")
 const app = express()
-
-// DB INITIALIZATION
-require("./models/db")
+const initializeDB = require("./models/db")
 
 //Middlewares
-//TODO: Add cors configuration
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -22,19 +18,26 @@ app.use(
 )
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static(path.join(__dirname, "public")))
 
-// Importing Routes
-const user = require("./routes/user")
-const vehicle = require("./routes/vehicle")
-const sticker = require("./routes/sticker")
-const department = require("./routes/department")
+async function projSetUp() {
+  // DB INITIALIZATION
+  await initializeDB()
 
-// Routes setup
-app.use("/", user)
-app.use("/vehicle", vehicle)
-app.use("/sticker", sticker)
-app.use("/department", department)
+  // Importing Routes
+  const user = require("./routes/user")
+  const vehicle = require("./routes/vehicle")
+  const sticker = require("./routes/sticker")
+  const department = require("./routes/department")
+  const file = require("./routes/file")
+  // Routes setup
+  app.use("/", user)
+  app.use("/vehicle", vehicle)
+  app.use("/sticker", sticker)
+  app.use("/department", department)
+  app.use("/file", file)
+}
+
+projSetUp()
 
 app.listen("5000", () => {
   console.log("Server is listening at port 5000")
