@@ -40,13 +40,16 @@ router.get(
   getUserById
 )
 
-// TODO: Add authorization here
 router.patch(
   "/user/:userid",
   setUserAuthentication,
   setUserAuthorization,
   setServerAuthentication,
   isAuthorized,
+  upload.fields([
+    { name: "photo", maxCount: 1 },
+    { name: "idProof", maxCount: 1 },
+  ]),
   updateUser
 )
 

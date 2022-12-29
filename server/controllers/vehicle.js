@@ -35,8 +35,8 @@ exports.getVehicleSticker = async (req, res) => {
     const sticker = await Sticker.findAll({
       where: { VehicleId: req.params.vehicleid },
       order: [["createdAt", "DESC"]],
-      offset: 5 * (req.query.pageNo - 1),
-      limit: 5,
+      offset: req.query.records * (req.query.pageNo - 1),
+      limit: req.query.records,
     })
     if (!sticker.length) return res.status(404).json({ msg: "No stickers" })
     if (req.user && sticker[0].userId !== req.user.userId)
@@ -48,20 +48,24 @@ exports.getVehicleSticker = async (req, res) => {
 }
 
 exports.updateVehicle = async (req, res) => {
+  let vehicle
   try {
     if (req.user) {
-      const vehicle = await Vehicle.findByPk(req.params.vehicleid, {
+      vehicle = await Vehicle.findByPk(req.params.vehicleid, {
         attributes: ["userId"],
       })
       if (vehicle && req.user.userId !== vehicle.userId)
         return res.status(401).json({ msg: "Not authorized" })
     }
+    if (req.file) req.body.RCCopy = req.file.filename
     const resp = await Vehicle.update(req.body, {
       where: { id: req.params.vehicleid },
     })
     if (resp[0] === 0)
       return res.status(404).json({ msg: "Vehicle not updated. Try again" })
-    return res.status(200).json({ msg: "Vehicle Updated" })
+    // return res.status(200).json({ msg: "Vehicle Updated" })
+    vehicle = await Vehicle.findByPk(req.params.vehicleid)
+    return res.status(200).json(vehicle)
   } catch (error) {
     return res.status(500).json({ err: error })
   }

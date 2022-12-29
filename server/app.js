@@ -1,12 +1,10 @@
 require("dotenv").config()
 const express = require("express")
 const cors = require("cors")
-const path = require("path")
 const app = express()
 const initializeDB = require("./models/db")
 
 //Middlewares
-//TODO: Add cors configuration
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -20,7 +18,6 @@ app.use(
 )
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static(path.join(__dirname, "public")))
 
 async function projSetUp() {
   // DB INITIALIZATION
@@ -31,11 +28,13 @@ async function projSetUp() {
   const vehicle = require("./routes/vehicle")
   const sticker = require("./routes/sticker")
   const department = require("./routes/department")
+  const file = require("./routes/file")
   // Routes setup
   app.use("/", user)
   app.use("/vehicle", vehicle)
   app.use("/sticker", sticker)
   app.use("/department", department)
+  app.use("/file", file)
 }
 
 projSetUp()
