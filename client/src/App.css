@@ -1,8 +1,10 @@
-.App {
+/* .App {
   text-align: center;
-}
+  min-height: 100vh;
+  display: flex;
+} */
 
-.App-logo {
+/* .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
@@ -40,4 +42,4 @@
 ::file-selector-button {
   margin-top: 5px;
   
-}
+} */
