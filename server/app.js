@@ -4,22 +4,21 @@ const cors = require("cors")
 const app = express()
 const initializeDB = require("./models/db")
 
-
 // Enables CORS
 // const cors = require('cors');
-app.use(cors({ origin: true }));
+// app.use(cors({ origin: true }))
 // Middlewares
-// app.use(
-//   cors({
-//     origin: function (origin, callback) {
-//       if (origin === "http://localhost:3000/" || !origin) {
-//         callback(null, true)
-//       } else {
-//         callback(new Error("Not allowed by CORS"))
-//       }
-//     },
-//   })
-// )
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (origin === "http://localhost:3000" || !origin) {
+        callback(null, true)
+      } else {
+        callback(new Error("Not allowed by CORS"))
+      }
+    },
+  })
+)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
