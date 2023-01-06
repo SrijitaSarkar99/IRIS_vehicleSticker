@@ -20,6 +20,7 @@ exports.signUp = async (req, res) => {
 
 exports.logIn = async (req, res) => {
   const { email, password } = req.body
+  console.log(email)
   let user
   try {
     user = await User.findOne({
@@ -39,7 +40,7 @@ exports.logIn = async (req, res) => {
 
   // JWT SETUP
   jwt.sign(
-    { userId: user.userId, name: user.name, aadharNumber: user.aadharNumber },
+    { userId: user.userId, name: user.name, email: user.email },
     process.env.privateUserKey,
     function (err, token) {
       if (err) {
@@ -49,7 +50,7 @@ exports.logIn = async (req, res) => {
         user: {
           userId: user.userId,
           name: user.name,
-          aadharNumber: user.aadharNumber,
+          email: user.email,
         },
         token,
       })

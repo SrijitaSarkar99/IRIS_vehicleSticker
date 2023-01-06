@@ -1,31 +1,42 @@
-import React,{useEffect} from "react";
-import { useUserContext } from "../hooks/useUserContext";
-import { useNavigate } from "react-router-dom";
-function HomePage() {
-  const {user,setUser} = useUserContext();
-  useEffect(() => {
-    const userexist = localStorage.getItem("user");
-    if(Object.keys("user").length ==0)
-    logout();
-    if(userexist){
-      const parseUserData = JSON.parse(userexist);
-      setUser(parseUserData);
-      return;
-    }
-    console.log(user?.family_name);
-  }, [user])
-  const navigate = useNavigate();
-  const logout = () =>{
-    localStorage.removeItem("user");
-    setUser({});
-    navigate("/register");
-  }
-  return <div><h1>HomePage 
-  welcome {user?.given_name}</h1>
-  <button onClick={logout}>
-    LogOut
-  </button>
-  </div>;
+import React from "react"
+import { Navigate, useHref } from "react-router-dom"
+import { Box, Button, Container, Flex, Link } from "@chakra-ui/react"
+import SignIn from "./SignIn"
+import HomeNav from "../components/HomeNav"
+function Homepage() {
+  return (
+    <Flex
+      direction="column"
+      alignSelf="center"
+      justifySelf="center"
+      overflow="hidden"
+    >
+      <HomeNav />
+      <Container centerContent>
+        <SignIn />
+      </Container>
+      <button
+        onClick={(e) => {
+          fetch("http://localhost:5000/login", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: "xyz@gmail.com",
+              password: "123456",
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            .catch((err) => console.log(err))
+        }}
+      >
+        Button
+      </button>
+    </Flex>
+  )
 }
 
-export default HomePage;
+export default Homepage
