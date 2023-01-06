@@ -28,15 +28,23 @@ import {
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-// import { useNavigate } from 'react-router-dom';
+import AuthApi from '../api/auth';
+import { useAuth } from '../auth-context/auth.context';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Simple() {
+  const { user, setUser } = useAuth();
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   // const { osOpen, onToggle } = useDisclosure()
-  // const navigate=useNavigate();
-
+  const navigate=useNavigate();
+  const handleLogout = () => {
+    AuthApi.Logout(user)
+    setUser(null);
+    localStorage.removeItem("user");
+    return navigate("/");
+  }
 
   return (
     
@@ -132,7 +140,7 @@ export default function Simple() {
                 <MenuItem>Profile</MenuItem>
                 <MenuItem>Link 2</MenuItem>
                 <MenuDivider />
-                <MenuItem >Log Out</MenuItem>
+                <MenuItem  > <Link onClick={handleLogout}>Log Out</Link></MenuItem>
               </MenuList>
             </Menu>
           </Flex>

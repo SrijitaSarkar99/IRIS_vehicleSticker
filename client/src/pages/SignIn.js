@@ -70,7 +70,7 @@ function SignIn() {
     // navigate('/dashboard');
     e.preventDefault();
     AuthApi.Login(formData).then(response => {
-        console.log(response.data);
+        console.log(response.data.success);
         navigate('/dashboard');
         toast({
             title: 'Login Successfully.',
@@ -200,7 +200,7 @@ function SignIn() {
       mt='0px'>
       <Text color={textColor} fontWeight='medium' >
         Don't have an account?
-        <Link color={titleColor} ms='5px'  fontWeight='bold'>
+        <Link color={titleColor} ms='5px' href='/SignUp' fontWeight='bold'>
           Sign Up
         </Link>
       </Text>
