@@ -17,13 +17,27 @@ exports.addVehicle = async (req, res) => {
 exports.getVehicleById = async (req, res) => {
   try {
     const vehicle = await Vehicle.findByPk(req.params.vehicleid, {
-      attributes: { exclude: ["updatedAt"] },
+      attributes: [
+        "id",
+        ["VehicleNo", "vehicle_no"],
+        ["VehicleType", "vehicle_type"],
+        "model",
+        ["RCHName", "rch_name"],
+        "relation",
+        ["RCCopy", "rc_copy"],
+        ["userId", "user_id"],
+      ],
     })
     if (!vehicle) {
       return res.status(404).json({ msg: "Vehicle not found" })
     }
-    if (req.user && req.user.userId !== vehicle.userId)
-      return res.status(401).json({ msg: "Not authorized" })
+
+    // TODO: Some implementation is here
+    console.log(
+      `${vehicle.id} ${vehicle.model} ${vehicle.relation} ${vehicle.rch_name} ${vehicle.rc_copy}`
+    )
+    // if (req.user && req.user.userId !== vehicle.user_id)
+    //   return res.status(401).json({ msg: "Not authorized" })
     res.status(200).json(vehicle)
   } catch (error) {
     res.status(500).json({ err: "error" })
@@ -31,16 +45,27 @@ exports.getVehicleById = async (req, res) => {
 }
 
 exports.getVehicleSticker = async (req, res) => {
+  console.log(req.params.vehicleid)
   try {
     const sticker = await Sticker.findAll({
       where: { VehicleId: req.params.vehicleid },
+      attributes: [
+        ["sid", "id"],
+        ["userId", "user_id"],
+        ["VehicleId", "vehicle_id"],
+        "date",
+        "validity",
+        "status",
+        ["dName", "d_name"],
+        "reason",
+      ],
       order: [["createdAt", "DESC"]],
-      offset: req.query.records * (req.query.pageNo - 1),
-      limit: req.query.records,
+      offset: req.query.limit * (req.query.page - 1),
+      limit: parseInt(req.query.limit),
     })
     if (!sticker.length) return res.status(404).json({ msg: "No stickers" })
-    if (req.user && sticker[0].userId !== req.user.userId)
-      return res.status(401).json({ msg: "Not authorized" })
+    // if (req.user && sticker[0].userId !== req.user.userId)
+    //   return res.status(401).json({ msg: "Not authorized" })
     return res.status(200).json(sticker)
   } catch (error) {
     return res.status(500).json({ err: error })

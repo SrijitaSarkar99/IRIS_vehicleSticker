@@ -113,7 +113,7 @@ exports.setServerAuthentication = (req, res, next) => {
 }
 
 exports.setUserAuthorization = (req, res, next) => {
-  req.authorized = req.user.userId === req.params.userid
+  req.authorized = req.user.userId === req.params.id
   next()
 }
 

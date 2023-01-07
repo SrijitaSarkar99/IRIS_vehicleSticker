@@ -6,6 +6,7 @@ const {
   logOut,
   setUserAuthentication,
   setServerAuthentication,
+  isServerAuthenticated,
   setUserAuthorization,
   isAuthorized,
 } = require("../controllers/authentication")
@@ -14,6 +15,7 @@ const {
   getUserVehicle,
   updateUser,
 } = require("../controllers/user")
+const { getDepartmentUsers } = require("../controllers/department.js")
 const router = express.Router()
 
 //  ... AUTHENTICATION APIS ...
@@ -32,7 +34,7 @@ router.get("/logout", logOut)
 // ... AUTHENTICATION APIS END HERE ...
 
 router.get(
-  "/user/:userid",
+  "/users/:id",
   setUserAuthentication,
   setUserAuthorization,
   setServerAuthentication,
@@ -41,7 +43,7 @@ router.get(
 )
 
 router.patch(
-  "/user/:userid",
+  "/users/:id",
   setUserAuthentication,
   setUserAuthorization,
   setServerAuthentication,
@@ -54,12 +56,19 @@ router.patch(
 )
 
 router.get(
-  "/user/:userid/vehicle",
+  "/users/:id/vehicles",
   setUserAuthentication,
   setUserAuthorization,
   setServerAuthentication,
   isAuthorized,
   getUserVehicle
+)
+
+router.get(
+  "/users",
+  setServerAuthentication,
+  isServerAuthenticated,
+  getDepartmentUsers
 )
 
 module.exports = router

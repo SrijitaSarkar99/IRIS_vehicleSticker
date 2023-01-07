@@ -48,11 +48,11 @@ router.patch(
   updateDepartment
 )
 
-router.get(
-  "/:departmentid/user",
-  setServerAuthentication,
-  isServerAuthenticated,
-  getDepartmentUsers
-)
+// router.get(
+//   "/:departmentid/user",
+//   setServerAuthentication,
+//   isServerAuthenticated,
+//   getDepartmentUsers
+// )
 
 module.exports = router

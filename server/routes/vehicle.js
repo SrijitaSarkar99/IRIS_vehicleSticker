@@ -40,7 +40,7 @@ router.patch(
 )
 
 router.get(
-  "/:vehicleid/sticker",
+  "/:vehicleid/stickers",
   setUserAuthentication,
   setServerAuthentication,
   isAuthenticated,
