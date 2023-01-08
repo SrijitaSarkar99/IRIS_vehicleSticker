@@ -3,8 +3,10 @@ const upload = require("../multer.js")
 const {
   isUserAuthenticated,
   setUserAuthentication,
+  setUserAuthorization,
   setServerAuthentication,
   isAuthenticated,
+  isAuthorized,
 } = require("../controllers/authentication")
 const router = express.Router()
 const {
@@ -13,6 +15,7 @@ const {
   getVehicleSticker,
   updateVehicle,
 } = require("../controllers/vehicle")
+const { getUserVehicle } = require("../controllers/user.js")
 
 // Add new vehicle
 router.post(
@@ -39,12 +42,14 @@ router.patch(
   updateVehicle
 )
 
+// GET USER VEHICLES
 router.get(
-  "/:vehicleid/stickers",
+  "/",
   setUserAuthentication,
+  setUserAuthorization,
   setServerAuthentication,
-  isAuthenticated,
-  getVehicleSticker
+  isAuthorized,
+  getUserVehicle
 )
 
 module.exports = router

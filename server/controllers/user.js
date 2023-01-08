@@ -37,7 +37,7 @@ exports.getUserById = async (req, res) => {
 exports.getUserVehicle = async (req, res) => {
   try {
     const vehicle = await Vehicle.findAll({
-      where: { userId: req.params.id },
+      where: { userId: req.query.user_id },
       order: [["createdAt", "DESC"]],
       attributes: [
         "id",

@@ -1,6 +1,7 @@
 const { Sticker } = require("../models/dbInfo")
+const { getVehicleSticker } = require("./vehicle")
 
-exports.getSticker = async (req, res) => {
+getSpecificSticker = async (req, res) => {
   // This route expect a query param "evaluationBy"
   // if evaluationBy is defined then return stickers accounding to it
   // else return all stickers
@@ -32,6 +33,14 @@ exports.getSticker = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ err: error })
   }
+}
+
+exports.getSticker = async (req, res) => {
+  if (req.query.vehicle_id) {
+    return await getVehicleSticker(req, res)
+  }
+
+  return await getSpecificSticker(req, res)
 }
 
 exports.getStickerById = async (req, res) => {

@@ -56,15 +56,6 @@ router.patch(
 )
 
 router.get(
-  "/users/:id/vehicles",
-  setUserAuthentication,
-  setUserAuthorization,
-  setServerAuthentication,
-  isAuthorized,
-  getUserVehicle
-)
-
-router.get(
   "/users",
   setServerAuthentication,
   isServerAuthenticated,
