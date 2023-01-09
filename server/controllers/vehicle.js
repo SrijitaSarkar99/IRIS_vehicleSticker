@@ -1,4 +1,6 @@
 const { Vehicle, Sticker } = require("../models/dbInfo")
+const path = require("path")
+const fs = require("fs")
 
 exports.addVehicle = async (req, res) => {
   req.body.RCCopy = req.file.filename
@@ -83,12 +85,30 @@ exports.updateVehicle = async (req, res) => {
         return res.status(401).json({ msg: "Not authorized" })
     }
     if (req.file) req.body.RCCopy = req.file.filename
+
+    // Remove previous file
+    vehicle = await Vehicle.findByPk(req.params.vehicleid, {
+      attributes: ["RCCopy"],
+    })
+
+    for (const prop in vehicle.dataValues) {
+      if (req.body.RCCopy) {
+        let filePath = path.join(
+          __dirname,
+          "../public/files",
+          prop,
+          vehicle[prop]
+        )
+        console.log(filePath)
+        if (fs.existsSync(path)) fs.unlinkSync(filePath)
+      }
+    }
+
     const resp = await Vehicle.update(req.body, {
       where: { id: req.params.vehicleid },
     })
     if (resp[0] === 0)
       return res.status(404).json({ msg: "Vehicle not updated. Try again" })
-    // return res.status(200).json({ msg: "Vehicle Updated" })
     vehicle = await Vehicle.findByPk(req.params.vehicleid)
     return res.status(200).json(vehicle)
   } catch (error) {

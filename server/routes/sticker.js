@@ -43,13 +43,4 @@ router.patch(
   updateSticker
 )
 
-// // GET ALL STICKERS OF A VEHICLE
-// router.get(
-//   "/",
-// setUserAuthentication,
-// setServerAuthentication,
-// isAuthenticated,
-//   getVehicleSticker
-// )
-
 module.exports = router
