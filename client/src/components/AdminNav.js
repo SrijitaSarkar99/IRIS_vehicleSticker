@@ -31,7 +31,7 @@ import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import AuthApi from '../api/auth';
 import { useAuth } from '../auth-context/auth.context';
 import { useNavigate } from 'react-router-dom';
-
+import { Vehicles } from '../pages/Vehicles'
 
 export default function Simple() {
   const { user, setUser } = useAuth();
@@ -39,6 +39,7 @@ export default function Simple() {
   const { colorMode, toggleColorMode } = useColorMode();
   // const { osOpen, onToggle } = useDisclosure()
   const navigate=useNavigate();
+
   const handleLogout = () => {
     AuthApi.Logout(user)
     setUser(null);
@@ -106,9 +107,10 @@ export default function Simple() {
                   bg: useColorModeValue('gray.200', 'gray.700'),
                 }}
                 // onClick={navigate('/newSticker')}
-                 href={'/newSticker'}
+                 href={'/Vehicles'}
+                // onClick={ <newSticker/> }
                 >
-                Apply for a New Sticker
+                My Vehicles
               </Link>
               {/* {Links.map((link) => (
                 <NavLink key={link}>{link}</NavLink>
@@ -137,7 +139,7 @@ export default function Simple() {
                 />
               </MenuButton>
               <MenuList>
-                <MenuItem>Profile</MenuItem>
+                <MenuItem  >Profile</MenuItem>
                 <MenuItem>Link 2</MenuItem>
                 <MenuDivider />
                 <MenuItem  > <Link onClick={handleLogout}>Log Out</Link></MenuItem>

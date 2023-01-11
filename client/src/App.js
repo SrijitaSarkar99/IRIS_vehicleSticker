@@ -5,8 +5,8 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Test from "./pages/test";
-import NewSticker from "./pages/newSticker"
-
+import Vehicles from "./pages/Vehicles"
+import Table from "./pages/table"
 function App() {
   return (
     <BrowserRouter>
@@ -16,7 +16,8 @@ function App() {
         <Route path="/SignUp" element={<SignUp/>} />
         <Route path="/Dashboard" element={<Dashboard/>} />
         <Route path="/test" element={<Test/>} />
-       <Route path="/newSticker" element={<NewSticker />} />
+       <Route path="/vehicles" element={<Vehicles />} />
+       <Route path="/table" element={<Table />} />
       </Routes>
     </BrowserRouter>
   );

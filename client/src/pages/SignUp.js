@@ -23,47 +23,22 @@ import { useAuth } from "../auth-context/auth.context";
 function SignUp() {
 
   const [formData, setFormData] = useState({});
-  
-  // const [name, setName] =useState()
-  // const [email, setEmail] =useState()
-  // const [aadhaar, setAadhaar] =useState()
-  // const [mobile, setMobile] =useState()
-  // const [department, setDepartment] =useState()
-  // const [city, setCity] =useState()
-  // const [state, setState] =useState()
-  // const [addressline1, setAddressline1] =useState()
-  // const [addressline2, setAddressline2] =useState()
-  // const [pincode, setPincode] =useState()
-  // const [country, setCountry] =useState()
-  // const [gender, setGender] =useState()
-  // const [type, setType] =useState()
-  // const [confirmpassword, setConfirmpassword] =useState()
-  // const [password, setPassword] =useState()
   const { user } = useAuth();
   const toast=useToast();
 
   const [error, setError] = useState("");
-  const history = useNavigate();
+  const navigate = useNavigate();
     const titleColor = useColorModeValue("teal.300", "teal.200");
     const textColor = useColorModeValue("gray.700", "white");
     const bgColor = useColorModeValue("white", "gray.700");
-    const bgIcons = useColorModeValue("teal.200", "rgba(255, 255, 255, 0.5)");
 
     const handleChange = e => {
       setFormData({
         ...formData,
-        [e.target.name]: e.target.value
+        [e.target.name]:(e.target.name==="photo" || e.target.name==="idProof") ? e.target.files[0]: e.target.value
       })
     }
     
-    // const postDetails = (pic) =>{
-
-    // }
-
-    // const postIdentity = (pic) =>{
-
-    // }
-
     const handleSubmit =async (e) => {
 //       if(!name || !email || !password || !confirmpassword || !aadhaar || !mobile || !type || !department || !addressline1 || !city ||!state ||!country ||!gender )
 //       {
@@ -75,16 +50,17 @@ function SignUp() {
 //           position:"bottom"
 //         })
 //       }
-//       if(password !== confirmpassword)
-//       {
-//         toast({
-//           title: "Passwords Do Not Match",
-//           status:"warning",
-//           duration:"5000",
-//           isClosable: true,
-//           position:"bottom"
-//         })
-//       }
+
+      if(e.target.password !== e.target.confirmpassword)
+      {
+        toast({
+          title: "Passwords Do Not Match",
+          status:"warning",
+          duration:"5000",
+          isClosable: true,
+          position:"bottom"
+        })
+      }
 //       try {
 //         const config = {
 //           headers:{
@@ -111,21 +87,63 @@ function SignUp() {
 //           isClosable: true,
 //         });
 //       }
-        e.preventDefault();
-        AuthApi.Register(formData).then(response => {
-          history("/");
-          if(response.data.success) {
+        // const data = new FormData(formData)
+       
+        // TODO: Add later
+        // console.log(formData)
+      //   e.preventDefault();
+      //   const data = new FormData();
+      // for (const property in formData) {
+      //   data.append(property, formData[property]);
+      // }
+      //   // AuthApi.Register(formData).then(response => {
+      //   AuthApi.Register(data).then(response => {
+      //     history("/");
+      //     if(response.data.success) {
             
-            return history("/");
-          } else {
-            setError(response.data.msg)
-          }
-        }).catch(error => {
-          if (error.response) {
-            return setError(error.response.data.msg);
-          }
-          return setError("There has been an error.");
-        })
+      //       return history("/");
+      //     } else {
+      //       setError(response.data.msg)
+      //     }
+      //   }).catch(error => {
+      //     if (error.response) {
+      //       return setError(error.response.data.msg);
+      //     }
+      //     return setError("There has been an error.");
+      //   })
+
+
+      e.preventDefault();
+      const data = new FormData();
+      for (const property in formData) {
+        data.append(property, formData[property]);
+      }
+    try {
+      const response = await axios({
+        method: "post",
+        url: `http://localhost:5000/signup`,
+        data: data,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      
+      toast({
+                  title: 'Account created.',
+                  description: "We've created your account for you. Redirecting to Login Page",
+                  status: 'success',
+                  duration: 9000,
+                  isClosable: true,
+                });
+                navigate('/');
+    } catch(error) {
+      toast({
+                  title: 'Error Occured!',
+                  description: error.response.data.message,
+                  status: 'error',
+                  duration: 5000,
+                  isClosable: true,
+                });
+                console.log(error.response)
+    }
       }
   return (
     
@@ -271,7 +289,7 @@ function SignUp() {
             size='lg'
             name="Confirmpassword"
             // onChange={(e)=>setConfirmpassword(e.target.value)}
-            // onChange={handleChange}
+            onChange={handleChange}
           />
 
 <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
@@ -361,7 +379,8 @@ function SignUp() {
             size='lg'
             name="addressline1"
             // onChange={(e)=>setAddressline1(e.target.value)}
-            onChange={handleChange}
+            // onChange={handleChange}  
+            // TODO: to be set
           />
 
           <Input
@@ -374,7 +393,7 @@ function SignUp() {
             size='lg'
             name="addressline2"
             // onChange={(e)=>setAddressline2(e.target.value)}
-            onChange={handleChange}
+            // onChange={handleChange}
           />
 
 <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
@@ -391,7 +410,7 @@ function SignUp() {
             size='lg'
             name="city"
             // onChange={(e)=>setCity(e.target.value)}
-            onChange={handleChange}
+            // onChange={handleChange}
           />
 
 <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
@@ -408,7 +427,7 @@ function SignUp() {
             size='lg'
             name="state"
             // onChange={(e)=>setState(e.target.value)}
-            onChange={handleChange}
+            // onChange={handleChange}
           />
 
 
@@ -425,6 +444,23 @@ function SignUp() {
             mb='24px'
             size='lg'
             name="country"
+            // onChange={(e)=>setCountry(e.target.value)}
+            onChange={handleChange}
+          />
+
+<FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+            Pincode
+          </FormLabel>
+          <Input
+            fontSize='sm'
+            ms='4px'
+            borderRadius='15px'
+            id='pinCode'
+            type='number'
+            placeholder='PinCode'
+            mb='24px'
+            size='lg'
+            name="pinCode"
             // onChange={(e)=>setCountry(e.target.value)}
             onChange={handleChange}
           />
@@ -464,6 +500,7 @@ function SignUp() {
             size='lg'
             name="photo"
             // onChange={(e)=>postDetails(e.target.files[0])}
+            // onChange={(e)=> console.log(e.target.value)}
             onChange={handleChange}
           />
 
@@ -480,7 +517,7 @@ function SignUp() {
             pt={2}
             mb='24px'
             size='lg'
-            name="idproof"
+            name="idProof"
             // onChange={(e)=>postIdentity(e.target.files[0])}
             onChange={handleChange}
           />

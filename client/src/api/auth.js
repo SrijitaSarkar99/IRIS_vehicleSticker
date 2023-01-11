@@ -6,7 +6,7 @@ class AuthApi {
   };
  // return axios.post(`${base}/login`, data);
   static Register = (data) => {
-    return axios.post(`/signup`, data);
+    return axios.post(`/signup`, data );
   };
 
   static Logout = (data) => {
