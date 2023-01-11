@@ -1,9 +1,30 @@
 const { User, Vehicle } = require("../models/dbInfo")
+const path = require("path")
+const fs = require("fs")
 
 exports.getUserById = async (req, res) => {
   try {
-    const user = await User.findByPk(req.params.userid, {
-      attributes: { exclude: ["password", "updatedAt"] },
+    const user = await User.findByPk(req.params.id, {
+      attributes: [
+        ["userId", "id"],
+        "email",
+        "name",
+        ["aadhaarNumber", "aadhaar_number"],
+        ["mobileNumber", "mobile_number"],
+        "department",
+        ["addressLine1", "address_line1"],
+        ["addressLine2", "address_line2"],
+        "city",
+        "state",
+        ["pinCode", "pin_code"],
+        "country",
+        "photo",
+        ["idProof", "id_proof"],
+        "gender",
+        "status",
+        "type",
+        "reason",
+      ],
     })
     if (!user) {
       return res.status(404).json({ msg: "User not found" })
@@ -18,10 +39,20 @@ exports.getUserById = async (req, res) => {
 exports.getUserVehicle = async (req, res) => {
   try {
     const vehicle = await Vehicle.findAll({
-      where: { userId: req.user.userId },
+      where: { userId: req.query.user_id },
       order: [["createdAt", "DESC"]],
-      offset: req.query.records * (req.query.pageNo - 1),
-      limit: req.query.records,
+      attributes: [
+        "id",
+        ["VehicleNo", "vehicle_no"],
+        ["VehicleType", "vehicle_type"],
+        "model",
+        ["RCHName", "rch_name"],
+        "relation",
+        ["RCCopy", "rc_copy"],
+        ["userId", "user_id"],
+      ],
+      offset: req.query.limit * (req.query.page - 1),
+      limit: parseInt(req.query.limit),
     })
     if (!vehicle.length) return res.status(404).json({ msg: "No vehicle" })
     return res.status(200).json(vehicle)
@@ -52,15 +83,52 @@ exports.updateUser = async (req, res) => {
     }
   }
 
+  let user
+
   try {
+    user = await User.findByPk(req.params.id, {
+      attributes: ["photo", "idProof"],
+    })
+
+    for (const prop in user.dataValues) {
+      if (
+        (resObj.photo && prop == "photo" && user.dataValues[prop]) ||
+        (resObj.idProof && prop == "idProof" && user.dataValues[prop])
+      ) {
+        let filePath = path.join(__dirname, "../public/files", prop, user[prop])
+        console.log(filePath)
+        if (fs.existsSync(path)) fs.unlinkSync(filePath)
+      }
+    }
+
+    // return res.json(user)
     const resp = await User.update(resObj, {
-      where: { userId: req.params.userid },
+      where: { userId: req.params.id },
     })
     if (resp[0] == 0)
       return res.status(404).json({ msg: "User not updated. Try again" })
     // return res.status(200).json({ msg: "User Updated" })
-    const user = await User.findByPk(req.params.userid, {
-      attributes: { excludes: ["password", "createdAt", "updatedAt"] },
+    user = await User.findByPk(req.params.id, {
+      attributes: [
+        ["userId", "id"],
+        "email",
+        "name",
+        ["aadhaarNumber", "aadhaar_number"],
+        ["mobileNumber", "mobile_number"],
+        "department",
+        ["addressLine1", "address_line1"],
+        ["addressLine2", "address_line2"],
+        "city",
+        "state",
+        ["pinCode", "pin_code"],
+        "country",
+        "photo",
+        ["idProof", "id_proof"],
+        "gender",
+        "status",
+        "type",
+        "reason",
+      ],
     })
     return res.status(200).json(user)
   } catch (error) {

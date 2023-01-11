@@ -15,26 +15,6 @@ function Homepage() {
       <Container centerContent>
         <SignIn />
       </Container>
-      <button
-        onClick={(e) => {
-          fetch("http://localhost:5000/login", {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: "xyz@gmail.com",
-              password: "123456",
-            }),
-          })
-            .then((response) => response.json())
-            .then((data) => console.log(data))
-            .catch((err) => console.log(err))
-        }}
-      >
-        Button
-      </button>
     </Flex>
   )
 }

@@ -1,16 +1,17 @@
 const { Sticker } = require("../models/dbInfo")
+const { getVehicleSticker } = require("./vehicle")
 
-exports.getSticker = async (req, res) => {
+getSpecificSticker = async (req, res) => {
   // This route expect a query param "evaluationBy"
   // if evaluationBy is defined then return stickers accounding to it
   // else return all stickers
   try {
     let stickers
-    if (!req.query.evaluationBy) {
+    if (!req.query.evaluation_by) {
       stickers = await Sticker.findAll({
         order: [["createdAt", "DESC"]],
-        offset: req.query.records * (req.query.pageNo - 1),
-        limit: req.query.records,
+        offset: req.query.limit * (req.query.page - 1),
+        limit: parseInt(req.query.limit),
       })
       return res.status(200).json(stickers)
     } else {
@@ -18,11 +19,13 @@ exports.getSticker = async (req, res) => {
         attributes: { exclude: ["updatedAt"] },
         where: {
           status:
-            req.query.evaluationBy === "FIC" ? "unapproved" : "approved by FIC",
+            req.query.evaluation_by === "FIC"
+              ? "unapproved"
+              : "approved by FIC",
         },
         order: [["createdAt", "DESC"]],
-        offset: req.query.records * (req.query.pageNo - 1),
-        limit: req.query.records,
+        offset: req.query.limit * (req.query.page - 1),
+        limit: parseInt(req.query.limit),
       })
     }
     if (!stickers) return res.status(404).json({ msg: "No stickers" })
@@ -32,11 +35,28 @@ exports.getSticker = async (req, res) => {
   }
 }
 
+exports.getSticker = async (req, res) => {
+  if (req.query.vehicle_id) {
+    return await getVehicleSticker(req, res)
+  }
+
+  return await getSpecificSticker(req, res)
+}
+
 exports.getStickerById = async (req, res) => {
   // TODO: Restrict access for non authorized user
   try {
     const sticker = await Sticker.findByPk(req.params.stickerid, {
-      attributes: { exclude: ["updatedAt"] },
+      attributes: [
+        ["sid", "id"],
+        ["userId", "user_id"],
+        ["VehicleId", "vehicle_id"],
+        "date",
+        "validity",
+        "status",
+        ["dName", "d_name"],
+        "reason",
+      ],
     })
     if (!sticker) {
       return res.status(404).json({ msg: "Sticker not found" })
@@ -83,7 +103,18 @@ exports.updateSticker = async (req, res) => {
       )
       if (resp[0] == 0)
         return res.status(404).json({ msg: "Sticker not updated. Try again" })
-      const updatedSticker = await Sticker.findByPk(req.params.stickerid)
+      const updatedSticker = await Sticker.findByPk(req.params.stickerid, {
+        attributes: [
+          ["sid", "id"],
+          ["userId", "user_id"],
+          ["VehicleId", "vehicle_id"],
+          "date",
+          "validity",
+          "status",
+          ["dName", "d_name"],
+          "reason",
+        ],
+      })
       return res.status(200).json(updatedSticker)
     } catch (error) {
       return res.status(500).json({ err: error })

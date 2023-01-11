@@ -6,12 +6,12 @@ class AuthApi {
   };
  // return axios.post(`${base}/login`, data);
   static Register = (data) => {
-    return axios.post(`/signup`, data);
+    return axios.post(`/signup`, data );
   };
 
-  // static Logout = (data) => {
-  //   return axios.post(`${base}/logout`, data, { headers: { Authorization: `${data.token}` } });
-  // };
+  static Logout = (data) => {
+    return axios.post(`/logout`, data, { headers: { Authorization: `${data.token}` } });
+  };
 }
 
 // let base = "";

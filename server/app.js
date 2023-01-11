@@ -34,10 +34,10 @@ async function projSetUp() {
   const file = require("./routes/file")
   // Routes setup
   app.use("/", user)
-  app.use("/vehicle", vehicle)
-  app.use("/sticker", sticker)
-  app.use("/department", department)
-  app.use("/file", file)
+  app.use("/vehicles", vehicle)
+  app.use("/stickers", sticker)
+  app.use("/departments", department)
+  app.use("/files", file)
 }
 
 projSetUp()

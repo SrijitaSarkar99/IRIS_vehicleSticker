@@ -70,8 +70,18 @@ function SignIn() {
     // navigate('/dashboard');
     e.preventDefault();
     AuthApi.Login(formData).then(response => {
-        console.log(response.data);
-        navigate('/dashboard');
+        // console.log(response.data);
+        // navigate('/dashboard');
+        // toast({
+        //     title: 'Login Successfully.',
+        //     description: "",
+        //     status: 'success',
+        //     duration: 3000,
+        //     isClosable: true,
+        //   });
+      // if(response.data.success) {
+        // if(response.status==200) {
+          navigate('/dashboard');
         toast({
             title: 'Login Successfully.',
             description: "",
@@ -79,12 +89,11 @@ function SignIn() {
             duration: 3000,
             isClosable: true,
           });
-      if(response.data.success) {
-        
         return (setProfile(response));
-      } else {
-        setError(response.data.msg)
-      }
+      // } 
+      // else {
+      //   setError(response.data.msg)
+      // }
     }).catch(error => {
       if (error.response) {
         return setError(error.response.data.msg);
@@ -200,7 +209,8 @@ function SignIn() {
       mt='0px'>
       <Text color={textColor} fontWeight='medium' >
         Don't have an account?
-        <Link color={titleColor} ms='5px'  fontWeight='bold'>
+        <Link color={titleColor} ms='5px' 
+        href='/SignUp' fontWeight='bold'>
           Sign Up
         </Link>
       </Text>

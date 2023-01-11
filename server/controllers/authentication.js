@@ -113,7 +113,8 @@ exports.setServerAuthentication = (req, res, next) => {
 }
 
 exports.setUserAuthorization = (req, res, next) => {
-  req.authorized = req.user.userId === req.params.userid
+  req.authorized =
+    req.user.userId === req.params.id || req.user.userId === req.query.user_id
   next()
 }
 
@@ -142,6 +143,6 @@ exports.isAuthenticated = (req, res, next) => {
 
 exports.isAuthorized = (req, res, next) => {
   if (!req.authorized && !req.server)
-    return res.status(401).json({ msg: "Not Hello bro" })
+    return res.status(401).json({ msg: "Not Authorized" })
   next()
 }
