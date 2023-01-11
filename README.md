@@ -10,6 +10,7 @@ Steps to run on your system:
    or,
 
    `git clone https://github.com/SrijitaSarkar99/IRIS_vehicleSticker.git`
+
 For sever
 1. run command `cd server`
 2. `npm install`
