@@ -15,7 +15,13 @@ const {
 const router = express.Router()
 
 // Return stickers based on condition
-router.get("/", setServerAuthentication, isServerAuthenticated, getSticker)
+router.get(
+  "/",
+  setUserAuthentication,
+  setServerAuthentication,
+  isAuthenticated,
+  getSticker
+)
 
 // Return sticker with a perticular id
 router.get(

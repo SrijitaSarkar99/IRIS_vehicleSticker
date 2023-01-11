@@ -67,8 +67,9 @@ exports.updateDepartment = async (req, res) => {
 }
 
 exports.getDepartmentUsers = async (req, res) => {
+  console.log(req.query.limit)
   try {
-    const department = await Department.findByPk(req.params.departmentid, {
+    const department = await Department.findByPk(req.query.department_id, {
       attributes: ["dName"],
     })
     if (!department)
@@ -77,8 +78,8 @@ exports.getDepartmentUsers = async (req, res) => {
       where: { department: department.dName },
       attributes: { exclude: ["password", "updatedAt"] },
       order: [["createdAt", "DESC"]],
-      offset: req.query.records * (req.query.pageNo - 1),
-      limit: req.query.records,
+      offset: req.query.limit * (req.query.page - 1),
+      limit: parseInt(req.query.limit),
     })
     if (!users) {
       return res.status(404).json({ msg: "No user exists" })
