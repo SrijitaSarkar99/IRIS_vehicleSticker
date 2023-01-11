@@ -23,9 +23,3 @@ For client
 4. Open "http://localhost:3000/"
 
 -----
-
-## Progress so far:
-- Express server initialized
-- React setup done
-- Updated scripts to run server and react
-- Created page to apply
