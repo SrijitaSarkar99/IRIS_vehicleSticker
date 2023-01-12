@@ -62,7 +62,7 @@ exports.getSticker = async (req, res) => {
 }
 
 exports.getStickerById = async (req, res) => {
-  // TODO: Restrict access for non authorized user
+  //  TODO: Restrict access for non authorized user
   try {
     const sticker = await Sticker.findByPk(req.params.stickerid, {
       attributes: [
