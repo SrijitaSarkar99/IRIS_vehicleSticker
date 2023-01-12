@@ -10,7 +10,16 @@ exports.addVehicle = async (req, res) => {
       userId: req.user.userId,
     })
 
-    res.status(200).json(vehicle)
+    res.status(200).json({
+      id: vehicle.id,
+      vehicle_no: vehicle.VehicleNo,
+      vehicle_type: vehicle.VehicleType,
+      model: vehicle.model,
+      rch_name: vehicle.RCHName,
+      relation: vehicle.relation,
+      rc_copy: vehicle.RCCopy,
+      user_id: vehicle.userId,
+    })
   } catch (error) {
     res.status(500).json({ err: error })
   }
@@ -109,7 +118,18 @@ exports.updateVehicle = async (req, res) => {
     })
     if (resp[0] === 0)
       return res.status(404).json({ msg: "Vehicle not updated. Try again" })
-    vehicle = await Vehicle.findByPk(req.params.vehicleid)
+    vehicle = await Vehicle.findByPk(req.params.vehicleid, {
+      attributes: [
+        "id",
+        ["VehicleNo", "vehicle_no"],
+        ["VehicleType", "vehicle_type"],
+        "model",
+        ["RCHName", "rch_name"],
+        "relation",
+        ["RCCopy", "rc_copy"],
+        ["userId", "user_id"],
+      ],
+    })
     return res.status(200).json(vehicle)
   } catch (error) {
     return res.status(500).json({ err: error })
