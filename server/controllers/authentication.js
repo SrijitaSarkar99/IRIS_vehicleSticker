@@ -12,7 +12,26 @@ exports.signUp = async (req, res) => {
   try {
     user.password = await bcrypt.hash(user.password, 10)
     const resp = await user.save()
-    res.status(201).json(resp)
+    res.status(201).json({
+      id: resp.userId,
+      email: resp.email,
+      name: resp.name,
+      aadhaar_number: resp.aadhaarNumber,
+      mobile_number: resp.mobileNumber,
+      department: resp.department,
+      address_line1: resp.addressLine1,
+      address_line2: resp.addressLine2,
+      city: resp.city,
+      state: resp.state,
+      pin_code: resp.pinCode,
+      country: resp.country,
+      photo: resp.photo,
+      id_proof: resp.idProof,
+      gender: resp.gender,
+      status: resp.status,
+      type: resp.type,
+      reason: resp.reason,
+    })
   } catch (error) {
     res.status(500).json({ err: error })
   }

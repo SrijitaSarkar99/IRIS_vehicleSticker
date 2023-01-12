@@ -3,7 +3,11 @@ const { User, Department } = require("../models/dbInfo")
 exports.getDepartmentById = async (req, res) => {
   try {
     const department = await Department.findByPk(req.params.departmentid, {
-      attributes: { exclude: ["updatedAt"] },
+      attributes: [
+        ["did", "id"],
+        ["dName", "d_name"],
+        ["HODorHOS", "hod_or_hos"],
+      ],
     })
     if (!department) {
       return res.status(404).json({ msg: "Department not found" })
@@ -21,12 +25,22 @@ exports.getAllDepartment = async (req, res) => {
     if (req.user) {
       departments = await Department.findAll({
         order: [["createdAt", "DESC"]],
+        attributes: [
+          ["did", "id"],
+          ["dName", "d_name"],
+          ["HODorHOS", "hod_or_hos"],
+        ],
       })
     } else {
       departments = await Department.findAll({
         order: [["createdAt", "DESC"]],
-        offset: 5 * (req.query.pageNo - 1),
-        limit: 5,
+        attributes: [
+          ["did", "id"],
+          ["dName", "d_name"],
+          ["HODorHOS", "hod_or_hos"],
+        ],
+        offset: req.query.limit * (req.query.page - 1),
+        limit: parseInt(req.query.limit),
       })
     }
     if (!departments) {
@@ -42,7 +56,11 @@ exports.addNewDepartment = async (req, res) => {
   const department = Department.build(req.body)
   try {
     const resp = await department.save()
-    res.status(201).json(resp)
+    res.status(201).json({
+      id: resp.did,
+      d_name: resp.dName,
+      hod_or_hos: resp.HODorHOS,
+    })
   } catch (error) {
     res.status(500).json({ err: error })
   }
@@ -59,7 +77,13 @@ exports.updateDepartment = async (req, res) => {
     })
     if (resp[0] == 0)
       return res.status(404).json({ msg: "User not updated. Try again" })
-    const updatedDept = await Department.findByPk(req.params.departmentid)
+    const updatedDept = await Department.findByPk(req.params.departmentid, {
+      attributes: [
+        ["did", "id"],
+        ["dName", "d_name"],
+        ["HODorHOS", "hod_or_hos"],
+      ],
+    })
     return res.status(200).json(updatedDept)
   } catch (error) {
     return res.status(500).json({ err: error })
@@ -76,7 +100,26 @@ exports.getDepartmentUsers = async (req, res) => {
       return res.status(400).json({ msg: "Department Doesn't exists" })
     const users = await User.findAll({
       where: { department: department.dName },
-      attributes: { exclude: ["password", "updatedAt"] },
+      attributes: [
+        ["userId", "id"],
+        "email",
+        "name",
+        ["aadhaarNumber", "aadhaar_number"],
+        ["mobileNumber", "mobile_number"],
+        "department",
+        ["addressLine1", "address_line1"],
+        ["addressLine2", "address_line2"],
+        "city",
+        "state",
+        ["pinCode", "pin_code"],
+        "country",
+        "photo",
+        ["idProof", "id_proof"],
+        "gender",
+        "status",
+        "type",
+        "reason",
+      ],
       order: [["createdAt", "DESC"]],
       offset: req.query.limit * (req.query.page - 1),
       limit: parseInt(req.query.limit),
