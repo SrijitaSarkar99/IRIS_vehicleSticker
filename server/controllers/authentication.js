@@ -16,7 +16,7 @@ exports.signUp = async (req, res) => {
       id: resp.userId,
       email: resp.email,
       name: resp.name,
-      aadhaar_number: resp.aadhaarNumber,
+      aadhar_number: resp.aadharNumber,
       mobile_number: resp.mobileNumber,
       department: resp.department,
       address_line1: resp.addressLine1,
