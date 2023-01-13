@@ -23,110 +23,131 @@ import { useAuth } from "../auth-context/auth.context"
 function SignUp() {
   const [formData, setFormData] = useState({})
 
-  // const [name, setName] =useState()
-  // const [email, setEmail] =useState()
-  // const [aadhar, setaadhar] =useState()
-  // const [mobile, setMobile] =useState()
-  // const [department, setDepartment] =useState()
-  // const [city, setCity] =useState()
-  // const [state, setState] =useState()
-  // const [addressline1, setAddressline1] =useState()
-  // const [addressline2, setAddressline2] =useState()
-  // const [pincode, setPincode] =useState()
-  // const [country, setCountry] =useState()
-  // const [gender, setGender] =useState()
-  // const [type, setType] =useState()
-  // const [confirmpassword, setConfirmpassword] =useState()
-  // const [password, setPassword] =useState()
-  const { user } = useAuth()
-  const toast = useToast()
 
-  const [error, setError] = useState("")
-  const history = useNavigate()
-  const titleColor = useColorModeValue("teal.300", "teal.200")
-  const textColor = useColorModeValue("gray.700", "white")
-  const bgColor = useColorModeValue("white", "gray.700")
-  const bgIcons = useColorModeValue("teal.200", "rgba(255, 255, 255, 0.5)")
+  const [formData, setFormData] = useState({});
+  const { user } = useAuth();
+  const toast=useToast();
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
-  }
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+    const titleColor = useColorModeValue("teal.300", "teal.200");
+    const textColor = useColorModeValue("gray.700", "white");
+    const bgColor = useColorModeValue("white", "gray.700");
 
-  // const postDetails = (pic) =>{
-
-  // }
-
-  // const postIdentity = (pic) =>{
-
-  // }
-
-  const handleSubmit = async (e) => {
-    //       if(!name || !email || !password || !confirmpassword || !aadhar || !mobile || !type || !department || !addressline1 || !city ||!state ||!country ||!gender )
-    //       {
-    //         toast({
-    //           title: "Please Fill All Fields",
-    //           status:"warning",
-    //           duration:"5000",
-    //           isClosable: true,
-    //           position:"bottom"
-    //         })
-    //       }
-    //       if(password !== confirmpassword)
-    //       {
-    //         toast({
-    //           title: "Passwords Do Not Match",
-    //           status:"warning",
-    //           duration:"5000",
-    //           isClosable: true,
-    //           position:"bottom"
-    //         })
-    //       }
-    //       try {
-    //         const config = {
-    //           headers:{
-    //             "Content-type": "application/json",
-    //           },
-    //         };
-    //         const { data } = await axios.post("localhost:5000/signup",{email,name,aadhar,mobile,department,pincode,country
-    //           ,gender,type,password, },config)
-    //         toast({
-    //           title: 'Account created.',
-    //           description: "We've created your account for you.",
-    //           status: 'success',
-    //           duration: 9000,
-    //           isClosable: true,
-    //         });
-    // history.push("/Dashboard");
-    //         localStorage.setItem('userInfo',JSON.stringify(data))
-    //       } catch (error) {
-    //         toast({
-    //           title: 'Error Occured!',
-    //           description: error.response.data.message,
-    //           status: 'error',
-    //           duration: 9000,
-    //           isClosable: true,
-    //         });
-    //       }
-    e.preventDefault()
-    AuthApi.Register(formData)
-      .then((response) => {
-        history("/")
-        if (response.data.success) {
-          return history("/")
-        } else {
-          setError(response.data.msg)
-        }
+    const handleChange = e => {
+      setFormData({
+        ...formData,
+        [e.target.name]:(e.target.name==="photo" || e.target.name==="idProof") ? e.target.files[0]: e.target.value
       })
-      .catch((error) => {
-        if (error.response) {
-          return setError(error.response.data.msg)
-        }
-        return setError("There has been an error.")
-      })
-  }
+    }
+    
+    const handleSubmit =async (e) => {
+//       if(!name || !email || !password || !confirmpassword || !aadhaar || !mobile || !type || !department || !addressline1 || !city ||!state ||!country ||!gender )
+//       {
+//         toast({
+//           title: "Please Fill All Fields",
+//           status:"warning",
+//           duration:"5000",
+//           isClosable: true,
+//           position:"bottom"
+//         })
+//       }
+
+      if(e.target.password !== e.target.confirmpassword)
+      {
+        toast({
+          title: "Passwords Do Not Match",
+          status:"warning",
+          duration:"5000",
+          isClosable: true,
+          position:"bottom"
+        })
+      }
+//       try {
+//         const config = {
+//           headers:{
+//             "Content-type": "application/json",
+//           },
+//         };
+//         const { data } = await axios.post("localhost:5000/signup",{email,name,aadhaar,mobile,department,pincode,country
+//           ,gender,type,password, },config)
+//         toast({
+//           title: 'Account created.',
+//           description: "We've created your account for you.",
+//           status: 'success',
+//           duration: 9000,
+//           isClosable: true,
+//         });
+// history.push("/Dashboard");
+//         localStorage.setItem('userInfo',JSON.stringify(data))
+//       } catch (error) {
+//         toast({
+//           title: 'Error Occured!',
+//           description: error.response.data.message,
+//           status: 'error',
+//           duration: 9000,
+//           isClosable: true,
+//         });
+//       }
+        // const data = new FormData(formData)
+       
+        // TODO: Add later
+        // console.log(formData)
+      //   e.preventDefault();
+      //   const data = new FormData();
+      // for (const property in formData) {
+      //   data.append(property, formData[property]);
+      // }
+      //   // AuthApi.Register(formData).then(response => {
+      //   AuthApi.Register(data).then(response => {
+      //     history("/");
+      //     if(response.data.success) {
+            
+      //       return history("/");
+      //     } else {
+      //       setError(response.data.msg)
+      //     }
+      //   }).catch(error => {
+      //     if (error.response) {
+      //       return setError(error.response.data.msg);
+      //     }
+      //     return setError("There has been an error.");
+      //   })
+
+
+      e.preventDefault();
+      const data = new FormData();
+      for (const property in formData) {
+        data.append(property, formData[property]);
+      }
+    try {
+      const response = await axios({
+        method: "post",
+        url: `http://localhost:5000/signup`,
+        data: data,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      
+      toast({
+                  title: 'Account created.',
+                  description: "We've created your account for you. Redirecting to Login Page",
+                  status: 'success',
+                  duration: 9000,
+                  isClosable: true,
+                });
+                navigate('/');
+    } catch(error) {
+      toast({
+                  title: 'Error Occured!',
+                  description: error.response.data.message,
+                  status: 'error',
+                  duration: 5000,
+                  isClosable: true,
+                });
+                console.log(error.response)
+    }
+      }
+
   return (
     <Flex
       // bgImage={BgSignUp}
@@ -262,22 +283,22 @@ function SignUp() {
               onChange={handleChange}
             />
 
-            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-              Confirm Password
-            </FormLabel>
-            <Input
-              fontSize="sm"
-              ms="4px"
-              borderRadius="15px"
-              id="confirmpassword"
-              type="password"
-              placeholder="Confirm password"
-              mb="24px"
-              size="lg"
-              name="Confirmpassword"
-              // onChange={(e)=>setConfirmpassword(e.target.value)}
-              // onChange={handleChange}
-            />
+<FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+            Confirm Password
+          </FormLabel>
+          <Input
+            fontSize='sm'
+            ms='4px'
+            borderRadius='15px'
+            id='confirmpassword'
+            type='password'
+            placeholder='Confirm password'
+            mb='24px'
+            size='lg'
+            name="Confirmpassword"
+            // onChange={(e)=>setConfirmpassword(e.target.value)}
+            onChange={handleChange}
+          />
 
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
               aadhar Number
@@ -356,52 +377,70 @@ function SignUp() {
               <option value="Mechanical">MECHANICAL</option>
             </Select>
 
-            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-              Address
-            </FormLabel>
-            <Input
-              fontSize="sm"
-              ms="4px"
-              borderRadius="15px"
-              type="text"
-              id="address"
-              placeholder="Address line 1"
-              mb="24px"
-              size="lg"
-              name="addressline1"
-              // onChange={(e)=>setAddressline1(e.target.value)}
-              onChange={handleChange}
-            />
+            <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+            Address
+          </FormLabel>
+          <Input
+            fontSize='sm'
+            ms='4px'
+            borderRadius='15px'
+            type='text'
+            id='address'
+            placeholder='Address line 1'
+            mb='24px'
+            size='lg'
+            name="addressline1"
+            // onChange={(e)=>setAddressline1(e.target.value)}
+            // onChange={handleChange}  
+            // TODO: to be set
+          />
 
-            <Input
-              fontSize="sm"
-              ms="4px"
-              borderRadius="15px"
-              type="text"
-              placeholder="Address line 2"
-              mb="24px"
-              size="lg"
-              name="addressline2"
-              // onChange={(e)=>setAddressline2(e.target.value)}
-              onChange={handleChange}
-            />
+          <Input
+            fontSize='sm'
+            ms='4px'
+            borderRadius='15px'
+            type='text'
+            placeholder='Address line 2'
+            mb='24px'
+            size='lg'
+            name="addressline2"
+            // onChange={(e)=>setAddressline2(e.target.value)}
+            // onChange={handleChange}
+          />
 
-            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-              City
-            </FormLabel>
-            <Input
-              fontSize="sm"
-              ms="4px"
-              borderRadius="15px"
-              id="city"
-              type="text"
-              placeholder="City"
-              mb="24px"
-              size="lg"
-              name="city"
-              // onChange={(e)=>setCity(e.target.value)}
-              onChange={handleChange}
-            />
+<FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+            City
+          </FormLabel>
+          <Input
+            fontSize='sm'
+            ms='4px'
+            borderRadius='15px'
+            id='city'
+            type='text'
+            placeholder='City'
+            mb='24px'
+            size='lg'
+            name="city"
+            // onChange={(e)=>setCity(e.target.value)}
+            // onChange={handleChange}
+          />
+
+<FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+            State
+          </FormLabel>
+          <Input
+            fontSize='sm'
+            ms='4px'
+            borderRadius='15px'
+            id='state'
+            type='text'
+            placeholder='State'
+            mb='24px'
+            size='lg'
+            name="state"
+            // onChange={(e)=>setState(e.target.value)}
+            // onChange={handleChange}
+          />
 
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
               State
@@ -437,20 +476,36 @@ function SignUp() {
               onChange={handleChange}
             />
 
-            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-              Gender
-            </FormLabel>
-            <Select
-              fontSize="sm"
-              ms="4px"
-              borderRadius="15px"
-              placeholder="Select your gender"
-              mb="24px"
-              id="gender"
-              size="lg"
-              name="gender"
-              // onChange={(e)=>setGender(e.target.value)}
-              onChange={handleChange}
+<FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+            Pincode
+          </FormLabel>
+          <Input
+            fontSize='sm'
+            ms='4px'
+            borderRadius='15px'
+            id='pinCode'
+            type='number'
+            placeholder='PinCode'
+            mb='24px'
+            size='lg'
+            name="pinCode"
+            // onChange={(e)=>setCountry(e.target.value)}
+            onChange={handleChange}
+          />
+
+<FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+            Gender
+          </FormLabel>
+          <Select fontSize='sm'
+            ms='4px'
+            borderRadius='15px'
+            placeholder='Select your gender' 
+            mb='24px'
+            id='gender'
+            size='lg'
+            name="gender"
+            // onChange={(e)=>setGender(e.target.value)}
+            onChange={handleChange}
             >
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -475,23 +530,42 @@ function SignUp() {
               onChange={handleChange}
             />
 
-            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-              Upload your Id proof
-            </FormLabel>
-            <Input
-              fontSize="sm"
-              ms="4px"
-              id="idproof"
-              borderRadius="15px"
-              type="file"
-              accept="image/*"
-              pt={2}
-              mb="24px"
-              size="lg"
-              name="idproof"
-              // onChange={(e)=>postIdentity(e.target.files[0])}
-              onChange={handleChange}
-            />
+<FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+            Upload your Picture
+          </FormLabel>
+          <Input
+            fontSize='sm'
+            ms='4px'
+            borderRadius='15px'
+            id='picture'
+            type='file'
+            accept='image/*'
+            pt={2}
+            mb='24px'
+            size='lg'
+            name="photo"
+            // onChange={(e)=>postDetails(e.target.files[0])}
+            // onChange={(e)=> console.log(e.target.value)}
+            onChange={handleChange}
+          />
+
+<FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+            Upload your Id proof
+          </FormLabel>
+          <Input
+            fontSize='sm'
+            ms='4px'
+            id='idproof'
+            borderRadius='15px'
+            type='file'
+            accept='image/*'
+            pt={2}
+            mb='24px'
+            size='lg'
+            name="idProof"
+            // onChange={(e)=>postIdentity(e.target.files[0])}
+            onChange={handleChange}
+          />
 
             {/* <FormControl display='flex' alignItems='center' mb='24px'>
             <Switch id='remember-login' colorScheme='teal' me='10px' />
