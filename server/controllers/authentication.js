@@ -5,7 +5,9 @@ const { User } = require("../models/dbInfo")
 exports.signUp = async (req, res) => {
   // TODO: Implement the function
   for (file in req.files) {
-    req.body[file] = req.files[file][0].filename
+    req.body[
+      file
+    ] = `http://localhost:5000/files/${req.files[file][0].filename}`
   }
 
   const user = User.build(req.body)
@@ -16,7 +18,7 @@ exports.signUp = async (req, res) => {
       id: resp.userId,
       email: resp.email,
       name: resp.name,
-      aadhaar_number: resp.aadhaarNumber,
+      aadhar_number: resp.aadharNumber,
       mobile_number: resp.mobileNumber,
       department: resp.department,
       address_line1: resp.addressLine1,

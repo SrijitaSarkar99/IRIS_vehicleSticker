@@ -104,7 +104,7 @@ exports.getDepartmentUsers = async (req, res) => {
         ["userId", "id"],
         "email",
         "name",
-        ["aadhaarNumber", "aadhaar_number"],
+        ["aadharNumber", "aadhar_number"],
         ["mobileNumber", "mobile_number"],
         "department",
         ["addressLine1", "address_line1"],
