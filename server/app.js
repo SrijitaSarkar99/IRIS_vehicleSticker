@@ -4,10 +4,6 @@ const cors = require("cors")
 const app = express()
 const initializeDB = require("./models/db")
 
-// Enables CORS
-// const cors = require('cors');
-// app.use(cors({ origin: true }))
-// Middlewares
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -27,13 +23,15 @@ async function projSetUp() {
   await initializeDB()
 
   // Importing Routes
+  const auth = require("./routes/auth")
   const user = require("./routes/user")
   const vehicle = require("./routes/vehicle")
   const sticker = require("./routes/sticker")
   const department = require("./routes/department")
   const file = require("./routes/file")
   // Routes setup
-  app.use("/", user)
+  app.use("/", auth)
+  app.use("/users", user)
   app.use("/vehicles", vehicle)
   app.use("/stickers", sticker)
   app.use("/departments", department)
