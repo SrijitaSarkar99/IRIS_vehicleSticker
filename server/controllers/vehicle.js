@@ -98,8 +98,6 @@ exports.getVehicleSticker = async (req, res) => {
         "reason",
       ],
       order: [["createdAt", "DESC"]],
-      offset: req.query.limit * (req.query.page - 1),
-      limit: parseInt(req.query.limit),
     })
     if (!sticker.length) return res.status(404).json({ msg: "No stickers" })
     // if (req.user && sticker[0].userId !== req.user.userId)

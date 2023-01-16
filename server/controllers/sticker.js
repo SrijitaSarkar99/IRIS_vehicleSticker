@@ -19,8 +19,6 @@ getSpecificSticker = async (req, res) => {
           ["dName", "d_name"],
           "reason",
         ],
-        offset: req.query.limit * (req.query.page - 1),
-        limit: parseInt(req.query.limit),
       })
       return res.status(200).json(stickers)
     } else {
@@ -42,8 +40,6 @@ getSpecificSticker = async (req, res) => {
           "reason",
         ],
         order: [["createdAt", "DESC"]],
-        offset: req.query.limit * (req.query.page - 1),
-        limit: parseInt(req.query.limit),
       })
     }
     if (!stickers) return res.status(404).json({ msg: "No stickers" })

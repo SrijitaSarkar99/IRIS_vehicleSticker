@@ -75,6 +75,10 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  iris_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
 })
 
 module.exports = User

@@ -16,6 +16,10 @@ const Department = sequelize.define('Department', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  iris_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
 })
 
 module.exports = Department

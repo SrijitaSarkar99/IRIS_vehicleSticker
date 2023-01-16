@@ -33,6 +33,7 @@ exports.signUp = async (req, res) => {
       status: resp.status,
       type: resp.type,
       reason: resp.reason,
+      reason: resp.iris_id,
     })
   } catch (error) {
     res.status(500).json({ err: error })

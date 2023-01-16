@@ -24,6 +24,7 @@ exports.getUserById = async (req, res) => {
         "status",
         "type",
         "reason",
+        "iris_id",
       ],
     })
     if (!user) {
@@ -135,6 +136,7 @@ exports.updateUser = async (req, res) => {
         "status",
         "type",
         "reason",
+        "iris_id",
       ],
     })
     return res.status(200).json(user)

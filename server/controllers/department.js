@@ -7,6 +7,7 @@ exports.getDepartmentById = async (req, res) => {
         ["did", "id"],
         ["dName", "d_name"],
         ["HODorHOS", "hod_or_hos"],
+        ["iris_id", "iris_id"],
       ],
     })
     if (!department) {
@@ -29,6 +30,7 @@ exports.getAllDepartment = async (req, res) => {
           ["did", "id"],
           ["dName", "d_name"],
           ["HODorHOS", "hod_or_hos"],
+          ["iris_id", "iris_id"],
         ],
       })
     } else {
@@ -38,6 +40,7 @@ exports.getAllDepartment = async (req, res) => {
           ["did", "id"],
           ["dName", "d_name"],
           ["HODorHOS", "hod_or_hos"],
+          ["iris_id", "iris_id"],
         ],
       })
     }
@@ -58,6 +61,7 @@ exports.addNewDepartment = async (req, res) => {
       id: resp.did,
       d_name: resp.dName,
       hod_or_hos: resp.HODorHOS,
+      iris_id: resp.iris_id,
     })
   } catch (error) {
     res.status(500).json({ err: error })
@@ -80,6 +84,7 @@ exports.updateDepartment = async (req, res) => {
         ["did", "id"],
         ["dName", "d_name"],
         ["HODorHOS", "hod_or_hos"],
+        ["iris_id", "iris_id"],
       ],
     })
     return res.status(200).json(updatedDept)
@@ -117,6 +122,7 @@ exports.getDepartmentUsers = async (req, res) => {
         "status",
         "type",
         "reason",
+        "iris_id"
       ],
       order: [["createdAt", "DESC"]],
     })
