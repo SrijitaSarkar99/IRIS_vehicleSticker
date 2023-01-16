@@ -4,9 +4,8 @@ import HomePage from "./pages/HomePage";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import Test from "./pages/test";
 import Vehicles from "./pages/Vehicles"
-import Table from "./pages/table"
+import Stickers from "./pages/Stickers";
 function App() {
   return (
     <BrowserRouter>
@@ -15,9 +14,8 @@ function App() {
         <Route path="/SignIn" element={<SignIn />} />
         <Route path="/SignUp" element={<SignUp/>} />
         <Route path="/Dashboard" element={<Dashboard/>} />
-        <Route path="/test" element={<Test/>} />
        <Route path="/vehicles" element={<Vehicles />} />
-       <Route path="/table" element={<Table />} />
+       <Route path="/stickers" element={<Stickers />} />
       </Routes>
     </BrowserRouter>
   );
