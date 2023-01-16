@@ -47,15 +47,15 @@ import {  AddIcon, WarningIcon, EditIcon, DeleteIcon } from '@chakra-ui/icons'
 import AdminNav from "../components/AdminNav";
 import axios from 'axios';
 
-function Vehicles() {
+function Stickers() {
     const [formData, setFormData] = useState({});
     const [RCImage, setRCImage] = useState();
     const [relationship, setRelationship] = useState("default");
     const [userVehicles, setUserVehicles] = useState([]);
     const [alertMessage, setAlertMessage] = useState("");
-
+    let dateToday=new Date().getFullYear()+"-"+new Date().getMonth()+1+"-"+new Date().getDate();
+    let dateExpire=new Date().getFullYear()+2+"-"+new Date().getMonth()+1+"-"+new Date().getDate();
     const toast = useToast();
-
      /*For Add New Vehicle Modal Popup Button*/
     const { isOpen, onOpen, onClose } = useDisclosure()
     const initialRef = React.useRef(null)
@@ -75,39 +75,12 @@ function Vehicles() {
 
     const currentUser = JSON.parse(localStorage.getItem("user"));
 
-    //TODO: Data Validation
-      // const validateInput = () => {
-      //   // https://stackoverflow.com/questions/6386300/want-a-regex-for-validating-indian-vehicle-number-format
-      //   const vehicleNumberPattern =
-      //     "^[A-Z]{2}[-][0-9]{1,2}[-](?:[A-Z])?(?:[A-Z]*)[-][0-9]{4}$";
-    
-      //   console.log(!vehicleNumber.match(vehicleNumberPattern));
-    
-      //   if (vehicleNumber === "") setAlertMessage("Vehicle Number is not filled.");
-      //   else if (vehicleModel === "")
-      //     setAlertMessage("Vehicle Model is not filled.");
-      //   else if (rcHolderName === "")
-      //     setAlertMessage("RC Holder Name is not filled.");
-      //   else if (relationship === "default")
-      //     setAlertMessage("Kindly select Relationship with RC Holder.");
-      //   else if (relationship === "others" && othersRelationship == "")
-      //     setAlertMessage("Relationship with RC Holder is not filled.");
-      //   else if (copyOfRC === undefined) setAlertMessage("Kindly upload RC Copy.");
-      //   else if (!vehicleNumber.match(vehicleNumberPattern))
-      //     setAlertMessage("Invalid Vehicle Number Format.");
-      //   else {
-      //     setAlertMessage("");
-      //     return true;
-      //   }
-      //   return false;
-      // };
-    
       const handleChange = e => {
         setFormData({
           ...formData,
-          [e.target.name]:(e.target.name==="RCCopy") ? e.target.files[0]: e.target.value
+          [e.target.name]: e.target.value
         })
-        
+        console.log(e.target.value);
 
       }
 
@@ -118,19 +91,21 @@ function Vehicles() {
       const data = new FormData();
       for (const property in formData) {
         data.append(property, formData[property]);
+        data.append('date',dateToday);
+        data.append('validity',dateExpire);
+        data.append('dName','MACS');
       }
     try {
       const response = await axios({
         method: "post",
-        url: `http://localhost:5000/vehicles`,
+        url: `http://localhost:5000/stickers`,
         data: data,
-        
         headers: { "Content-Type": "multipart/form-data",Authorization: `Bearer ${currentUser.token}` },
       });
 
       toast({
-        title: 'New vehicle added.',
-        description: "Your Vehicle added successfully to the database",
+        title: 'Applied for a new Sticker.',
+        description: "You have successfully applied for a new sticker. Keep checking the status.",
         status: 'success',
         duration: 5000,
         isClosable: true,
@@ -164,7 +139,6 @@ function Vehicles() {
     <>
     <AdminNav/>
 
-    {/* <Button onClick={onOpen} colorScheme='teal'>< AddIcon />Add Vehicle</Button> */}
     <Modal
     size='xl'
         initialFocusRef={initialRef}
@@ -174,25 +148,11 @@ function Vehicles() {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Add new vehicle</ModalHeader>
+          <ModalHeader>Apply for a new sticker</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
           <FormControl>
-                <Box marginTop={3}>
-                  <FormLabel>Vehicle Number</FormLabel>
-                  <Input
-                    borderRadius='10px'
-                    type="email"
-                    // value={vehicleNumber}
-                    name='VehicleNo'
-                    placeholder="KA-11-AB-1234"
-                    // onChange={(e) => {
-                    //   setVehicleNumber(e.target.value.toUpperCase());
-                    // }}
-                    onChange={handleChange}
-                  />
-                </Box>
-                <Box marginTop={3}>
+                {/* <Box marginTop={3}>
                   <FormLabel>Vehicle Type</FormLabel>
                   <Select
                   borderRadius='10px'
@@ -203,100 +163,25 @@ function Vehicles() {
                     <option value="Two Wheeler" >Two Wheeler</option>
                     <option value="Four Wheeler">Four Wheeler</option>
                   </Select>
-
-                  {/* <RadioGroup 
-                  // value={vehicleType} 
-                  name='VehicleType'
-                  // onChange={setVehicleType}
-                  onChange={handleChange}
-                  >
-                    <HStack spacing="48px">
-                      <Radio value="two_wheeler">2 Wheeler</Radio>
-                      <Radio value="four_wheeler">4 Wheeler</Radio>
-                    </HStack>
-                  </RadioGroup> */}
-
-                </Box>
-                <Box marginTop={3}>
-                  <FormLabel>Vehicle Model</FormLabel>
-                  <Input
-                  borderRadius='10px'
-                    type="text"
-                    // value={vehicleModel}
-                    name='model'
-                    placeholder="Ex: Honda Activa"
-                    // onChange={(e) => {
-                    //   setVehicleModel(e.target.value);
-                    // }}
-                    onChange={handleChange}
-                  />
-                </Box>
-                <Box marginTop={3}>
-                  <FormLabel>Registration Certificate Holder Name</FormLabel>
-                  <Input
-                  borderRadius='10px'
-                    type="text"
-                    // value={rcHolderName}
-                    name='RCHName'
-                    placeholder="Enter Holder's Name Here"
-                    // onChange={(e) => {
-                    //   setRCHolderName(e.target.value);
-                    // }}
-                    onChange={handleChange}
-                  />
-                </Box>
-                <Box marginTop={3}>
-                  <FormLabel>Relationship with the RC Holder</FormLabel>
-                  <Select
-                  borderRadius='10px'
-                    // value={relationship}
-                    placeholder='Select Here'
-                    name='relation'
-                    // onChange={(e) => {
-                    //   setRelationship(e.target.value);
-                    // }}
-                    onChange={handleChange}
-                  >
-                    {/* <option value="default">Select Here</option> */}
-                    <option value="self">Self</option>
-                    <option value="father">Father</option>
-                    <option value="mother">Mother</option>
-                    <option value="brother">Brother</option>
-                    <option value="sister">Sister</option>
-                    <option value="others">Others (please specify)</option>
-                  </Select>
-                </Box>
-                {relationship === "others" && (
-                  <Box marginTop={3}>
-                    <FormLabel>Others</FormLabel>
-                    <Input
-                    borderRadius='10px'
-                      type="text"
-                      // value={othersRelationship}
-                      // onChange={(e) => {
-                      //   setOthersRelationship(e.target.value);
-                      // }}
-                      onChange={handleChange}
-                    />
-                  </Box>
-                )}
-                <Box marginTop={3}>
-                  <FormLabel>Upload Copy of Registration Certificate</FormLabel>
-                  <Input borderRadius='10px' pt={1} type="file" 
-                  name='RCCopy'
-                  // onChange={handleRCUpload} 
-                  onChange={handleChange}
-                  />
-                </Box>
-                {/* <Box marginTop={3}>
-                  <Flex justify="space-evenly">
-                    <Button 
-                    colorScheme="teal" 
-                    onClick={handleSubmit}>
-                      Submit Application
-                    </Button>
-                  </Flex>
                 </Box> */}
+                <Box marginTop={3}>
+                  <FormLabel>Select Vehicle</FormLabel>
+                  
+              <Select
+              borderRadius='10px'
+                // value={relationship}
+                placeholder='Select Here'
+                name='relation'
+                onChange={handleChange}
+                required
+              >
+                {userVehicles.map((userVehicle) => ( 
+                <option value={userVehicle.id}>{userVehicle.vehicle_no}</option>
+                
+            )
+            )}
+            </Select>
+                </Box>
               </FormControl>
 
            
@@ -304,7 +189,7 @@ function Vehicles() {
 
           <ModalFooter>
             <Button colorScheme='teal' mr={3} onClick={handleSubmit}> 
-              Add Vehicle
+              Apply
             </Button>
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>
@@ -320,11 +205,7 @@ function Vehicles() {
           <ModalHeader>Image</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-          {userVehicles.map((userVehicle) => ( 
-              // userVehicle.rc_copy
-              console.log(userVehicle.rc_copy)
-            )
-            )}
+
           
             {/* <Image >{userVehicles.map((userVehicle) => ( 
               // userVehicle.rc_copy
@@ -426,8 +307,8 @@ function Vehicles() {
         fontWeight='bold'
         mt='10px'
         mb='26px'
-        marginTop={3}>Registered Vehicle  </Heading>
-        <Button onClick={onOpen} colorScheme='teal' leftIcon={<AddIcon/>}>New Vehicle</Button>
+        marginTop={3}>Registered Stickers  </Heading>
+        <Button onClick={onOpen} colorScheme='teal' leftIcon={<AddIcon/>}>New Sticker</Button>
         </Flex>
             {/* <Flex
               width="100%"
@@ -491,4 +372,4 @@ function Vehicles() {
   )
 }
 
-export default Vehicles
+export default Stickers

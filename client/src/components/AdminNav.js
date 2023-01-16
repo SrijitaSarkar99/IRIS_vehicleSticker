@@ -25,21 +25,35 @@ import {
   PopoverCloseButton,
   PopoverHeader,
   PopoverBody,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogCloseButton,
+  AlertDialogBody,
+  AlertDialogFooter,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import AuthApi from '../api/auth';
 import { useAuth } from '../auth-context/auth.context';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Vehicles } from '../pages/Vehicles'
+import Profile  from '../pages/Profile'
+import React, { Component } from 'react';
 
 export default function Simple() {
   const { user, setUser } = useAuth();
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
+  const currentUser = JSON.parse(localStorage.getItem("user"));
   // const { osOpen, onToggle } = useDisclosure()
   const navigate=useNavigate();
 
+  /*For Logout Confirmation */
+  const { isOpen: isLogoutOpen, onOpen: onLogoutOpen, onClose: onLogoutClose} = useDisclosure()
+  const cancelRef = React.useRef()
+  /***************************************/
   const handleLogout = () => {
     AuthApi.Logout(user)
     setUser(null);
@@ -47,8 +61,41 @@ export default function Simple() {
     return navigate("/");
   }
 
+  const handleProfile = () => {
+{/* <Profile/> */}
+<NavLink to={Profile}>{Profile}</NavLink>
+  }
+
   return (
-    
+    <>
+     {/* AlertDialog for Logout */}
+     <AlertDialog
+        motionPreset='slideInBottom'
+        leastDestructiveRef={cancelRef}
+        onClose={onLogoutClose}
+        isOpen={isLogoutOpen}
+        isCentered
+      >
+        <AlertDialogOverlay />
+
+        <AlertDialogContent>
+          <AlertDialogHeader>Logout ?</AlertDialogHeader>
+          <AlertDialogCloseButton />
+          <AlertDialogBody>
+            Are you sure you want to Logout?
+          </AlertDialogBody>
+          <AlertDialogFooter>
+            <Button ref={cancelRef} onClick={onLogoutClose}>
+              No
+            </Button>
+            <Button colorScheme='red' ml={3} onClick={handleLogout}>
+              Yes
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+     {/* ************************************* */}
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
         
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
@@ -112,6 +159,20 @@ export default function Simple() {
                 >
                 My Vehicles
               </Link>
+              <Link
+                px={2}
+                py={1}
+                rounded={'md'}
+                _hover={{
+                  textDecoration: 'none',
+                  bg: useColorModeValue('gray.200', 'gray.700'),
+                }}
+                // onClick={navigate('/newSticker')}
+                 href={'/stickers'}
+                // onClick={ <newSticker/> }
+                >
+                My Stickers
+              </Link>
               {/* {Links.map((link) => (
                 <NavLink key={link}>{link}</NavLink>
               ))} */}
@@ -121,6 +182,7 @@ export default function Simple() {
           
               
           <Flex alignItems={'center'} spacing='20'>
+            <HStack>
           <Button onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
@@ -128,23 +190,30 @@ export default function Simple() {
               <MenuButton
                 as={Button}
                 rounded={'full'}
-                variant={'link'}
+                variant={'unstyled'}
+                
                 cursor={'pointer'}
                 minW={0}>
-                <Avatar
+                  <HStack>
+                  <Avatar
                   size={'sm'}
                   src={
-                    'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                    'https://bit.ly/broken-link'
                   }
                 />
+                  <Text alignContent='baseline'>{currentUser.name}</Text>
+                
+                </HStack>
               </MenuButton>
               <MenuList>
-                <MenuItem  >Profile</MenuItem>
-                <MenuItem>Link 2</MenuItem>
+                
+                <MenuItem  onClick={handleProfile}>Profile</MenuItem>
+                {/* <MenuItem>Link 2</MenuItem> */}
                 <MenuDivider />
-                <MenuItem  > <Link onClick={handleLogout}>Log Out</Link></MenuItem>
+                <MenuItem  onClick={onLogoutOpen}>Log Out</MenuItem>
               </MenuList>
             </Menu>
+            </HStack>
           </Flex>
         </Flex>
 
@@ -158,5 +227,6 @@ export default function Simple() {
           </Box>
         ) : null}
       </Box>
+      </>
   );
 }
