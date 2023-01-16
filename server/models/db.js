@@ -21,9 +21,9 @@ module.exports = async () => {
 
   db.Sequelize = Sequelize
   db.sequelize = sequelize
-  db.Department = require("./department")
-  db.User = require("./user")
-  db.Vehicle = require("./vehicle")
-  db.Sticker = require("./sticker")
+  db.Department = require("./Department")
+  db.User = require("./User")
+  db.Vehicle = require("./Vehicle")
+  db.Sticker = require("./Sticker")
   db.sequelize.sync()
 }

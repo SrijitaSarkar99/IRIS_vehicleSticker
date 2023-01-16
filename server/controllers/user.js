@@ -9,7 +9,7 @@ exports.getUserById = async (req, res) => {
         ["userId", "id"],
         "email",
         "name",
-        ["aadhaarNumber", "aadhaar_number"],
+        ["aadharNumber", "aadhar_number"],
         ["mobileNumber", "mobile_number"],
         "department",
         ["addressLine1", "address_line1"],
@@ -79,7 +79,9 @@ exports.updateUser = async (req, res) => {
     }
 
     for (file in req.files) {
-      resObj[file] = req.files[file][0].filename
+      resObj[
+        file
+      ] = `http://localhost:5000/files/${req.files[file][0].filename}`
     }
   }
 
@@ -95,9 +97,17 @@ exports.updateUser = async (req, res) => {
         (resObj.photo && prop == "photo" && user.dataValues[prop]) ||
         (resObj.idProof && prop == "idProof" && user.dataValues[prop])
       ) {
-        let filePath = path.join(__dirname, "../public/files", prop, user[prop])
+        const pathArr = user[prop].split("/")
+        let filePath = path.join(
+          __dirname,
+          "../public/files",
+          prop,
+          pathArr[pathArr.length - 1]
+        )
         console.log(filePath)
-        if (fs.existsSync(path)) fs.unlinkSync(filePath)
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath)
+        }
       }
     }
 
@@ -113,7 +123,7 @@ exports.updateUser = async (req, res) => {
         ["userId", "id"],
         "email",
         "name",
-        ["aadhaarNumber", "aadhaar_number"],
+        ["aadharNumber", "aadhar_number"],
         ["mobileNumber", "mobile_number"],
         "department",
         ["addressLine1", "address_line1"],

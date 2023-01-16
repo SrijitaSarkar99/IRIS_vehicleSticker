@@ -9,20 +9,38 @@ getSpecificSticker = async (req, res) => {
     let stickers
     if (!req.query.evaluation_by) {
       stickers = await Sticker.findAll({
-        order: [["createdAt", "DESC"]],
+        attributes: [
+          ["sid", "id"],
+          ["userId", "user_id"],
+          ["VehicleId", "vehicle_id"],
+          "date",
+          "validity",
+          "status",
+          ["dName", "d_name"],
+          "reason",
+        ],
         offset: req.query.limit * (req.query.page - 1),
         limit: parseInt(req.query.limit),
       })
       return res.status(200).json(stickers)
     } else {
       stickers = await Sticker.findAll({
-        attributes: { exclude: ["updatedAt"] },
         where: {
           status:
             req.query.evaluation_by === "FIC"
               ? "unapproved"
               : "approved by FIC",
         },
+        attributes: [
+          ["sid", "id"],
+          ["userId", "user_id"],
+          ["VehicleId", "vehicle_id"],
+          "date",
+          "validity",
+          "status",
+          ["dName", "d_name"],
+          "reason",
+        ],
         order: [["createdAt", "DESC"]],
         offset: req.query.limit * (req.query.page - 1),
         limit: parseInt(req.query.limit),
@@ -44,7 +62,7 @@ exports.getSticker = async (req, res) => {
 }
 
 exports.getStickerById = async (req, res) => {
-  // TODO: Restrict access for non authorized user
+  //  TODO: Restrict access for non authorized user
   try {
     const sticker = await Sticker.findByPk(req.params.stickerid, {
       attributes: [

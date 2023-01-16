@@ -3,14 +3,23 @@ const path = require("path")
 const fs = require("fs")
 
 exports.addVehicle = async (req, res) => {
-  req.body.RCCopy = req.file.filename
+  req.body.RCCopy = `http://localhost:5000/files/${req.file.filename}`
   try {
     const vehicle = await Vehicle.create({
       ...req.body,
       userId: req.user.userId,
     })
 
-    res.status(200).json(vehicle)
+    res.status(200).json({
+      id: vehicle.id,
+      vehicle_no: vehicle.VehicleNo,
+      vehicle_type: vehicle.VehicleType,
+      model: vehicle.model,
+      rch_name: vehicle.RCHName,
+      relation: vehicle.relation,
+      rc_copy: vehicle.RCCopy,
+      user_id: vehicle.userId,
+    })
   } catch (error) {
     res.status(500).json({ err: error })
   }
@@ -84,7 +93,8 @@ exports.updateVehicle = async (req, res) => {
       if (vehicle && req.user.userId !== vehicle.userId)
         return res.status(401).json({ msg: "Not authorized" })
     }
-    if (req.file) req.body.RCCopy = req.file.filename
+    if (req.file)
+      req.body.RCCopy = `http://localhost:5000/files/${req.file.filename}`
 
     // Remove previous file
     vehicle = await Vehicle.findByPk(req.params.vehicleid, {
@@ -93,14 +103,15 @@ exports.updateVehicle = async (req, res) => {
 
     for (const prop in vehicle.dataValues) {
       if (req.body.RCCopy) {
+        const pathArr = vehicle[prop].split("/")
         let filePath = path.join(
           __dirname,
           "../public/files",
           prop,
-          vehicle[prop]
+          pathArr[pathArr.length - 1]
         )
         console.log(filePath)
-        if (fs.existsSync(path)) fs.unlinkSync(filePath)
+        if (fs.existsSync(filePath)) fs.unlinkSync(filePath)
       }
     }
 
@@ -109,7 +120,18 @@ exports.updateVehicle = async (req, res) => {
     })
     if (resp[0] === 0)
       return res.status(404).json({ msg: "Vehicle not updated. Try again" })
-    vehicle = await Vehicle.findByPk(req.params.vehicleid)
+    vehicle = await Vehicle.findByPk(req.params.vehicleid, {
+      attributes: [
+        "id",
+        ["VehicleNo", "vehicle_no"],
+        ["VehicleType", "vehicle_type"],
+        "model",
+        ["RCHName", "rch_name"],
+        "relation",
+        ["RCCopy", "rc_copy"],
+        ["userId", "user_id"],
+      ],
+    })
     return res.status(200).json(vehicle)
   } catch (error) {
     return res.status(500).json({ err: error })

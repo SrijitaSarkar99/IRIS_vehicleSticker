@@ -17,7 +17,11 @@ module.exports = multer({
     filename: function (req, file, cb) {
       cb(
         null,
-        file.fieldname + "-" + uuidv4() + "." + file.originalname.split(".")[1]
+        file.fieldname +
+          "-" +
+          Math.floor(Math.random() * 10000000000) +
+          "." +
+          file.originalname.split(".")[1]
       )
     },
   }),
