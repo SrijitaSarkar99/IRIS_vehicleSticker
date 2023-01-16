@@ -16,13 +16,7 @@ const {
 const router = express.Router()
 
 // Get all departments
-router.get(
-  "/",
-  setUserAuthentication,
-  setServerAuthentication,
-  isAuthenticated,
-  getAllDepartment
-)
+router.get("/", getAllDepartment)
 
 // Get info about a perticular dept
 router.get(

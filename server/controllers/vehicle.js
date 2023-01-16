@@ -59,7 +59,11 @@ exports.getVehicleSticker = async (req, res) => {
   // console.log(req.query.vehicle_id)
   try {
     const sticker = await Sticker.findAll({
-      where: { VehicleId: req.query.vehicle_id },
+      where: {
+        VehicleId: req.query.vehicle_id
+          ? req.query.vehicle_id
+          : req.query.user_id,
+      },
       attributes: [
         ["sid", "id"],
         ["userId", "user_id"],
