@@ -23,7 +23,6 @@ import axios from "axios"
 import AuthApi from "../api/auth"
 import { useAuth } from "../auth-context/auth.context"
 function SignUp() {
-  const [formData, setFormData] = useState({})
 
 
   const [formData, setFormData] = useState({});
