@@ -39,8 +39,6 @@ exports.getAllDepartment = async (req, res) => {
           ["dName", "d_name"],
           ["HODorHOS", "hod_or_hos"],
         ],
-        offset: req.query.limit * (req.query.page - 1),
-        limit: parseInt(req.query.limit),
       })
     }
     if (!departments) {
@@ -121,8 +119,6 @@ exports.getDepartmentUsers = async (req, res) => {
         "reason",
       ],
       order: [["createdAt", "DESC"]],
-      offset: req.query.limit * (req.query.page - 1),
-      limit: parseInt(req.query.limit),
     })
     if (!users) {
       return res.status(404).json({ msg: "No user exists" })

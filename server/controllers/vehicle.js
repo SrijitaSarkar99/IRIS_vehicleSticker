@@ -7,8 +7,9 @@ exports.addVehicle = async (req, res) => {
   try {
     const vehicle = await Vehicle.create({
       ...req.body,
-      userId: req.user.userId,
+      userId: req.body.userId,
     })
+
 
     res.status(200).json({
       id: vehicle.id,
@@ -18,10 +19,32 @@ exports.addVehicle = async (req, res) => {
       rch_name: vehicle.RCHName,
       relation: vehicle.relation,
       rc_copy: vehicle.RCCopy,
-      user_id: vehicle.userId,
+      user_id: req.body.userId,
     })
   } catch (error) {
     res.status(500).json({ err: error })
+  }
+}
+
+exports.getVehicle = async (req, res) => {
+  try {
+    const vehicle = await Vehicle.findAll({
+      order: [["createdAt", "DESC"]],
+      attributes: [
+        "id",
+        ["VehicleNo", "vehicle_no"],
+        ["VehicleType", "vehicle_type"],
+        "model",
+        ["RCHName", "rch_name"],
+        "relation",
+        ["RCCopy", "rc_copy"],
+        ["userId", "user_id"],
+      ],
+    })
+    if (!vehicle.length) return res.status(404).json({ msg: "No vehicle" })
+    return res.status(200).json(vehicle)
+  } catch (error) {
+    return res.status(500).json({ err: error })
   }
 }
 

@@ -33,6 +33,19 @@ router.patch(
   updateUser
 )
 
+router.put(
+  "/:id",
+  setUserAuthentication,
+  setUserAuthorization,
+  setServerAuthentication,
+  isAuthorized,
+  upload.fields([
+    { name: "photo", maxCount: 1 },
+    { name: "idProof", maxCount: 1 },
+  ]),
+  updateUser
+)
+
 router.get(
   "/",
   setServerAuthentication,

@@ -7,11 +7,13 @@ module.exports = async () => {
   const connection = await mysql.createConnection({
     host: "localhost",
     user: "root",
+    password: process.env.dbPassword
   })
   await connection.query(`CREATE DATABASE IF NOT EXISTS iris;`)
   const sequelize = new Sequelize("iris", "root", "", {
     host: "localhost",
     dialect: "mysql",
+    password: process.env.dbPassword
   })
   try {
     await sequelize.authenticate()

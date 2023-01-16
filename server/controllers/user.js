@@ -51,8 +51,6 @@ exports.getUserVehicle = async (req, res) => {
         ["RCCopy", "rc_copy"],
         ["userId", "user_id"],
       ],
-      offset: req.query.limit * (req.query.page - 1),
-      limit: parseInt(req.query.limit),
     })
     if (!vehicle.length) return res.status(404).json({ msg: "No vehicle" })
     return res.status(200).json(vehicle)
@@ -65,7 +63,7 @@ exports.updateUser = async (req, res) => {
   let resObj = {}
   if (req.server) {
     for (const prop in req.body) {
-      if (prop != "status" || prop != "reason") {
+      if (prop != "status" && prop != "reason") {
         return res.status(401).json({ msg: "Not authorized" })
       }
       if (req.body[prop]) resObj[prop] = req.body[prop]
@@ -104,7 +102,6 @@ exports.updateUser = async (req, res) => {
           prop,
           pathArr[pathArr.length - 1]
         )
-        console.log(filePath)
         if (fs.existsSync(filePath)) {
           fs.unlinkSync(filePath)
         }

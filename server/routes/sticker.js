@@ -7,7 +7,7 @@ const {
   isServerAuthenticated,
 } = require("../controllers/authentication")
 const {
-  getSticker,
+  getAllStickers,
   addNewSticker,
   getStickerById,
   updateSticker,
@@ -20,7 +20,7 @@ router.get(
   setUserAuthentication,
   setServerAuthentication,
   isAuthenticated,
-  getSticker
+  getAllStickers
 )
 
 // Return sticker with a perticular id

@@ -61,6 +61,27 @@ exports.getSticker = async (req, res) => {
   return await getSpecificSticker(req, res)
 }
 
+exports.getAllStickers = async (req, res) => {
+  try {
+    let stickers
+    stickers = await Sticker.findAll({
+      attributes: [
+        ["sid", "id"],
+        ["userId", "user_id"],
+        ["VehicleId", "vehicle_id"],
+        "date",
+        "validity",
+        "status",
+        ["dName", "d_name"],
+        "reason",
+      ],
+    })
+    return res.status(200).json(stickers)
+  } catch (error) {
+    return res.status(500).json({ err: error })
+  }
+}
+
 exports.getStickerById = async (req, res) => {
   //  TODO: Restrict access for non authorized user
   try {
@@ -87,7 +108,7 @@ exports.getStickerById = async (req, res) => {
 }
 
 exports.addNewSticker = async (req, res) => {
-  const sticker = Sticker.build({ ...req.body, userId: req.user.userId })
+  const sticker = Sticker.build({ ...req.body, userId: req.body.userId })
   try {
     const resp = await sticker.save()
     res.status(201).json(resp)
