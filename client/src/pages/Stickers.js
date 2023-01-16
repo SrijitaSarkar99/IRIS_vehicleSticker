@@ -48,9 +48,7 @@ import AdminNav from "../components/AdminNav";
 import axios from 'axios';
 
 function Stickers() {
-    const [formData, setFormData] = useState({});
-    const [RCImage, setRCImage] = useState();
-    const [relationship, setRelationship] = useState("default");
+    const [VehicleId, setVehicleId] = useState();
     const [userVehicles, setUserVehicles] = useState([]);
     const [alertMessage, setAlertMessage] = useState("");
     let dateToday=new Date().getFullYear()+"-"+new Date().getMonth()+1+"-"+new Date().getDate();
@@ -75,32 +73,23 @@ function Stickers() {
 
     const currentUser = JSON.parse(localStorage.getItem("user"));
 
-      const handleChange = e => {
-        setFormData({
-          ...formData,
-          [e.target.name]: e.target.value
-        })
-        console.log(e.target.value);
-
-      }
-
 
       const handleSubmit =async (e) => {
         // const isValid = validateInput();
         e.preventDefault();
-      const data = new FormData();
-      for (const property in formData) {
-        data.append(property, formData[property]);
-        data.append('date',dateToday);
-        data.append('validity',dateExpire);
-        data.append('dName','MACS');
-      }
+      
+      const data = {
+        VehicleId: {VehicleId},
+        date: "2022-12-25",
+        validity: "2023-12-25",
+        dName: "MACS"
+    }
     try {
       const response = await axios({
         method: "post",
         url: `http://localhost:5000/stickers`,
         data: data,
-        headers: { "Content-Type": "multipart/form-data",Authorization: `Bearer ${currentUser.token}` },
+        headers: { "Content-Type": "application/JSON",Authorization: `Bearer ${currentUser.token}` },
       });
 
       toast({
@@ -171,8 +160,8 @@ function Stickers() {
               borderRadius='10px'
                 // value={relationship}
                 placeholder='Select Here'
-                name='relation'
-                onChange={handleChange}
+                name='VehicleId'
+                onChange={(e) =>setVehicleId(e.target.value)}
                 required
               >
                 {userVehicles.map((userVehicle) => ( 
@@ -322,17 +311,16 @@ function Stickers() {
     {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
     <Thead>
       <Tr>
+        <Th>Sticker Number</Th>
         <Th>Vehicle Number</Th>
-        <Th>Type</Th>
-        <Th>Model</Th>
-        <Th>RC Holder Name</Th>
-        <Th>Relationship with RC Holder</Th>
+        <Th>date</Th>
+        <Th>validity</Th>
+        <Th>status</Th>
         {/* TODO: Change name later */}
-        <Th>RC Copy</Th>  
       </Tr>
     </Thead>
     <Tbody>
-      {
+      {/* {
         userVehicles.map((userVehicle) => (
           <Tr key={userVehicle.id} vehicleId={userVehicle.id}>
             <Td>{userVehicle.vehicle_no}</Td>
@@ -340,17 +328,15 @@ function Stickers() {
             <Td>{userVehicle.model}</Td>
             <Td>{userVehicle.rch_name}</Td>
             <Td>{userVehicle.relation}</Td>
-            {/* {console.log(userVehicle.rc_copy)} */}
             <Td><Button colorScheme='teal' onClick={() => {
               onImgOpen()
             }}>Show</Button></Td>
             <Td><Button leftIcon={<DeleteIcon/>} onClick={() => {
               onVehicleDeleteOpen()
             }} colorScheme='red'>Delete</Button></Td>
-            {/* <Td><Button leftIcon={<EditIcon/>} colorScheme='teal' variant='outline'>Edit</Button></Td> */}
           </Tr>
         ))
-      }
+      } */}
       
     </Tbody>
     {/* <Tfoot>

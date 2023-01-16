@@ -363,7 +363,8 @@ function Vehicles() {
               <Button ref={cancelRef} onClick={onVehicleDeleteClose}>
                 Cancel
               </Button>
-              <Button colorScheme='red' 
+              <Button 
+              colorScheme='red' 
               // onClick={()=>
                 
               //   toast({
@@ -465,7 +466,7 @@ function Vehicles() {
             }}>Show</Button></Td>
             <Td><Button leftIcon={<DeleteIcon/>} onClick={() => {
               onVehicleDeleteOpen()
-            }} colorScheme='red'>Delete</Button></Td>
+            }} colorScheme='red' variant={'outline'}>Delete</Button></Td>
             {/* <Td><Button leftIcon={<EditIcon/>} colorScheme='teal' variant='outline'>Edit</Button></Td> */}
           </Tr>
         ))

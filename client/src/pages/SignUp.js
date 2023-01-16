@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Button,
@@ -25,7 +25,7 @@ function SignUp() {
   const [formData, setFormData] = useState({});
   const { user } = useAuth();
   const toast=useToast();
-
+  const [departments, setDepartments] = useState([]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
     const titleColor = useColorModeValue("teal.300", "teal.200");
@@ -145,6 +145,24 @@ function SignUp() {
                 console.log(error.response)
     }
       }
+// TODO: Implement backend route to send all departments without authorization
+      // useEffect(() => {
+      //   async function fetchData(){
+      //   try {
+      //     const response = await axios({
+      //       method: "get",
+      //       url: `http://localhost:5000/departments?pageNo=${1}`
+
+      //     }); 
+      //     console.log(response.data);
+      //      setDepartments(response.data);
+      //   } 
+      //   catch(error) {
+      //     console.log(error);
+      //   }
+      //   }
+      //   fetchData();
+      //     }, []);
   return (
     
     <Flex
@@ -360,9 +378,13 @@ function SignUp() {
             name="department"
             // onChange={(e)=>setDepartment(e.target.value)}>
             onChange={handleChange}>
-            <option value='MACS'>MACS</option>
+
+              {/* TODO: Implement auto department fetch */}
+            {/* {departments.map((departments) => ( 
+                <option value={departments.dName}>{departments.dName}</option>
+              ))} */}
+              <option value='MACS'>MACS</option>
             <option value='CSE'>CSE</option>
-            <option value='Mechanical'>MECHANICAL</option>
             </Select>
 
             <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
