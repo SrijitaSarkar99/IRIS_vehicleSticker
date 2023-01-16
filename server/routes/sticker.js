@@ -14,7 +14,7 @@ const {
 } = require("../controllers/sticker")
 const router = express.Router()
 
-// Return stickers based on condition
+// Return stickers based on condition or vehicle_id or user_id
 router.get(
   "/",
   setUserAuthentication,

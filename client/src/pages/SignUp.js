@@ -1,4 +1,6 @@
-import React, { useState } from "react"
+
+import React, { useEffect, useState } from 'react'
+
 import {
   Box,
   Button,
@@ -21,13 +23,12 @@ import axios from "axios"
 import AuthApi from "../api/auth"
 import { useAuth } from "../auth-context/auth.context"
 function SignUp() {
-  const [formData, setFormData] = useState({})
 
 
   const [formData, setFormData] = useState({});
   const { user } = useAuth();
   const toast=useToast();
-
+  const [departments, setDepartments] = useState([]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
     const titleColor = useColorModeValue("teal.300", "teal.200");
@@ -147,6 +148,25 @@ function SignUp() {
                 console.log(error.response)
     }
       }
+
+// TODO: Implement backend route to send all departments without authorization
+      // useEffect(() => {
+      //   async function fetchData(){
+      //   try {
+      //     const response = await axios({
+      //       method: "get",
+      //       url: `http://localhost:5000/departments?pageNo=${1}`
+
+      //     }); 
+      //     console.log(response.data);
+      //      setDepartments(response.data);
+      //   } 
+      //   catch(error) {
+      //     console.log(error);
+      //   }
+      //   }
+      //   fetchData();
+      //     }, []);
 
   return (
     <Flex
@@ -360,21 +380,25 @@ function SignUp() {
               Department
             </FormLabel>
 
-            <Select
-              fontSize="sm"
-              ms="4px"
-              borderRadius="15px"
-              id="department"
-              placeholder="Select your department"
-              mb="24px"
-              size="lg"
-              name="department"
-              // onChange={(e)=>setDepartment(e.target.value)}>
-              onChange={handleChange}
-            >
-              <option value="MACS">MACS</option>
-              <option value="CSE">CSE</option>
-              <option value="Mechanical">MECHANICAL</option>
+
+          <Select fontSize='sm'
+            ms='4px'
+            borderRadius='15px'
+            id='department'
+            placeholder='Select your department' 
+            mb='24px'
+            size='lg'
+            name="department"
+            // onChange={(e)=>setDepartment(e.target.value)}>
+            onChange={handleChange}>
+
+              {/* TODO: Implement auto department fetch */}
+            {/* {departments.map((departments) => ( 
+                <option value={departments.dName}>{departments.dName}</option>
+              ))} */}
+              <option value='MACS'>MACS</option>
+            <option value='CSE'>CSE</option>
+
             </Select>
 
             <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>

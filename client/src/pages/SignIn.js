@@ -150,18 +150,29 @@ function SignIn() {
       <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
         Password
       </FormLabel>
+      <InputGroup>
       <Input
         borderRadius='15px'
         mb='36px'
         fontSize='sm'
         id='password'
-        type='password'
+        type={show ? "text" : "password"}
         placeholder='Your password'
         size='lg'
         onChange={handleChange}
         name="password"
         value={formData?.password}
       />
+
+<InputRightElement display='flex' alignItems='center' mt='4px'>
+                <Icon
+                  color={textColorSecondary}
+                  _hover={{ cursor: "pointer" }}
+                  as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
+                  onClick={handleClick}
+                />
+              </InputRightElement>
+      </InputGroup>
       {/* <FormControl display='flex' alignItems='center'>
         <Route id='remember-login' colorScheme='teal' me='10px' />
         <FormLabel

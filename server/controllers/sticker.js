@@ -54,7 +54,7 @@ getSpecificSticker = async (req, res) => {
 }
 
 exports.getSticker = async (req, res) => {
-  if (req.query.vehicle_id) {
+  if (req.query.vehicle_id || req.query.user_id) {
     return await getVehicleSticker(req, res)
   }
 
