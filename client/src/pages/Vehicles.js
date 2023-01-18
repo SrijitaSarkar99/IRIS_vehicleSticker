@@ -321,8 +321,7 @@ function Vehicles() {
           <ModalCloseButton />
           <ModalBody pb={6}>
           {userVehicles.map((userVehicle) => ( 
-              // userVehicle.rc_copy
-              console.log(userVehicle.rc_copy)
+              <Image src={userVehicle.rc_copy}/>
             )
             )}
           

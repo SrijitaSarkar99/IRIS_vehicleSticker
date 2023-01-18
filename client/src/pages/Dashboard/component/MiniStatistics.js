@@ -18,7 +18,7 @@ import {
     // const textColor = useColorModeValue("gray.700", "white");
     const textColor = useColorModeValue("teal.300", "teal.300");
     return (
-      <Card minH='83px' border='1px' borderColor='teal.200' rounded='md'>
+      <Card minH='83px' bg={useColorModeValue("gray.100","teal.100")}  border='1px' borderColor='teal.200' rounded='md' variant='filled'>
         <CardBody >
           <Flex flexDirection='row' align='center' justify='center' w='100%'  >
             <Stat me='auto' p={'5'}>

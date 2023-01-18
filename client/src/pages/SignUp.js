@@ -449,22 +449,7 @@ function SignUp() {
             // onChange={handleChange}
           />
 
-<FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-            State
-          </FormLabel>
-          <Input
-            fontSize='sm'
-            ms='4px'
-            borderRadius='15px'
-            id='state'
-            type='text'
-            placeholder='State'
-            mb='24px'
-            size='lg'
-            name="state"
-            // onChange={(e)=>setState(e.target.value)}
-            // onChange={handleChange}
-          />
+
 
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
               State
@@ -554,7 +539,7 @@ function SignUp() {
               onChange={handleChange}
             />
 
-<FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+{/* <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
             Upload your Picture
           </FormLabel>
           <Input
@@ -571,7 +556,7 @@ function SignUp() {
             // onChange={(e)=>postDetails(e.target.files[0])}
             // onChange={(e)=> console.log(e.target.value)}
             onChange={handleChange}
-          />
+          /> */}
 
 <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
             Upload your Id proof

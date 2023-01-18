@@ -50,6 +50,7 @@ import axios from 'axios';
 function Stickers() {
     const [VehicleId, setVehicleId] = useState();
     const [userVehicles, setUserVehicles] = useState([]);
+    const [userStickers, setUserStickers] = useState([]);
     const [alertMessage, setAlertMessage] = useState("");
     let dateToday=new Date().getFullYear()+"-"+new Date().getMonth()+1+"-"+new Date().getDate();
     let dateExpire=new Date().getFullYear()+2+"-"+new Date().getMonth()+1+"-"+new Date().getDate();
@@ -320,23 +321,23 @@ function Stickers() {
       </Tr>
     </Thead>
     <Tbody>
-      {/* {
-        userVehicles.map((userVehicle) => (
-          <Tr key={userVehicle.id} vehicleId={userVehicle.id}>
-            <Td>{userVehicle.vehicle_no}</Td>
-            <Td>{userVehicle.vehicle_type}</Td>
-            <Td>{userVehicle.model}</Td>
-            <Td>{userVehicle.rch_name}</Td>
-            <Td>{userVehicle.relation}</Td>
-            <Td><Button colorScheme='teal' onClick={() => {
+      {
+        userStickers.map((userStickers) => (
+          <Tr key={userStickers.id} StickersId={userStickers.id}>
+            {/* <Td>{userStickers.Stickers_no}</Td>
+            <Td>{userStickers.Stickers_type}</Td>
+            <Td>{userStickers.model}</Td>
+            <Td>{userStickers.rch_name}</Td>
+            <Td>{userStickers.relation}</Td> */}
+            {/* <Td><Button colorScheme='teal' onClick={() => {
               onImgOpen()
             }}>Show</Button></Td>
             <Td><Button leftIcon={<DeleteIcon/>} onClick={() => {
               onVehicleDeleteOpen()
-            }} colorScheme='red'>Delete</Button></Td>
+            }} colorScheme='red'>Delete</Button></Td> */}
           </Tr>
         ))
-      } */}
+      }
       
     </Tbody>
     {/* <Tfoot>

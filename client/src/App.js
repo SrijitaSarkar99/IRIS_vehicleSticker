@@ -6,6 +6,7 @@ import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Vehicles from "./pages/Vehicles"
 import Stickers from "./pages/Stickers";
+import Profile from "./pages/Profile"
 function App() {
   return (
     <BrowserRouter>
@@ -16,6 +17,7 @@ function App() {
         <Route path="/Dashboard" element={<Dashboard/>} />
        <Route path="/vehicles" element={<Vehicles />} />
        <Route path="/stickers" element={<Stickers />} />
+       <Route path='/Profile' element={<Profile/>} />
       </Routes>
     </BrowserRouter>
   );

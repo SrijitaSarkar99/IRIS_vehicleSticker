@@ -18,27 +18,24 @@ import {
   useToast,
 } from "@chakra-ui/react";
 // Custom components
-// import { HSeparator } from "components/separator/Separator";
 import AuthApi from "../api/auth";
-
 import { useAuth } from "../auth-context/auth.context";
-// import DefaultAuth from "../layouts/auth/Default";
 // Assets
-import illustration from "../asset/bg.jpg";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 import { Link, Navigate, NavLink, Route, useNavigate, useNavigation } from "react-router-dom";
-import { Switch } from "react-router-dom";
 
 function SignIn() {
   const [formData, setFormData] = useState({
     'email': '',
     'password': ''
   });
-  // Chakra color mode
+  
   const navigate = useNavigate();
   const toast=useToast();
+  
+  // Chakra color mode
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
   const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
@@ -57,8 +54,8 @@ function SignIn() {
   const [show, setShow] = React.useState(null);
   const handleClick = () => setShow(!show);
   const [error, setError] = useState("");
-  // const history = useHistory();
   const { user, setUser } = useAuth();
+
   const handleChange = e => {
     setFormData({
       ...formData,
@@ -70,18 +67,8 @@ function SignIn() {
     // navigate('/dashboard');
     e.preventDefault();
     AuthApi.Login(formData).then(response => {
-        // console.log(response.data);
-        // navigate('/dashboard');
-        // toast({
-        //     title: 'Login Successfully.',
-        //     description: "",
-        //     status: 'success',
-        //     duration: 3000,
-        //     isClosable: true,
-        //   });
       // if(response.data.success) {
-        // if(response.status==200) {
-          navigate('/dashboard');
+          // navigate('/dashboard');
         toast({
             title: 'Login Successfully.',
             description: "",
@@ -96,9 +83,16 @@ function SignIn() {
       // }
     }).catch(error => {
       if (error.response) {
-        return setError(error.response.data.msg);
+        toast({
+          title: 'Error!',
+          description: error.response.data.msg,
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+        // return setError(error.response.data.msg);
       }
-      return setError("There has been an error.");
+      // return setError("There has been an error.");
     })
   }
 
@@ -217,14 +211,15 @@ function SignIn() {
       justifyContent='center'
       alignItems='center'
       maxW='100%'
-      mt='0px'>
+      mt='0px'
+      >
       <Text color={textColor} fontWeight='medium' >
         Don't have an account?
-        <Link color={titleColor} ms='5px' 
-        href='/SignUp' fontWeight='bold'>
+        <Link color={titleColor} ms='5px' href='/SignUp' fontWeight='bold'>
           Sign Up
         </Link>
       </Text>
+     
     </Flex>
   </Flex>
   );
