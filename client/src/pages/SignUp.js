@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react'
 
 import {
@@ -22,105 +21,104 @@ import HomeNav from "../components/HomeNav"
 import axios from "axios"
 import AuthApi from "../api/auth"
 import { useAuth } from "../auth-context/auth.context"
+
 function SignUp() {
-
-
   const [formData, setFormData] = useState({});
   const { user } = useAuth();
-  const toast=useToast();
+  const toast = useToast();
   const [departments, setDepartments] = useState([]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-    const titleColor = useColorModeValue("teal.300", "teal.200");
-    const textColor = useColorModeValue("gray.700", "white");
-    const bgColor = useColorModeValue("white", "gray.700");
+  const titleColor = useColorModeValue("teal.300", "teal.200");
+  const textColor = useColorModeValue("gray.700", "white");
+  const bgColor = useColorModeValue("white", "gray.700");
 
-    const handleChange = e => {
-      setFormData({
-        ...formData,
-        [e.target.name]:(e.target.name==="photo" || e.target.name==="idProof") ? e.target.files[0]: e.target.value
+  const handleChange = e => {
+    setFormData({
+      ...formData,
+      [e.target.name]: (e.target.name === "photo" || e.target.name === "idProof") ? e.target.files[0] : e.target.value
+    })
+    console.log({formData});
+  }
+
+  const handleSubmit = async (e) => {
+    //       if(!name || !email || !password || !confirmpassword || !aadhaar || !mobile || !type || !department || !addressline1 || !city ||!state ||!country ||!gender )
+    //       {
+    //         toast({
+    //           title: "Please Fill All Fields",
+    //           status:"warning",
+    //           duration:"5000",
+    //           isClosable: true,
+    //           position:"bottom"
+    //         })
+    //       }
+
+    if (e.target.password !== e.target.confirmpassword) {
+      toast({
+        title: "Passwords Do Not Match",
+        status: "warning",
+        duration: "5000",
+        isClosable: true,
+        position: "bottom"
       })
     }
-    
-    const handleSubmit =async (e) => {
-//       if(!name || !email || !password || !confirmpassword || !aadhaar || !mobile || !type || !department || !addressline1 || !city ||!state ||!country ||!gender )
-//       {
-//         toast({
-//           title: "Please Fill All Fields",
-//           status:"warning",
-//           duration:"5000",
-//           isClosable: true,
-//           position:"bottom"
-//         })
-//       }
+    //       try {
+    //         const config = {
+    //           headers:{
+    //             "Content-type": "application/json",
+    //           },
+    //         };
+    //         const { data } = await axios.post("localhost:5000/signup",{email,name,aadhaar,mobile,department,pincode,country
+    //           ,gender,type,password, },config)
+    //         toast({
+    //           title: 'Account created.',
+    //           description: "We've created your account for you.",
+    //           status: 'success',
+    //           duration: 9000,
+    //           isClosable: true,
+    //         });
+    // history.push("/Dashboard");
+    //         localStorage.setItem('userInfo',JSON.stringify(data))
+    //       } catch (error) {
+    //         toast({
+    //           title: 'Error Occured!',
+    //           description: error.response.data.message,
+    //           status: 'error',
+    //           duration: 9000,
+    //           isClosable: true,
+    //         });
+    //       }
+    // const data = new FormData(formData)
 
-      if(e.target.password !== e.target.confirmpassword)
-      {
-        toast({
-          title: "Passwords Do Not Match",
-          status:"warning",
-          duration:"5000",
-          isClosable: true,
-          position:"bottom"
-        })
-      }
-//       try {
-//         const config = {
-//           headers:{
-//             "Content-type": "application/json",
-//           },
-//         };
-//         const { data } = await axios.post("localhost:5000/signup",{email,name,aadhaar,mobile,department,pincode,country
-//           ,gender,type,password, },config)
-//         toast({
-//           title: 'Account created.',
-//           description: "We've created your account for you.",
-//           status: 'success',
-//           duration: 9000,
-//           isClosable: true,
-//         });
-// history.push("/Dashboard");
-//         localStorage.setItem('userInfo',JSON.stringify(data))
-//       } catch (error) {
-//         toast({
-//           title: 'Error Occured!',
-//           description: error.response.data.message,
-//           status: 'error',
-//           duration: 9000,
-//           isClosable: true,
-//         });
-//       }
-        // const data = new FormData(formData)
-       
-        // TODO: Add later
-        // console.log(formData)
-      //   e.preventDefault();
-      //   const data = new FormData();
-      // for (const property in formData) {
-      //   data.append(property, formData[property]);
-      // }
-      //   // AuthApi.Register(formData).then(response => {
-      //   AuthApi.Register(data).then(response => {
-      //     history("/");
-      //     if(response.data.success) {
-            
-      //       return history("/");
-      //     } else {
-      //       setError(response.data.msg)
-      //     }
-      //   }).catch(error => {
-      //     if (error.response) {
-      //       return setError(error.response.data.msg);
-      //     }
-      //     return setError("There has been an error.");
-      //   })
+    // TODO: Add later
+    // console.log(formData)
+    //   e.preventDefault();
+    //   const data = new FormData();
+    // for (const property in formData) {
+    //   data.append(property, formData[property]);
+    // }
+    //   // AuthApi.Register(formData).then(response => {
+    //   AuthApi.Register(data).then(response => {
+    //     history("/");
+    //     if(response.data.success) {
 
+    //       return history("/");
+    //     } else {
+    //       setError(response.data.msg)
+    //     }
+    //   }).catch(error => {
+    //     if (error.response) {
+    //       return setError(error.response.data.msg);
+    //     }
+    //     return setError("There has been an error.");
+    //   })
 
-      e.preventDefault();
-      const data = new FormData();
-      for (const property in formData) {
-        data.append(property, formData[property]);
-      }
+    e.preventDefault();
+    const data = new FormData();
+    for (const property in formData) {
+      data.append(property, formData[property]);
+    }
+    console.log({ data });
     try {
       const response = await axios({
         method: "post",
@@ -128,45 +126,44 @@ function SignUp() {
         data: data,
         headers: { "Content-Type": "multipart/form-data" },
       });
-      
       toast({
-                  title: 'Account created.',
-                  description: "We've created your account for you. Redirecting to Login Page",
-                  status: 'success',
-                  duration: 9000,
-                  isClosable: true,
-                });
-                navigate('/');
-    } catch(error) {
+        title: 'Account created.',
+        description: "We've created your account for you. Redirecting to Login Page",
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
+      navigate('/');
+    } catch (error) {
       toast({
-                  title: 'Error Occured!',
-                  description: error.response.data.message,
-                  status: 'error',
-                  duration: 5000,
-                  isClosable: true,
-                });
-                console.log(error.response)
+        title: 'Error Occured',
+        description: error.response.data.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+      console.log(error.response)
     }
+  }
+
+  // TODO: Implement backend route to send all departments without authorization
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios({
+          method: "get",
+          url: `http://localhost:5000/departments`
+
+        });
+        console.log(response.data);
+        setDepartments(response.data);
       }
-
-// TODO: Implement backend route to send all departments without authorization
-      useEffect(() => {
-        async function fetchData(){
-        try {
-          const response = await axios({
-            method: "get",
-            url: `http://localhost:5000/departments`
-
-          }); 
-          console.log(response.data);
-           setDepartments(response.data);
-        } 
-        catch(error) {
-          console.log(error);
-        }
-        }
-        fetchData();
-          }, []);
+      catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, []);
 
   return (
     <Flex
@@ -303,22 +300,22 @@ function SignUp() {
               onChange={handleChange}
             />
 
-<FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-            Confirm Password
-          </FormLabel>
-          <Input
-            fontSize='sm'
-            ms='4px'
-            borderRadius='15px'
-            id='confirmpassword'
-            type='password'
-            placeholder='Confirm password'
-            mb='24px'
-            size='lg'
-            name="Confirmpassword"
-            // onChange={(e)=>setConfirmpassword(e.target.value)}
-            onChange={handleChange}
-          />
+            <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+              Confirm Password
+            </FormLabel>
+            <Input
+              fontSize='sm'
+              ms='4px'
+              borderRadius='15px'
+              id='confirmpassword'
+              type='password'
+              placeholder='Confirm password'
+              mb='24px'
+              size='lg'
+              name="Confirmpassword"
+              // onChange={(e)=>setConfirmpassword(e.target.value)}
+              onChange={handleChange}
+            />
 
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
               aadhar Number
@@ -381,19 +378,19 @@ function SignUp() {
             </FormLabel>
 
 
-          <Select fontSize='sm'
-            ms='4px'
-            borderRadius='15px'
-            id='department'
-            placeholder='Select your department' 
-            mb='24px'
-            size='lg'
-            name="department"
-            // onChange={(e)=>setDepartment(e.target.value)}>
-            // onChange={handleChange}
+            <Select fontSize='sm'
+              ms='4px'
+              borderRadius='15px'
+              id='department'
+              placeholder='Select your department'
+              mb='24px'
+              size='lg'
+              name="department"
+              // onChange={(e)=>setDepartment(e.target.value)}>
+              onChange={handleChange}
             >
               {/* TODO: Implement auto department fetch */}
-            {departments.map((departments) => ( 
+              {departments.map((departments) => (
                 <option value={departments.d_name}>{departments.d_name}</option>
               ))}
               {/* <option value='MACS'>MACS</option>
@@ -402,52 +399,52 @@ function SignUp() {
             </Select>
 
             <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-            Address
-          </FormLabel>
-          <Input
-            fontSize='sm'
-            ms='4px'
-            borderRadius='15px'
-            type='text'
-            id='address'
-            placeholder='Address line 1'
-            mb='24px'
-            size='lg'
-            name="addressline1"
-            // onChange={(e)=>setAddressline1(e.target.value)}
-            // onChange={handleChange}  
+              Address
+            </FormLabel>
+            <Input
+              fontSize='sm'
+              ms='4px'
+              borderRadius='15px'
+              type='text'
+              id='address'
+              placeholder='Address line 1'
+              mb='24px'
+              size='lg'
+              name="addressLine1"
+              // onChange={(e)=>setAddressline1(e.target.value)}
+              onChange={handleChange}
             // TODO: to be set
-          />
+            />
 
-          <Input
-            fontSize='sm'
-            ms='4px'
-            borderRadius='15px'
-            type='text'
-            placeholder='Address line 2'
-            mb='24px'
-            size='lg'
-            name="addressline2"
-            // onChange={(e)=>setAddressline2(e.target.value)}
-            // onChange={handleChange}
-          />
+            <Input
+              fontSize='sm'
+              ms='4px'
+              borderRadius='15px'
+              type='text'
+              placeholder='Address line 2'
+              mb='24px'
+              size='lg'
+              name="addressLine2"
+              // onChange={(e)=>setAddressline2(e.target.value)}
+              onChange={handleChange}
+            />
 
-<FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-            City
-          </FormLabel>
-          <Input
-            fontSize='sm'
-            ms='4px'
-            borderRadius='15px'
-            id='city'
-            type='text'
-            placeholder='City'
-            mb='24px'
-            size='lg'
-            name="city"
-            // onChange={(e)=>setCity(e.target.value)}
-            // onChange={handleChange}
-          />
+            <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+              City
+            </FormLabel>
+            <Input
+              fontSize='sm'
+              ms='4px'
+              borderRadius='15px'
+              id='city'
+              type='text'
+              placeholder='City'
+              mb='24px'
+              size='lg'
+              name="city"
+              // onChange={(e)=>setCity(e.target.value)}
+              onChange={handleChange}
+            />
 
 
 
@@ -485,36 +482,36 @@ function SignUp() {
               onChange={handleChange}
             />
 
-<FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-            Pincode
-          </FormLabel>
-          <Input
-            fontSize='sm'
-            ms='4px'
-            borderRadius='15px'
-            id='pinCode'
-            type='number'
-            placeholder='PinCode'
-            mb='24px'
-            size='lg'
-            name="pinCode"
-            // onChange={(e)=>setCountry(e.target.value)}
-            onChange={handleChange}
-          />
+            <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+              Pincode
+            </FormLabel>
+            <Input
+              fontSize='sm'
+              ms='4px'
+              borderRadius='15px'
+              id='pinCode'
+              type='number'
+              placeholder='PinCode'
+              mb='24px'
+              size='lg'
+              name="pinCode"
+              // onChange={(e)=>setCountry(e.target.value)}
+              onChange={handleChange}
+            />
 
-<FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-            Gender
-          </FormLabel>
-          <Select fontSize='sm'
-            ms='4px'
-            borderRadius='15px'
-            placeholder='Select your gender' 
-            mb='24px'
-            id='gender'
-            size='lg'
-            name="gender"
-            // onChange={(e)=>setGender(e.target.value)}
-            onChange={handleChange}
+            <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+              Gender
+            </FormLabel>
+            <Select fontSize='sm'
+              ms='4px'
+              borderRadius='15px'
+              placeholder='Select your gender'
+              mb='24px'
+              id='gender'
+              size='lg'
+              name="gender"
+              // onChange={(e)=>setGender(e.target.value)}
+              onChange={handleChange}
             >
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -539,7 +536,7 @@ function SignUp() {
               onChange={handleChange}
             />
 
-{/* <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+            {/* <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
             Upload your Picture
           </FormLabel>
           <Input
@@ -558,23 +555,23 @@ function SignUp() {
             onChange={handleChange}
           /> */}
 
-<FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-            Upload your Id proof
-          </FormLabel>
-          <Input
-            fontSize='sm'
-            ms='4px'
-            id='idproof'
-            borderRadius='15px'
-            type='file'
-            accept='image/*'
-            pt={2}
-            mb='24px'
-            size='lg'
-            name="idProof"
-            // onChange={(e)=>postIdentity(e.target.files[0])}
-            onChange={handleChange}
-          />
+            <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+              Upload your Id proof
+            </FormLabel>
+            <Input
+              fontSize='sm'
+              ms='4px'
+              id='idproof'
+              borderRadius='15px'
+              type='file'
+              accept='image/*'
+              pt={2}
+              mb='24px'
+              size='lg'
+              name="idProof"
+              // onChange={(e)=>postIdentity(e.target.files[0])}
+              onChange={handleChange}
+            />
 
             {/* <FormControl display='flex' alignItems='center' mb='24px'>
             <Switch id='remember-login' colorScheme='teal' me='10px' />
