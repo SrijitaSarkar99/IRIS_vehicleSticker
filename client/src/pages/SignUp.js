@@ -150,23 +150,23 @@ function SignUp() {
       }
 
 // TODO: Implement backend route to send all departments without authorization
-      // useEffect(() => {
-      //   async function fetchData(){
-      //   try {
-      //     const response = await axios({
-      //       method: "get",
-      //       url: `http://localhost:5000/departments?pageNo=${1}`
+      useEffect(() => {
+        async function fetchData(){
+        try {
+          const response = await axios({
+            method: "get",
+            url: `http://localhost:5000/departments`
 
-      //     }); 
-      //     console.log(response.data);
-      //      setDepartments(response.data);
-      //   } 
-      //   catch(error) {
-      //     console.log(error);
-      //   }
-      //   }
-      //   fetchData();
-      //     }, []);
+          }); 
+          console.log(response.data);
+           setDepartments(response.data);
+        } 
+        catch(error) {
+          console.log(error);
+        }
+        }
+        fetchData();
+          }, []);
 
   return (
     <Flex
@@ -390,14 +390,14 @@ function SignUp() {
             size='lg'
             name="department"
             // onChange={(e)=>setDepartment(e.target.value)}>
-            onChange={handleChange}>
-
+            // onChange={handleChange}
+            >
               {/* TODO: Implement auto department fetch */}
-            {/* {departments.map((departments) => ( 
-                <option value={departments.dName}>{departments.dName}</option>
-              ))} */}
-              <option value='MACS'>MACS</option>
-            <option value='CSE'>CSE</option>
+            {departments.map((departments) => ( 
+                <option value={departments.d_name}>{departments.d_name}</option>
+              ))}
+              {/* <option value='MACS'>MACS</option>
+             <option value='CSE'>CSE</option> */}
 
             </Select>
 
