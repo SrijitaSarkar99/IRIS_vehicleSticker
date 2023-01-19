@@ -2,14 +2,25 @@ const { User, Department } = require("../models/dbInfo")
 
 exports.getDepartmentById = async (req, res) => {
   try {
-    const department = await Department.findByPk(req.params.departmentid, {
-      attributes: [
-        ["did", "id"],
-        ["dName", "d_name"],
-        ["HODorHOS", "hod_or_hos"],
-        ["iris_id", "iris_id"],
-      ],
-    })
+    let department;
+    if (req.user)
+      department = await Department.findByPk(req.params.departmentid, {
+        attributes: [
+          ["did", "id"],
+          ["dName", "d_name"],
+          ["HODorHOS", "hod_or_hos"],
+          ["iris_id", "iris_id"],
+        ],
+      })
+    else if (req.server)
+      department = await Department.findOne({where:{iris_id: req.params.department_iris_id}}, {
+        attributes: [
+          ["did", "id"],
+          ["dName", "d_name"],
+          ["HODorHOS", "hod_or_hos"],
+          ["iris_id", "iris_id"],
+        ],
+      })
     if (!department) {
       return res.status(404).json({ msg: "Department not found" })
     }
@@ -96,9 +107,15 @@ exports.updateDepartment = async (req, res) => {
 exports.getDepartmentUsers = async (req, res) => {
   console.log(req.query.limit)
   try {
-    const department = await Department.findByPk(req.query.department_id, {
-      attributes: ["dName"],
-    })
+    let department;
+    console.log(req.query);
+    if (req.user)
+      department = await Department.findByPk(req.query.department_id, {
+        attributes: ["dName"],
+      })
+    else if (req.server)
+      department = await Department.findOne({where: {iris_id: req.query.department_iris_id}})
+    console.log(123, department);
     if (!department)
       return res.status(400).json({ msg: "Department Doesn't exists" })
     const users = await User.findAll({
