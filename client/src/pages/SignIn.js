@@ -31,10 +31,10 @@ function SignIn() {
     'email': '',
     'password': ''
   });
-  
+
   const navigate = useNavigate();
-  const toast=useToast();
-  
+  const toast = useToast();
+
   // Chakra color mode
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
@@ -63,20 +63,20 @@ function SignIn() {
     })
   }
 
-   const handleSubmit =e => {
+  const handleSubmit = e => {
     // navigate('/dashboard');
     e.preventDefault();
     AuthApi.Login(formData).then(response => {
       // if(response.data.success) {
-          // navigate('/dashboard');
-        toast({
-            title: 'Login Successfully.',
-            description: "",
-            status: 'success',
-            duration: 3000,
-            isClosable: true,
-          });
-        return (setProfile(response));
+      // navigate('/dashboard');
+      toast({
+        title: 'Login Successfully.',
+        description: "",
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+      return (setProfile(response));
       // } 
       // else {
       //   setError(response.data.msg)
@@ -106,68 +106,68 @@ function SignIn() {
   };
 
   const titleColor = useColorModeValue("teal.300", "teal.200");
-//   const textColor = useColorModeValue("gray.400", "white");
+  //   const textColor = useColorModeValue("gray.400", "white");
   return (
     <Flex
-    direction='column'
-    w='100%'
-    background='transparent'
-    p='48px'
-    mt={{ md: "150px", lg: "80px" }}>
-    <Heading color={titleColor} fontSize='32px' mb='10px'>
-      Welcome Back
-    </Heading>
-    <Text
-      mb='36px'
-      ms='4px'
-      color={textColor}
-      fontWeight='bold'
-      fontSize='14px'>
-      add your credentials
-    </Text>
-    <FormControl>
-      <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-        Email
-      </FormLabel>
-      <Input
-        borderRadius='15px'
-        mb='24px'
-        fontSize='sm'
-        id='email'
-        type='text'
-        placeholder='Your email adress'
-        size='lg'
-        onChange={handleChange}
-        name="email"
-        value={formData?.email}
-      />
-      <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-        Password
-      </FormLabel>
-      <InputGroup>
-      <Input
-        borderRadius='15px'
+      direction='column'
+      w='100%'
+      background='transparent'
+      p='48px'
+      mt={{ md: "150px", lg: "80px" }}>
+      <Heading color={titleColor} fontSize='32px' mb='10px'>
+        Welcome Back
+      </Heading>
+      <Text
         mb='36px'
-        fontSize='sm'
-        id='password'
-        type={show ? "text" : "password"}
-        placeholder='Your password'
-        size='lg'
-        onChange={handleChange}
-        name="password"
-        value={formData?.password}
-      />
+        ms='4px'
+        color={textColor}
+        fontWeight='bold'
+        fontSize='14px'>
+        add your credentials
+      </Text>
+      <FormControl>
+        <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+          Email
+        </FormLabel>
+        <Input
+          borderRadius='15px'
+          mb='24px'
+          fontSize='sm'
+          id='email'
+          type='text'
+          placeholder='Your email adress'
+          size='lg'
+          onChange={handleChange}
+          name="email"
+          value={formData?.email}
+        />
+        <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+          Password
+        </FormLabel>
+        <InputGroup>
+          <Input
+            borderRadius='15px'
+            mb='36px'
+            fontSize='sm'
+            id='password'
+            type={show ? "text" : "password"}
+            placeholder='Your password'
+            size='lg'
+            onChange={handleChange}
+            name="password"
+            value={formData?.password}
+          />
 
-<InputRightElement display='flex' alignItems='center' mt='4px'>
-                <Icon
-                  color={textColorSecondary}
-                  _hover={{ cursor: "pointer" }}
-                  as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                  onClick={handleClick}
-                />
-              </InputRightElement>
-      </InputGroup>
-      {/* <FormControl display='flex' alignItems='center'>
+          <InputRightElement display='flex' alignItems='center' mt='4px'>
+            <Icon
+              color={textColorSecondary}
+              _hover={{ cursor: "pointer" }}
+              as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
+              onClick={handleClick}
+            />
+          </InputRightElement>
+        </InputGroup>
+        {/* <FormControl display='flex' alignItems='center'>
         <Route id='remember-login' colorScheme='teal' me='10px' />
         <FormLabel
           htmlFor='remember-login'
@@ -177,51 +177,51 @@ function SignIn() {
           Remember me
         </FormLabel>
       </FormControl> */}
+        <Flex
+          flexDirection='column'
+          justifyContent='center'
+          alignItems='center'
+          maxW='100%'
+          mt='0px'>
+          <Text color="red" marginTop="10px" fontWeight='medium'>
+            {error}
+          </Text>
+        </Flex>
+        <Button
+          onClick={handleSubmit}
+          fontSize='10px'
+          type='submit'
+          bg='teal.300'
+          w='100%'
+          h='45'
+          mb='20px'
+          color='white'
+          mt='20px'
+          _hover={{
+            bg: "teal.200",
+          }}
+          _active={{
+            bg: "teal.400",
+          }}>
+          SIGN IN
+        </Button>
+      </FormControl>
       <Flex
         flexDirection='column'
         justifyContent='center'
         alignItems='center'
         maxW='100%'
-        mt='0px'>
-        <Text color="red" marginTop="10px" fontWeight='medium'>
-          {error}
-        </Text>
-      </Flex>
-      <Button
-        onClick={handleSubmit}
-        fontSize='10px'
-        type='submit'
-        bg='teal.300'
-        w='100%'
-        h='45'
-        mb='20px'
-        color='white'
-        mt='20px'
-        _hover={{
-          bg: "teal.200",
-        }}
-        _active={{
-          bg: "teal.400",
-        }}>
-        SIGN IN
-      </Button>
-    </FormControl>
-    <Flex
-      flexDirection='column'
-      justifyContent='center'
-      alignItems='center'
-      maxW='100%'
-      mt='0px'
+        mt='0px'
       >
-      <Text color={textColor} fontWeight='medium' >
-        Don't have an account?
-        <Link color={titleColor} ms='5px' href='/SignUp' fontWeight='bold'>
-          Sign Up
-        </Link>
-      </Text>
-     
+        <Text color={textColor} fontWeight='medium' >
+          Don't have an account?
+          <Link color={titleColor} ms='5px' href='/SignUp' fontWeight='bold'>
+            Sign Up
+          </Link>
+        </Text>
+
+      </Flex>
     </Flex>
-  </Flex>
   );
 }
 
