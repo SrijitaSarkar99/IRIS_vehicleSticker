@@ -85,6 +85,31 @@ function Profile() {
       <EditablePreview />
    </Editable>
    </HStack>
+
+   <HStack>
+    <Text>Address Line 2:</Text>
+    <Editable
+      textAlign='center'
+      value={userProfile.addressLine2}
+      fontSize='md'
+      isPreviewFocusable={false}
+    >
+      <EditablePreview />
+   </Editable>
+   </HStack>
+
+   <HStack>
+    <Text>City:</Text>
+    <Editable
+      textAlign='center'
+      value={userProfile.city}
+      fontSize='md'
+      isPreviewFocusable={false}
+    >
+      <EditablePreview />
+   </Editable>
+   </HStack> 
+
    </VStack>
    </>
   )
