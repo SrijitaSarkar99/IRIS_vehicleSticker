@@ -91,17 +91,14 @@ exports.updateDepartment = async(req, res) => {
 }
 
 exports.getDepartmentUsers = async(req, res) => {
-    console.log(req.query.limit)
     try {
         let department;
-        console.log(req.query);
         if (req.user)
             department = await Department.findByPk(req.query.department_id, {
                 attributes: ["dName"],
             })
         else if (req.server)
             department = await Department.findOne({ where: { iris_id: req.query.department_iris_id } })
-        console.log(123, department);
         if (!department)
             return res.status(400).json({ msg: "Department Doesn't exists" })
         const users = await User.findAll({

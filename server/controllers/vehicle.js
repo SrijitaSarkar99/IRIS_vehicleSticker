@@ -7,7 +7,7 @@ exports.addVehicle = async(req, res) => {
     try {
         const vehicle = await Vehicle.create({
             ...req.body,
-            userId: req.body.userId,
+            userId: req.user.userId,
         })
 
 
@@ -19,7 +19,7 @@ exports.addVehicle = async(req, res) => {
             rch_name: vehicle.RCHName,
             relation: vehicle.relation,
             rc_copy: vehicle.RCCopy,
-            user_id: req.body.userId,
+            user_id: vehicle.userId,
         })
     } catch (error) {
         res.status(500).json({ err: error })

@@ -91,7 +91,7 @@ exports.getStickerById = async(req, res) => {
 }
 
 exports.addNewSticker = async(req, res) => {
-    const sticker = Sticker.build({...req.body, userId: req.body.userId })
+    const sticker = Sticker.build({...req.body, userId: req.user.userId })
     try {
         const resp = await sticker.save()
         res.status(201).json(resp)
