@@ -32,33 +32,18 @@ exports.getDepartmentById = async(req, res) => {
 }
 
 exports.getAllDepartments = async(req, res) => {
-    let departments
     try {
-        if (req.user) {
-            departments = await Department.findAll({
-                order: [
-                    ["createdAt", "DESC"]
-                ],
-                attributes: [
-                    ["did", "id"],
-                    ["dName", "d_name"],
-                    ["HODorHOS", "hod_or_hos"],
-                    ["iris_id", "iris_id"],
-                ],
-            })
-        } else {
-            departments = await Department.findAll({
-                order: [
-                    ["createdAt", "DESC"]
-                ],
-                attributes: [
-                    ["did", "id"],
-                    ["dName", "d_name"],
-                    ["HODorHOS", "hod_or_hos"],
-                    ["iris_id", "iris_id"],
-                ],
-            })
-        }
+        const departments = await Department.findAll({
+            order: [
+                ["createdAt", "DESC"]
+            ],
+            attributes: [
+                ["did", "id"],
+                ["dName", "d_name"],
+                ["HODorHOS", "hod_or_hos"],
+                ["iris_id", "iris_id"],
+            ],
+        })
         return res.status(200).json(departments)
     } catch (error) {
         return res.status(500).json({ err: error })

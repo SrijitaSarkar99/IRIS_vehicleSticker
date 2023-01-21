@@ -61,10 +61,9 @@ export default function Simple() {
     return navigate("/");
   }
 
-  const handleProfile = () => {
-{/* <Profile/> */}
-<NavLink to={Profile}>{Profile}</NavLink>
-  }
+  // const handleProfile = () => {
+
+  // }
 
   return (
     <>
@@ -207,7 +206,13 @@ export default function Simple() {
               </MenuButton>
               <MenuList>
                 
-                <MenuItem  onClick={handleProfile}>Profile</MenuItem>
+                <MenuItem  
+                // onClick={handleProfile}
+                >
+                  <Link href='/Profile'>
+                    Profile
+                </Link>
+                </MenuItem>
                 {/* <MenuItem>Link 2</MenuItem> */}
                 <MenuDivider />
                 <MenuItem  onClick={onLogoutOpen}>Log Out</MenuItem>
