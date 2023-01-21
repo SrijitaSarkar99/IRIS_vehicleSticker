@@ -90,7 +90,7 @@ function SignIn() {
     if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/.test(formData.password)) {
       return toast({
         title: "Error!",
-        description: "Password must contain at least one uppercase, one lowercase, one number and one special character.",
+        description: "Invalid Credentials.",
         status: "error",
         duration: 3000,
         isClosable: true,
