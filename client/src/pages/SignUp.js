@@ -226,6 +226,16 @@ function SignUp() {
       });
       navigate("/");
     } catch (error) {
+      if(error.response.data.err.original.code === "ER_DUP_ENTRY"){
+        return toast({
+          title: "Error Occured",
+          description: "User already exists. Kindly Sign In.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+
       toast({
         title: "Error Occured",
         description: error.response.data.message,
@@ -233,7 +243,6 @@ function SignUp() {
         duration: 5000,
         isClosable: true,
       });
-      console.log(error.response);
     }
   };
 
