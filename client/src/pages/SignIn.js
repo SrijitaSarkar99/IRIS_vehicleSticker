@@ -270,7 +270,7 @@ function SignIn() {
           Don't have an account?
         </Text>
         <RouteLink to="/SignUp">
-          <Text fontWeight="medium" ms="4px">
+          <Text fontWeight="medium" ms="4px" color={titleColor}>
             <Link>Sign Up</Link>
           </Text>
         </RouteLink>
