@@ -11,6 +11,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Link,
   Text,
   useColorModeValue,
   useToast,
@@ -21,7 +22,7 @@ import { useAuth } from "../auth-context/auth.context";
 // Assets
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
-import { Link, useNavigate } from "react-router-dom";
+import { Link as RouteLink, useNavigate } from "react-router-dom";
 
 function SignIn() {
   const [formData, setFormData] = useState({
@@ -87,7 +88,11 @@ function SignIn() {
     }
 
     //check if password is strong or not
-    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/.test(formData.password)) {
+    if (
+      !/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/.test(
+        formData.password
+      )
+    ) {
       return toast({
         title: "Error!",
         description: "Invalid Credentials.",
@@ -255,7 +260,7 @@ function SignIn() {
         </Button>
       </FormControl>
       <Flex
-        flexDirection="column"
+        flexDirection="row"
         justifyContent="center"
         alignItems="center"
         maxW="100%"
@@ -263,10 +268,12 @@ function SignIn() {
       >
         <Text color={textColor} fontWeight="medium">
           Don't have an account?
-          <Link color={titleColor} ms="5px" href="/SignUp" fontWeight="bold">
-            Sign Up
-          </Link>
         </Text>
+        <RouteLink to="/SignUp">
+          <Text fontWeight="medium" ms="4px">
+            <Link>Sign Up</Link>
+          </Text>
+        </RouteLink>
       </Flex>
     </Flex>
   );
