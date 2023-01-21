@@ -31,7 +31,7 @@ exports.getDepartmentById = async(req, res) => {
     }
 }
 
-exports.getAllDepartment = async(req, res) => {
+exports.getAllDepartments = async(req, res) => {
     let departments
     try {
         if (req.user) {
@@ -58,9 +58,6 @@ exports.getAllDepartment = async(req, res) => {
                     ["iris_id", "iris_id"],
                 ],
             })
-        }
-        if (!departments) {
-            return res.status(404).json({ msg: "No department exists" })
         }
         return res.status(200).json(departments)
     } catch (error) {

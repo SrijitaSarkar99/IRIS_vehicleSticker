@@ -1,22 +1,18 @@
 const express = require("express")
 const {
-    setUserAuthentication,
     setServerAuthentication,
-    isAuthenticated,
     isServerAuthenticated,
-    isUserAuthenticated,
 } = require("../controllers/authentication")
 const {
     addNewDepartment,
-    getAllDepartment,
+    getAllDepartments,
     getDepartmentById,
-    getDepartmentUsers,
     updateDepartment,
 } = require("../controllers/department")
 const router = express.Router()
 
 // Get all departments
-router.get("/", getAllDepartment)
+router.get("/", getAllDepartments)
 
 // Get info about a perticular dept
 router.get(

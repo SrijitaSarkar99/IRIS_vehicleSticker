@@ -40,7 +40,6 @@ getSpecificSticker = async(req, res) => {
                 ],
             })
         }
-        if (!stickers) return res.status(404).json({ msg: "No stickers" })
         return res.status(200).json(stickers)
     } catch (error) {
         return res.status(500).json({ err: error })

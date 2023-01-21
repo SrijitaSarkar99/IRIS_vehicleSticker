@@ -4,7 +4,6 @@ const { User } = require("../models/dbInfo")
 
 exports.signUp = async(req, res) => {
     // TODO: Implement the function
-    console.log(req.files);
     for (file in req.files) {
         req.body[file] = req.files[file][0].filename
     }
@@ -32,7 +31,7 @@ exports.signUp = async(req, res) => {
             status: resp.status,
             type: resp.type,
             reason: resp.reason,
-            reason: resp.iris_id,
+            iris_id: resp.iris_id,
         })
     } catch (error) {
         res.status(500).json({ err: error })
@@ -139,7 +138,6 @@ exports.setUserAuthorization = (req, res, next) => {
 }
 
 exports.isUserAuthenticated = (req, res, next) => {
-    req.user = true
     if (!req.user) return res.status(401).json({ msg: "Not authenticated" })
     next()
 }
@@ -155,8 +153,6 @@ exports.isUserAuthorized = (req, res, next) => {
 }
 
 exports.isAuthenticated = (req, res, next) => {
-    console.log(req.user)
-    console.log(req.server)
     if (!req.user && !req.server)
         return res.status(401).json({ msg: "Not authenticated" })
     next()

@@ -12,11 +12,9 @@ const router = express.Router()
 const {
     addVehicle,
     getVehicleById,
-    getVehicleSticker,
     updateVehicle,
     getVehicle
 } = require("../controllers/vehicle")
-const { getUserVehicle } = require("../controllers/user.js")
 
 // Add new vehicle
 router.post(
