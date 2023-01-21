@@ -65,7 +65,7 @@ exports.updateUser = async(req, res) => {
         }
     } else {
         for (const prop in req.body) {
-            if (prop == "status" || prop == "reason") {
+            if (prop == "status" && prop == "reason") {
                 return res.status(401).json({ msg: "Not authorized" })
             }
             if (req.body[prop]) resObj[prop] = req.body[prop]
