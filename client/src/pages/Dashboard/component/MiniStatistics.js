@@ -18,10 +18,10 @@ import {
     // const textColor = useColorModeValue("gray.700", "white");
     const textColor = useColorModeValue("teal.300", "teal.300");
     return (
-      <Card minH='83px' >
+      <Card minH='83px' bg={useColorModeValue("gray.100","teal.100")}  border='1px' borderColor='teal.200' rounded='md' variant='filled'>
         <CardBody >
           <Flex flexDirection='row' align='center' justify='center' w='100%'  >
-            <Stat me='auto'>
+            <Stat me='auto' p={'5'}>
               <StatLabel
                 fontSize='sm'
                 color='gray.400'
@@ -33,16 +33,6 @@ import {
                 <StatNumber fontSize='lg' color={textColor}>
                   {amount}
                 </StatNumber>
-                {/* <StatHelpText
-                  alignSelf='flex-end'
-                  justifySelf='flex-end'
-                  m='0px'
-                  color={percentage > 0 ? "green.400" : "red.400"}
-                  fontWeight='bold'
-                  ps='3px'
-                  fontSize='md'>
-                  {percentage > 0 ? `+${percentage}%` : `${percentage}%`}
-                </StatHelpText> */}
               </Flex>
             </Stat>
             {/* <IconBox as='box' h={"45px"} w={"45px"} bg={iconTeal}>

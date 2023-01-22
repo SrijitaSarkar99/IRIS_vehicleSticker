@@ -20,29 +20,15 @@ exports.getDepartmentById = async (req, res) => {
 }
 
 exports.getAllDepartment = async (req, res) => {
-  let departments
   try {
-    if (req.user) {
-      departments = await Department.findAll({
-        order: [["createdAt", "DESC"]],
-        attributes: [
-          ["did", "id"],
-          ["dName", "d_name"],
-          ["HODorHOS", "hod_or_hos"],
-        ],
-      })
-    } else {
-      departments = await Department.findAll({
-        order: [["createdAt", "DESC"]],
-        attributes: [
-          ["did", "id"],
-          ["dName", "d_name"],
-          ["HODorHOS", "hod_or_hos"],
-        ],
-        offset: req.query.limit * (req.query.page - 1),
-        limit: parseInt(req.query.limit),
-      })
-    }
+    const departments = await Department.findAll({
+      order: [["createdAt", "DESC"]],
+      attributes: [
+        ["did", "id"],
+        ["dName", "d_name"],
+        ["HODorHOS", "hod_or_hos"],
+      ],
+    })
     if (!departments) {
       return res.status(404).json({ msg: "No department exists" })
     }

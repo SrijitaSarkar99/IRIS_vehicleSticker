@@ -31,7 +31,8 @@ import { Navigate, NavLink } from 'react-router-dom';
     return (
       <Box>
         <Flex
-          bg={useColorModeValue('white', 'gray.800')}
+          // bg={useColorModeValue('white', 'gray.800')}
+          bg={useColorModeValue('white', 'black.600')}
           color={useColorModeValue('gray.600', 'white')}
           minH={'60px'}
           py={{ base: 2 }}
