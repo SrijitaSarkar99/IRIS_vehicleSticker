@@ -80,10 +80,10 @@ function Stickers() {
         e.preventDefault();
       
       const data = {
-        VehicleId: {VehicleId},
-        date: "2022-12-25",
-        validity: "2023-12-25",
-        dName: "MACS"
+        "VehicleId": VehicleId,
+        "date": "2022-12-25",
+        "validity": "2023-12-25",
+        "dName": "MACS"
     }
     try {
       const response = await axios({
@@ -125,6 +125,26 @@ function Stickers() {
 
         fetchData();
           }, []);
+
+
+          useEffect(() => {
+            async function fetchData(){
+            try {
+              const response = await axios({
+                method: "get",
+                url: `http://localhost:5000/stickers?page=${1}&limit=${5}&user_id=${currentUser.userId}`,
+                headers: { Authorization: `Bearer ${currentUser.token}`},
+              }); 
+              console.log(response.data);
+              setUserStickers(response.data);
+            } 
+            catch(error) {
+              console.log(error);
+            }
+            }
+    
+            fetchData();
+              }, []);
   return (
     <>
     <AdminNav/>
@@ -324,11 +344,11 @@ function Stickers() {
       {
         userStickers.map((userStickers) => (
           <Tr key={userStickers.id} StickersId={userStickers.id}>
-            {/* <Td>{userStickers.Stickers_no}</Td>
-            <Td>{userStickers.Stickers_type}</Td>
-            <Td>{userStickers.model}</Td>
-            <Td>{userStickers.rch_name}</Td>
-            <Td>{userStickers.relation}</Td> */}
+            <Td>{userStickers.stickers_no}</Td>
+            <Td>{userStickers.stickers_type}</Td>
+            <Td>{userStickers.date}</Td>
+            <Td>{userStickers.validity}</Td>
+            <Td>{userStickers.status}</Td>
             {/* <Td><Button colorScheme='teal' onClick={() => {
               onImgOpen()
             }}>Show</Button></Td>
