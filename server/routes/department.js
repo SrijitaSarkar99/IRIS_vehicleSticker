@@ -1,4 +1,5 @@
 const express = require("express")
+const { body } = require("express-validator")
 const {
   setUserAuthentication,
   setServerAuthentication,
@@ -31,6 +32,8 @@ router.post(
   "/",
   setServerAuthentication,
   isServerAuthenticated,
+  body("dName").notEmpty().withMessage("Department Name can't be empty"),
+  body("HODorHOS").notEmpty().withMessage("Submit the name if HOD or HOS"),
   addNewDepartment
 )
 

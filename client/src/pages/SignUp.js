@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 
 import {
   Box,
@@ -6,21 +6,18 @@ import {
   Flex,
   FormControl,
   FormLabel,
-  HStack,
   // Icon,
   Input,
   Link,
   Select,
-  Switch,
   Text,
   useColorModeValue,
   useToast,
-} from "@chakra-ui/react"
-import { useNavigate } from "react-router-dom"
-import HomeNav from "../components/HomeNav"
-import axios from "axios"
-import AuthApi from "../api/auth"
-import { useAuth } from "../auth-context/auth.context"
+} from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import HomeNav from "../components/HomeNav";
+import axios from "axios";
+import { useAuth } from "../auth-context/auth.context";
 
 function SignUp() {
   const [formData, setFormData] = useState({});
@@ -33,35 +30,20 @@ function SignUp() {
   const textColor = useColorModeValue("gray.700", "white");
   const bgColor = useColorModeValue("white", "gray.700");
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: (e.target.name === "photo" || e.target.name === "idProof") ? e.target.files[0] : e.target.value
-    })
-    // console.log({formData});
-  }
+
+      [e.target.name]:
+        e.target.name === "photo" || e.target.name === "idProof"
+          ? e.target.files[0]
+          : e.target.value,
+    });
+    console.log({ formData });
+  };
+
 
   const handleSubmit = async (e) => {
-    //       if(!name || !email || !password || !confirmpassword || !aadhaar || !mobile || !type || !department || !addressline1 || !city ||!state ||!country ||!gender )
-    //       {
-    //         toast({
-    //           title: "Please Fill All Fields",
-    //           status:"warning",
-    //           duration:"5000",
-    //           isClosable: true,
-    //           position:"bottom"
-    //         })
-    //       }
-
-    if (e.target.password !== e.target.confirmpassword) {
-      toast({
-        title: "Passwords Do Not Match",
-        status: "warning",
-        duration: "5000",
-        isClosable: true,
-        position: "bottom"
-      })
-    }
     //       try {
     //         const config = {
     //           headers:{
@@ -112,13 +94,123 @@ function SignUp() {
     //     }
     //     return setError("There has been an error.");
     //   })
-
     e.preventDefault();
+
+    //check if all fields are filled
+    if (invalidInput(formData)) {
+      return toast({
+        title: "Error Occured",
+        description: "Please fill all the fields",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+
+    //check if password and confirm password match
+    if (formData.password !== formData.Confirmpassword) {
+      return toast({
+        title: "Error Occured",
+        description: "Passwords do not match",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+
+    //check if password is strong
+    if (!isPasswordStrong(formData.password)) {
+      return toast({
+        title: "Error Occured",
+        description: "Password is not strong enough",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+
+    //check if email is valid
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      return toast({
+        title: "Error!",
+        description: "Please enter a valid email.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+
+    //check if aadhar is valid
+    if (!/^\d{12}$/.test(formData.aadharNumber)) {
+      return toast({
+        title: "Error!",
+        description: "Please enter a valid Aadhar Number.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+
+    //check if mobile is valid
+    if (!/^\d{10}$/.test(formData.mobileNumber)) {
+      return toast({
+        title: "Error!",
+        description: "Please enter a valid Mobile Number.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+
+    //check if city is valid
+    if (!/^[a-zA-Z]+$/.test(formData.city)) {
+      return toast({
+        title: "Error!",
+        description: "Please enter a valid City.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+
+    //check if state is valid
+    if (!/^[a-zA-Z]+$/.test(formData.state)) {
+      return toast({
+        title: "Error!",
+        description: "Please enter a valid State.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+
+    //check if pincode is valid
+    if (!/^\d{6}$/.test(formData.pinCode)) {
+      return toast({
+        title: "Error!",
+        description: "Please enter a valid Pincode.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+
+    //check if country is valid
+    if (!/^[a-zA-Z]+$/.test(formData.country)) {
+      return toast({
+        title: "Error!",
+        description: "Please enter a valid Country.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+
     const data = new FormData();
     for (const property in formData) {
       data.append(property, formData[property]);
     }
-    console.log({ data });
+    console.log({ formData });
     try {
       const response = await axios({
         method: "post",
@@ -127,37 +219,45 @@ function SignUp() {
         headers: { "Content-Type": "multipart/form-data" },
       });
       toast({
-        title: 'Account created.',
-        description: "We've created your account for you. Redirecting to Login Page",
-        status: 'success',
+        title: "Account created.",
+        description:
+          "We've created your account for you. Redirecting to Login Page",
+        status: "success",
         duration: 9000,
         isClosable: true,
       });
-      navigate('/');
+      navigate("/");
     } catch (error) {
+      if(error.response.data.err.original.code === "ER_DUP_ENTRY"){
+        return toast({
+          title: "Error Occured",
+          description: "User already exists. Kindly Sign In.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+
       toast({
-        title: 'Error Occured',
+        title: "Error Occured",
         description: error.response.data.message,
-        status: 'error',
+        status: "error",
         duration: 5000,
         isClosable: true,
       });
-      console.log(error.response)
     }
-  }
+  };
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await axios({
           method: "get",
-          url: `http://localhost:5000/departments`
-
+          url: `http://localhost:5000/departments`,
         });
         console.log(response.data);
         setDepartments(response.data);
-      }
-      catch (error) {
+      } catch (error) {
         console.log(error);
       }
     }
@@ -299,18 +399,18 @@ function SignUp() {
               onChange={handleChange}
             />
 
-            <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
               Confirm Password
             </FormLabel>
             <Input
-              fontSize='sm'
-              ms='4px'
-              borderRadius='15px'
-              id='confirmpassword'
-              type='password'
-              placeholder='Confirm password'
-              mb='24px'
-              size='lg'
+              fontSize="sm"
+              ms="4px"
+              borderRadius="15px"
+              id="confirmpassword"
+              type="password"
+              placeholder="Confirm password"
+              mb="24px"
+              size="lg"
               name="Confirmpassword"
               // onChange={(e)=>setConfirmpassword(e.target.value)}
               onChange={handleChange}
@@ -376,14 +476,14 @@ function SignUp() {
               Department
             </FormLabel>
 
-
-            <Select fontSize='sm'
-              ms='4px'
-              borderRadius='15px'
-              id='department'
-              placeholder='Select your department'
-              mb='24px'
-              size='lg'
+            <Select
+              fontSize="sm"
+              ms="4px"
+              borderRadius="15px"
+              id="department"
+              placeholder="Select your department"
+              mb="24px"
+              size="lg"
               name="department"
               // onChange={(e)=>setDepartment(e.target.value)}>
               onChange={handleChange}
@@ -394,58 +494,55 @@ function SignUp() {
               ))}
               {/* <option value='MACS'>MACS</option>
              <option value='CSE'>CSE</option> */}
-
             </Select>
 
-            <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
               Address
             </FormLabel>
             <Input
-              fontSize='sm'
-              ms='4px'
-              borderRadius='15px'
-              type='text'
-              id='address'
-              placeholder='Address line 1'
-              mb='24px'
-              size='lg'
+              fontSize="sm"
+              ms="4px"
+              borderRadius="15px"
+              type="text"
+              id="address"
+              placeholder="Address line 1"
+              mb="24px"
+              size="lg"
               name="addressLine1"
               // onChange={(e)=>setAddressline1(e.target.value)}
               onChange={handleChange}
-            // TODO: to be set
+              // TODO: to be set
             />
 
             <Input
-              fontSize='sm'
-              ms='4px'
-              borderRadius='15px'
-              type='text'
-              placeholder='Address line 2'
-              mb='24px'
-              size='lg'
+              fontSize="sm"
+              ms="4px"
+              borderRadius="15px"
+              type="text"
+              placeholder="Address line 2"
+              mb="24px"
+              size="lg"
               name="addressLine2"
               // onChange={(e)=>setAddressline2(e.target.value)}
               onChange={handleChange}
             />
 
-            <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
               City
             </FormLabel>
             <Input
-              fontSize='sm'
-              ms='4px'
-              borderRadius='15px'
-              id='city'
-              type='text'
-              placeholder='City'
-              mb='24px'
-              size='lg'
+              fontSize="sm"
+              ms="4px"
+              borderRadius="15px"
+              id="city"
+              type="text"
+              placeholder="City"
+              mb="24px"
+              size="lg"
               name="city"
               // onChange={(e)=>setCity(e.target.value)}
               onChange={handleChange}
             />
-
-
 
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
               State
@@ -481,33 +578,34 @@ function SignUp() {
               onChange={handleChange}
             />
 
-            <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
               Pincode
             </FormLabel>
             <Input
-              fontSize='sm'
-              ms='4px'
-              borderRadius='15px'
-              id='pinCode'
-              type='number'
-              placeholder='PinCode'
-              mb='24px'
-              size='lg'
+              fontSize="sm"
+              ms="4px"
+              borderRadius="15px"
+              id="pinCode"
+              type="number"
+              placeholder="PinCode"
+              mb="24px"
+              size="lg"
               name="pinCode"
               // onChange={(e)=>setCountry(e.target.value)}
               onChange={handleChange}
             />
 
-            <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
               Gender
             </FormLabel>
-            <Select fontSize='sm'
-              ms='4px'
-              borderRadius='15px'
-              placeholder='Select your gender'
-              mb='24px'
-              id='gender'
-              size='lg'
+            <Select
+              fontSize="sm"
+              ms="4px"
+              borderRadius="15px"
+              placeholder="Select your gender"
+              mb="24px"
+              id="gender"
+              size="lg"
               name="gender"
               // onChange={(e)=>setGender(e.target.value)}
               onChange={handleChange}
@@ -554,19 +652,19 @@ function SignUp() {
             onChange={handleChange}
           /> */}
 
-            <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
               Upload your Id proof
             </FormLabel>
             <Input
-              fontSize='sm'
-              ms='4px'
-              id='idproof'
-              borderRadius='15px'
-              type='file'
-              accept='image/*'
+              fontSize="sm"
+              ms="4px"
+              id="idproof"
+              borderRadius="15px"
+              type="file"
+              accept="image/*"
               pt={2}
-              mb='24px'
-              size='lg'
+              mb="24px"
+              size="lg"
               name="idProof"
               // onChange={(e)=>postIdentity(e.target.files[0])}
               onChange={handleChange}
@@ -633,7 +731,31 @@ function SignUp() {
         {/* )} */}
       </Flex>
     </Flex>
-  )
+  );
 }
 
-export default SignUp
+export default SignUp;
+
+function invalidInput(formData) {
+  return (
+    !formData.name ||
+    !formData.email ||
+    !formData.password ||
+    !formData.Confirmpassword ||
+    !formData.aadharNumber ||
+    !formData.mobileNumber ||
+    !formData.department ||
+    !formData.addressLine1 ||
+    !formData.city ||
+    !formData.state ||
+    !formData.pinCode ||
+    !formData.country ||
+    !formData.photo ||
+    !formData.idProof
+  );
+}
+
+function isPasswordStrong(password) {
+  //check if password is strong
+  return /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/.test(password);
+}
