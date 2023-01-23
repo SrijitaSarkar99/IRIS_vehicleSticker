@@ -20,37 +20,6 @@ exports.getDepartmentById = async (req, res) => {
 }
 
 exports.getAllDepartment = async (req, res) => {
-  // let departments
-  // try {
-  //   if (req.user) {
-  //     departments = await Department.findAll({
-  //       order: [["createdAt", "DESC"]],
-  //       attributes: [
-  //         ["did", "id"],
-  //         ["dName", "d_name"],
-  //         ["HODorHOS", "hod_or_hos"],
-  //       ],
-  //     })
-  //   } else {
-  //     departments = await Department.findAll({
-  //       order: [["createdAt", "DESC"]],
-  //       attributes: [
-  //         ["did", "id"],
-  //         ["dName", "d_name"],
-  //         ["HODorHOS", "hod_or_hos"],
-  //       ],
-  //       offset: req.query.limit * (req.query.page - 1),
-  //       limit: parseInt(req.query.limit),
-  //     })
-  //   }
-  //   if (!departments) {
-  //     return res.status(404).json({ msg: "No department exists" })
-  //   }
-  //   return res.status(200).json(departments)
-  // } catch (error) {
-  //   return res.status(500).json({ err: error })
-  // }
-
   try {
     const departments = await Department.findAll({
       order: [["createdAt", "DESC"]],
@@ -59,11 +28,11 @@ exports.getAllDepartment = async (req, res) => {
         ["dName", "d_name"],
         ["HODorHOS", "hod_or_hos"],
       ],
-    })   
+    })
     if (!departments) {
-          return res.status(404).json({ msg: "No department exists" })
-        }
-        return res.status(200).json(departments)
+      return res.status(404).json({ msg: "No department exists" })
+    }
+    return res.status(200).json(departments)
   } catch (error) {
     return res.status(500).json({ err: error })
   }

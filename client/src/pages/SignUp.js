@@ -33,6 +33,7 @@ function SignUp() {
   const handleChange = (e) => {
     setFormData({
       ...formData,
+
       [e.target.name]:
         e.target.name === "photo" || e.target.name === "idProof"
           ? e.target.files[0]
@@ -40,6 +41,7 @@ function SignUp() {
     });
     console.log({ formData });
   };
+
 
   const handleSubmit = async (e) => {
     //       try {
@@ -246,7 +248,6 @@ function SignUp() {
     }
   };
 
-  // TODO: Implement backend route to send all departments without authorization
   useEffect(() => {
     async function fetchData() {
       try {
