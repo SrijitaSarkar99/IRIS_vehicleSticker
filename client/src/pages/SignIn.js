@@ -102,7 +102,7 @@ function SignIn() {
     user = JSON.stringify(user);
     setUser(user);
     localStorage.setItem("user", user);
-    return navigate("/dashboard");
+    return navigate("/Vehicles");
   };
 
   const titleColor = useColorModeValue("teal.300", "teal.200");

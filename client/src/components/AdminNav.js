@@ -112,7 +112,7 @@ return navigate("/Profile")
               as={'nav'}
               spacing={4}
               display={{ base: 'none', md: 'flex' }}>
-              <Link
+              {/* <Link
                 px={2}
                 py={1}
                 rounded={'md'}
@@ -124,7 +124,7 @@ return navigate("/Profile")
                 href={'/Dashboard'}
                 >
                 Dashboard
-              </Link>
+              </Link> */}
               {/* <Popover>
                 <PopoverTrigger>
                   <Button onClick={onToggle}>Click Me</Button>
