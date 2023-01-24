@@ -1,8 +1,16 @@
 const { Vehicle, Sticker } = require("../models/dbInfo")
 const path = require("path")
 const fs = require("fs")
+const { validationResult } = require("express-validator")
 
 exports.addVehicle = async (req, res) => {
+  const result = validationResult(req)
+  const hasErrors = !result.isEmpty()
+
+  if (hasErrors) {
+    return res.status(400).json(result)
+  }
+
   req.body.RCCopy = `http://localhost:5000/files/${req.file.filename}`
   try {
     const vehicle = await Vehicle.create({

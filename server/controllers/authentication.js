@@ -10,7 +10,7 @@ exports.signUp = async (req, res) => {
   const hasErrors = !result.isEmpty()
 
   if (hasErrors) {
-    return res.json(result)
+    return res.status(400).json(result)
   }
 
   for (file in req.files) {

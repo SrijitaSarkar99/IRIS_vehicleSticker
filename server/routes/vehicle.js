@@ -16,6 +16,7 @@ const {
   updateVehicle,
 } = require("../controllers/vehicle")
 const { getUserVehicle } = require("../controllers/user.js")
+const { body } = require("express-validator")
 
 // Add new vehicle
 router.post(
@@ -23,6 +24,13 @@ router.post(
   setUserAuthentication,
   isUserAuthenticated,
   upload.single("RCCopy"),
+  body("VehicleNo").notEmpty().withMessage("Vehicle Number can't be empty"),
+  body("VehicleType").notEmpty().withMessage("Vehicle Type can't be empty"),
+  body("model").notEmpty().withMessage("Model can't be empty"),
+  body("RCHName").notEmpty().withMessage("RC Holder name can't be empty"),
+  body("relation")
+    .notEmpty()
+    .withMessage("Relation with RC Holder should be specified"),
   addVehicle
 )
 

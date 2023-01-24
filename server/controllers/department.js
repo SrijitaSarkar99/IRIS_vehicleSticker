@@ -1,3 +1,4 @@
+const { validationResult } = require("express-validator")
 const { User, Department } = require("../models/dbInfo")
 
 exports.getDepartmentById = async (req, res) => {
@@ -39,6 +40,13 @@ exports.getAllDepartment = async (req, res) => {
 }
 
 exports.addNewDepartment = async (req, res) => {
+  const result = validationResult(req)
+  const hasErrors = !result.isEmpty()
+
+  if (hasErrors) {
+    return res.status(400).json(result)
+  }
+
   const department = Department.build(req.body)
   try {
     const resp = await department.save()
