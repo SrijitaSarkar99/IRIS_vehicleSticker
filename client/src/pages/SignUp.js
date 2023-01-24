@@ -14,7 +14,7 @@ import {
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { Link as RouteLink , useNavigate } from "react-router-dom";
 import HomeNav from "../components/HomeNav";
 import axios from "axios";
 import { useAuth } from "../auth-context/auth.context";
@@ -716,6 +716,7 @@ function SignUp() {
           >
             <Text color={textColor} fontWeight="medium">
               Already have an account?
+              <RouteLink to="/">
               <Link
                 color={titleColor}
                 ms="5px"
@@ -725,6 +726,7 @@ function SignUp() {
               >
                 Sign In
               </Link>
+              </RouteLink>
             </Text>
           </Flex>
         </Flex>
