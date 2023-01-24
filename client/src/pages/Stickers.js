@@ -51,6 +51,7 @@ function Stickers() {
     const [VehicleId, setVehicleId] = useState();
     const [userVehicles, setUserVehicles] = useState([]);
     const [userStickers, setUserStickers] = useState([]);
+    const [userStickersVehicle, setUserStickersVehicle] = useState([]);
     const [alertMessage, setAlertMessage] = useState("");
     let dateToday=new Date().getFullYear()+"-"+new Date().getMonth()+1+"-"+new Date().getDate();
     let dateExpire=new Date().getFullYear()+2+"-"+new Date().getMonth()+1+"-"+new Date().getDate();
@@ -83,7 +84,7 @@ function Stickers() {
         "VehicleId": VehicleId,
         "date": "2022-12-25",
         "validity": "2023-12-25",
-        "dName": "MACS"
+        "dName": "IT"
     }
     try {
       const response = await axios({
@@ -137,7 +138,9 @@ function Stickers() {
               }); 
               console.log(response.data);
               setUserStickers(response.data);
+              console.log(userStickers.vehicle_id);
             } 
+            
             catch(error) {
               console.log(error);
             }
@@ -187,7 +190,6 @@ function Stickers() {
               >
                 {userVehicles.map((userVehicle) => ( 
                 <option value={userVehicle.id}>{userVehicle.vehicle_no}</option>
-                
             )
             )}
             </Select>
@@ -332,7 +334,7 @@ function Stickers() {
     {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
     <Thead>
       <Tr>
-        <Th>Sticker Number</Th>
+        {/* <Th>Sticker Number</Th> */}
         <Th>Vehicle Number</Th>
         <Th>date</Th>
         <Th>validity</Th>
@@ -344,8 +346,8 @@ function Stickers() {
       {
         userStickers.map((userStickers) => (
           <Tr key={userStickers.id} StickersId={userStickers.id}>
-            <Td>{userStickers.stickers_no}</Td>
-            <Td>{userStickers.stickers_type}</Td>
+            {/* <Td>{userStickers.stickers_no}</Td> */}
+            <Td>{userStickers.vehicle_id}</Td>
             <Td>{userStickers.date}</Td>
             <Td>{userStickers.validity}</Td>
             <Td>{userStickers.status}</Td>

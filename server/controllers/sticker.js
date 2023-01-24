@@ -19,8 +19,6 @@ getSpecificSticker = async (req, res) => {
           ["dName", "d_name"],
           "reason",
         ],
-        offset: req.query.limit * (req.query.page - 1),
-        limit: parseInt(req.query.limit),
       })
       return res.status(200).json(stickers)
     } else {
@@ -42,24 +40,33 @@ getSpecificSticker = async (req, res) => {
           "reason",
         ],
         order: [["createdAt", "DESC"]],
-        offset: req.query.limit * (req.query.page - 1),
-        limit: parseInt(req.query.limit),
       })
     }
-    if (!stickers) return res.status(404).json({ msg: "No stickers" })
     return res.status(200).json(stickers)
   } catch (error) {
     return res.status(500).json({ err: error })
   }
 }
 
-exports.getSticker = async (req, res) => {
-  if (req.query.vehicle_id || req.query.user_id) {
-    return await getVehicleSticker(req, res)
-  }
-
-  return await getSpecificSticker(req, res)
-}
+// getAllStickers = async(req, res) => {
+//     try {
+//         let stickers
+//         stickers = await Sticker.findAll({
+//             attributes: [
+//                 ["sid", "id"],
+//                 ["userId", "user_id"],
+//                 ["VehicleId", "vehicle_id"],
+//                 "date",
+//                 "validity",
+//                 "status", ["dName", "d_name"],
+//                 "reason",
+//             ],
+//         })
+//         return res.status(200).json(stickers)
+//     } catch (error) {
+//         return res.status(500).json({ err: error })
+//     }
+// }
 
 exports.getStickerById = async (req, res) => {
   //  TODO: Restrict access for non authorized user
@@ -114,6 +121,7 @@ exports.updateSticker = async (req, res) => {
               ? "approved by CSO"
               : "denied by CSO",
           reason,
+          validity,
         },
         {
           where: { sid: req.params.stickerid },
@@ -142,4 +150,18 @@ exports.updateSticker = async (req, res) => {
       msg: "Invalid value passed in evaluatedBy field or status field",
     })
   }
+}
+
+exports.getSticker = async (req, res) => {
+  if (req.query.vehicle_id || req.query.user_id) {
+    return await getVehicleSticker(req, res)
+  }
+  //  else if (req.query.id) {
+  //     return await getSpecificSticker(req, res)
+  // }
+  // else {
+  //     return await getAllStickers(req, res)
+  // }
+
+  return await getSpecificSticker(req, res)
 }

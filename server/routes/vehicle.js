@@ -12,8 +12,8 @@ const router = express.Router()
 const {
   addVehicle,
   getVehicleById,
-  getVehicleSticker,
   updateVehicle,
+  getVehicle,
 } = require("../controllers/vehicle")
 const { getUserVehicle } = require("../controllers/user.js")
 const { body } = require("express-validator")
@@ -46,7 +46,7 @@ router.patch(
   "/:vehicleid",
   setUserAuthentication,
   isUserAuthenticated,
-  upload.single("RCCopy"),
+  upload.single("rc_copy"),
   updateVehicle
 )
 
@@ -57,7 +57,7 @@ router.get(
   setUserAuthorization,
   setServerAuthentication,
   isAuthorized,
-  getUserVehicle
+  getVehicle
 )
 
 module.exports = router

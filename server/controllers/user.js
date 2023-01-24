@@ -24,6 +24,7 @@ exports.getUserById = async (req, res) => {
         "status",
         "type",
         "reason",
+        "iris_id",
       ],
     })
     if (!user) {
@@ -51,10 +52,7 @@ exports.getUserVehicle = async (req, res) => {
         ["RCCopy", "rc_copy"],
         ["userId", "user_id"],
       ],
-      offset: req.query.limit * (req.query.page - 1),
-      limit: parseInt(req.query.limit),
     })
-    if (!vehicle.length) return res.status(404).json({ msg: "No vehicle" })
     return res.status(200).json(vehicle)
   } catch (error) {
     return res.status(500).json({ err: error })
@@ -65,23 +63,21 @@ exports.updateUser = async (req, res) => {
   let resObj = {}
   if (req.server) {
     for (const prop in req.body) {
-      if (prop != "status" || prop != "reason") {
+      if (prop != "status" && prop != "reason") {
         return res.status(401).json({ msg: "Not authorized" })
       }
       if (req.body[prop]) resObj[prop] = req.body[prop]
     }
   } else {
     for (const prop in req.body) {
-      if (prop == "status" || prop == "reason") {
+      if (prop == "status" && prop == "reason") {
         return res.status(401).json({ msg: "Not authorized" })
       }
       if (req.body[prop]) resObj[prop] = req.body[prop]
     }
 
     for (file in req.files) {
-      resObj[
-        file
-      ] = `http://localhost:5000/files/${req.files[file][0].filename}`
+      resObj[file] = req.files[file][0].filename
     }
   }
 
@@ -104,7 +100,6 @@ exports.updateUser = async (req, res) => {
           prop,
           pathArr[pathArr.length - 1]
         )
-        console.log(filePath)
         if (fs.existsSync(filePath)) {
           fs.unlinkSync(filePath)
         }
@@ -138,6 +133,7 @@ exports.updateUser = async (req, res) => {
         "status",
         "type",
         "reason",
+        "iris_id",
       ],
     })
     return res.status(200).json(user)

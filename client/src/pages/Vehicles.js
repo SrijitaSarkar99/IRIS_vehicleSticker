@@ -50,6 +50,7 @@ import axios from 'axios';
 function Vehicles() {
   const [formData, setFormData] = useState({});
   const [RCImage, setRCImage] = useState();
+  const [RCImageLoc, setRCImageLoc] = useState(undefined);
   const [relationship, setRelationship] = useState("default");
   const [userVehicles, setUserVehicles] = useState([]);
   const [alertMessage, setAlertMessage] = useState("");
@@ -113,7 +114,7 @@ function Vehicles() {
   const handleSubmit = async (e) => {
     // const isValid = validateInput();
     e.preventDefault();
-    console.log({ formData });
+    // console.log({ formData });
     const data = new FormData();
     for (const property in formData) {
       data.append(property, formData[property]);
@@ -144,14 +145,34 @@ function Vehicles() {
 
   };
 
+  const getFile = async (e) => {
+    setRCImageLoc(undefined)
+    try {
+      const response = await fetch(e, {
+        method: "GET",
+        headers: {  Authorization: `Bearer ${currentUser.token}`,
+        responseType: "blob"
+      },
+      })
+
+      const data = await response.blob();
+      setRCImage(data);
+      setRCImageLoc(URL.createObjectURL(data))
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await axios({
           method: "get",
-          url: `http://localhost:5000/vehicles?user_id=${currentUser.userId}&limit=${5}&page=${1}`
+          url: `http://localhost:5000/vehicles?user_id=${currentUser.userId}&limit=${5}&page=${1}`,
+          headers: {  Authorization: `Bearer ${currentUser.token}` },
         });
-        console.log(response.data);
+        // console.log(response.data);
         setUserVehicles(response.data);
       }
       catch (error) {
@@ -321,11 +342,8 @@ function Vehicles() {
           <ModalHeader>Image</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            {userVehicles.map((userVehicle) => (
-              <Image src={userVehicle.rc_copy} />
-            )
-            )}
-
+            {RCImageLoc && <Image src={RCImageLoc} />}
+            {console.log(RCImageLoc)}
             {/* <Image >{userVehicles.map((userVehicle) => ( 
               // userVehicle.rc_copy
               console.log(userVehicle.rc_copy)
@@ -461,8 +479,9 @@ function Vehicles() {
                       <Td>{userVehicle.rch_name}</Td>
                       <Td>{userVehicle.relation}</Td>
                       {/* {console.log(userVehicle.rc_copy)} */}
-                      <Td><Button colorScheme='teal' onClick={() => {
-                        onImgOpen()
+                      <Td><Button colorScheme='teal' onClick={async () => {
+                        await getFile(userVehicle.rc_copy);
+                        onImgOpen();
                       }}>Show</Button></Td>
                       {/* <Td><Button leftIcon={<DeleteIcon />} onClick={() => {
                         onVehicleDeleteOpen()

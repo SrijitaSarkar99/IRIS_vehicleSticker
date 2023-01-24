@@ -3,13 +3,28 @@ const { User, Department } = require("../models/dbInfo")
 
 exports.getDepartmentById = async (req, res) => {
   try {
-    const department = await Department.findByPk(req.params.departmentid, {
-      attributes: [
-        ["did", "id"],
-        ["dName", "d_name"],
-        ["HODorHOS", "hod_or_hos"],
-      ],
-    })
+    let department
+    if (req.user)
+      department = await Department.findByPk(req.params.departmentid, {
+        attributes: [
+          ["did", "id"],
+          ["dName", "d_name"],
+          ["HODorHOS", "hod_or_hos"],
+          ["iris_id", "iris_id"],
+        ],
+      })
+    else if (req.server)
+      department = await Department.findOne(
+        { where: { iris_id: req.params.department_iris_id } },
+        {
+          attributes: [
+            ["did", "id"],
+            ["dName", "d_name"],
+            ["HODorHOS", "hod_or_hos"],
+            ["iris_id", "iris_id"],
+          ],
+        }
+      )
     if (!department) {
       return res.status(404).json({ msg: "Department not found" })
     }
@@ -20,7 +35,7 @@ exports.getDepartmentById = async (req, res) => {
   }
 }
 
-exports.getAllDepartment = async (req, res) => {
+exports.getAllDepartments = async (req, res) => {
   try {
     const departments = await Department.findAll({
       order: [["createdAt", "DESC"]],
@@ -28,11 +43,9 @@ exports.getAllDepartment = async (req, res) => {
         ["did", "id"],
         ["dName", "d_name"],
         ["HODorHOS", "hod_or_hos"],
+        ["iris_id", "iris_id"],
       ],
     })
-    if (!departments) {
-      return res.status(404).json({ msg: "No department exists" })
-    }
     return res.status(200).json(departments)
   } catch (error) {
     return res.status(500).json({ err: error })
@@ -54,6 +67,7 @@ exports.addNewDepartment = async (req, res) => {
       id: resp.did,
       d_name: resp.dName,
       hod_or_hos: resp.HODorHOS,
+      iris_id: resp.iris_id,
     })
   } catch (error) {
     res.status(500).json({ err: error })
@@ -76,6 +90,7 @@ exports.updateDepartment = async (req, res) => {
         ["did", "id"],
         ["dName", "d_name"],
         ["HODorHOS", "hod_or_hos"],
+        ["iris_id", "iris_id"],
       ],
     })
     return res.status(200).json(updatedDept)
@@ -85,11 +100,16 @@ exports.updateDepartment = async (req, res) => {
 }
 
 exports.getDepartmentUsers = async (req, res) => {
-  console.log(req.query.limit)
   try {
-    const department = await Department.findByPk(req.query.department_id, {
-      attributes: ["dName"],
-    })
+    let department
+    if (req.user)
+      department = await Department.findByPk(req.query.department_id, {
+        attributes: ["dName"],
+      })
+    else if (req.server)
+      department = await Department.findOne({
+        where: { iris_id: req.query.department_iris_id },
+      })
     if (!department)
       return res.status(400).json({ msg: "Department Doesn't exists" })
     const users = await User.findAll({
@@ -113,10 +133,9 @@ exports.getDepartmentUsers = async (req, res) => {
         "status",
         "type",
         "reason",
+        "iris_id",
       ],
       order: [["createdAt", "DESC"]],
-      offset: req.query.limit * (req.query.page - 1),
-      limit: parseInt(req.query.limit),
     })
     if (!users) {
       return res.status(404).json({ msg: "No user exists" })
