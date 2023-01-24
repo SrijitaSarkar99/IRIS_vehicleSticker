@@ -73,6 +73,36 @@ exports.getVehicle = async (req, res) => {
   }
 }
 
+exports.getVehicleById = async (req, res) => {
+  try {
+    const vehicle = await Vehicle.findByPk(req.params.vehicleid, {
+      attributes: [
+        "id",
+        ["VehicleNo", "vehicle_no"],
+        ["VehicleType", "vehicle_type"],
+        "model",
+        ["RCHName", "rch_name"],
+        "relation",
+        ["RCCopy", "rc_copy"],
+        ["userId", "user_id"],
+      ],
+    })
+    if (!vehicle) {
+      return res.status(404).json({ msg: "Vehicle not found" })
+    }
+
+    // TODO: Some implementation is here
+    console.log(
+      `${vehicle.id} ${vehicle.model} ${vehicle.relation} ${vehicle.rch_name} ${vehicle.rc_copy}`
+    )
+    // if (req.user && req.user.userId !== vehicle.user_id)
+    //   return res.status(401).json({ msg: "Not authorized" })
+    res.status(200).json(vehicle)
+  } catch (error) {
+    res.status(500).json({ err: "error" })
+  }
+}
+
 exports.getVehicleSticker = async (req, res) => {
   console.log(req.query.user_id)
   console.log(req.query.vehicle_id)
