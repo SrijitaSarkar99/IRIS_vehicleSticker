@@ -1,8 +1,8 @@
 import { CheckIcon, CloseIcon, EditIcon } from '@chakra-ui/icons';
-import { Avatar, Box, ButtonGroup, Divider, Editable, EditableInput, EditablePreview, Flex, FormControl, FormLabel, Heading, HStack, IconButton, Image, Input, Text, useColorModeValue, useEditableControls, VStack } from '@chakra-ui/react'
+import { Avatar, Box, Button, ButtonGroup, Divider, Editable, EditableInput, EditablePreview, Flex, FormControl, FormLabel, Heading, HStack, IconButton, Image, Input, Text, useColorModeValue, useEditableControls, useToast, VStack } from '@chakra-ui/react'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Form } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
 import AdminNav from "../components/AdminNav"
 
   
@@ -31,7 +31,51 @@ function Profile() {
   const [userProfile,setuserProfile] = useState([]);
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const titleColor = useColorModeValue("teal.300", "teal.200");
-
+  const toast = useToast();
+  const navigate = useNavigate();
+  const [userMobile, setUserMobile] = useState([]);
+  const [userAddressLine1, setuserAddressLine1] = useState([]);
+  const [userAddressLine2, setuserAddressLine2] = useState([]);
+  const [userCity, setUserCity] = useState([]);
+  const [userState, setUserState] = useState([]);
+  const [userPincode, setUserPincode] = useState([]);
+  const [userCountry, setUserCountry] = useState([]);
+  const [userIdProof, setUserIdProof] = useState([]);
+  
+const handleSubmit = async (e)=>{
+  e.preventDefault();
+    const data = new FormData();
+    data.append('mobile_number', {userMobile})
+    // for (const property in formData) {
+      // data.append(property, formData[property]);
+    // }
+    try {
+      const response = await axios({
+        method: "patch",
+        url: `http://localhost:5000/users/${currentUser.userId}`,
+        data: data,
+        headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${currentUser.token}`},
+      });
+      toast({
+        title: 'Profile Updated.',
+        // description: "",
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
+      navigate('/Profile');
+    } catch (error) {
+      toast({
+        title: 'Error Occured',
+        description: error.response.data.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+      console.log(error.response)
+    }
+  }
+  
   useEffect(() => {
     async function fetchData(){
     try {
@@ -102,6 +146,8 @@ size={'sm'}
 color={titleColor}
 mt='1rem'
 >
+  
+
   Personal Details
 </Heading>
    <HStack>
@@ -120,10 +166,8 @@ mt='1rem'
     mb="24px"
     size="lg"
     name="name"
-    variant='filled'
-    placeholder={userProfile.name}
+    value={userProfile.name}
     disabledInputStyle={{opacity: 1}}
-    disabled
     />
     </HStack>
     </FormControl>
@@ -143,9 +187,7 @@ mt='1rem'
     mb="24px"
     size="lg"
     name="email"
-    variant='filled'
-    placeholder={userProfile.email}
-    disabled
+    value={userProfile.email}
     />
     </HStack>
     </FormControl>
@@ -167,9 +209,7 @@ mt='1rem'
     mb="24px"
     size="lg"
     name="aadhar"
-    variant='filled'
-    placeholder={userProfile.aadhar_number}
-    disabled
+    value={userProfile.aadhar_number}
     />
     </HStack>
     </FormControl>
@@ -189,7 +229,12 @@ mt='1rem'
     mb="24px"
     size="lg"
     name="mobile"
+    // value={userProfile.mobile_number}
     placeholder={userProfile.mobile_number}
+    value={userMobile}
+    onChange={(e) => {
+        setUserMobile(e.target.value);
+      }}
     />
     </HStack>
     </FormControl>
@@ -211,9 +256,7 @@ mt='1rem'
     mb="24px"
     size="lg"
     name="gender"
-    variant='filled'
-    placeholder={userProfile.gender}
-    disabled
+    value={userProfile.gender}
     />
     </HStack>
     </FormControl>
@@ -233,9 +276,7 @@ mt='1rem'
     mb="24px"
     size="lg"
     name="department"
-    variant='filled'
-    placeholder={userProfile.department}
-    disabled
+    value={userProfile.department}
     />
     </HStack>
     </FormControl>
@@ -257,9 +298,7 @@ mt='1rem'
     mb="24px"
     size="lg"
     name="type"
-    variant='filled'
-    placeholder={userProfile.type}
-    disabled
+    value={userProfile.type}
     />
     </HStack>
     </FormControl>
@@ -282,6 +321,10 @@ mt='1rem'
     size="lg"
     name="idproof"
     placeholder={userProfile.id_proof}
+    value={userIdProof}
+    onChange={(e) => {
+        setUserIdProof(e.target.files[0]);
+      }}
     />
     </HStack>
     </FormControl>
@@ -310,7 +353,11 @@ mt='1rem'
     mb="24px"
     size="lg"
     name="addressline1"
-    value={userProfile.address_line1}
+    placeholder={userProfile.address_line1}
+    value={userAddressLine1}
+    onChange={(e) => {
+        setuserAddressLine1(e.target.value);
+      }}
     />
     </HStack>
     </FormControl>
@@ -330,7 +377,11 @@ mt='1rem'
     mb="24px"
     size="lg"
     name="addressline2"
-    value={userProfile.address_line2}
+    placeholder={userProfile.address_line2}
+    value={userAddressLine2}
+    onChange={(e) => {
+        setuserAddressLine2(e.target.value);
+      }}
     />
     </HStack>
     </FormControl>
@@ -351,7 +402,11 @@ mt='1rem'
     mb="24px"
     size="lg"
     name="city"
-    value={userProfile.city}
+    placeholder={userProfile.city}
+    value={userCity}
+    onChange={(e) => {
+        setUserCity(e.target.value);
+      }}
     />
     </HStack>
     </FormControl>
@@ -371,7 +426,11 @@ mt='1rem'
     mb="24px"
     size="lg"
     name="state"
-    value={userProfile.state}
+    placeholder={userProfile.state}
+    value={userState}
+    onChange={(e) => {
+        setUserState(e.target.value);
+      }}
     />
     </HStack>
     </FormControl>
@@ -393,7 +452,11 @@ mt='1rem'
     mb="24px"
     size="lg"
     name="pincode"
-    value={userProfile.pin_code}
+    placeholder={userProfile.pin_code}
+    value={userPincode}
+    onChange={(e) => {
+        setUserPincode(e.target.value);
+      }}
     />
     </HStack>
     </FormControl>
@@ -413,13 +476,17 @@ mt='1rem'
     mb="24px"
     size="lg"
     name="country"
-    value={userProfile.country}
+    placeholder={userProfile.country}
+    value={userCountry}
+    onChange={(e) => {
+        setUserCountry(e.target.value);
+      }}
     />
     </HStack>
     </FormControl>
     </HStack>
 <Divider/>
-    
+    <Button onClick={handleSubmit}>Submit</Button>
 
     
    </Box>

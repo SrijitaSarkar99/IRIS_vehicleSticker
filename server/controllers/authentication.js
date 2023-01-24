@@ -1,12 +1,23 @@
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const { User } = require("../models/dbInfo")
+const { validationResult } = require("express-validator")
 
-exports.signUp = async(req, res) => {
-    // TODO: Implement the function
-    for (file in req.files) {
-        req.body[file] = req.files[file][0].filename
-    }
+exports.signUp = async (req, res) => {
+  // TODO: Implement the function
+
+  const result = validationResult(req)
+  const hasErrors = !result.isEmpty()
+
+  if (hasErrors) {
+    return res.json(result)
+  }
+
+  for (file in req.files) {
+    req.body[
+      file
+    ] = `http://localhost:5000/files/${req.files[file][0].filename}`
+  }
 
     const user = User.build(req.body)
     try {

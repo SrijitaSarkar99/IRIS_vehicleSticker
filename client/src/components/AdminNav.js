@@ -61,9 +61,9 @@ export default function Simple() {
     return navigate("/");
   }
 
-  // const handleProfile = () => {
-
-  // }
+  const handleProfile = () => {
+return navigate("/Profile")
+  }
 
   return (
     <>
@@ -112,7 +112,7 @@ export default function Simple() {
               as={'nav'}
               spacing={4}
               display={{ base: 'none', md: 'flex' }}>
-              <Link
+              {/* <Link
                 px={2}
                 py={1}
                 rounded={'md'}
@@ -124,7 +124,7 @@ export default function Simple() {
                 href={'/Dashboard'}
                 >
                 Dashboard
-              </Link>
+              </Link> */}
               {/* <Popover>
                 <PopoverTrigger>
                   <Button onClick={onToggle}>Click Me</Button>
@@ -207,11 +207,9 @@ export default function Simple() {
               <MenuList>
                 
                 <MenuItem  
-                // onClick={handleProfile}
+                onClick={handleProfile}
                 >
-                  <Link href='/Profile'>
                     Profile
-                </Link>
                 </MenuItem>
                 {/* <MenuItem>Link 2</MenuItem> */}
                 <MenuDivider />
