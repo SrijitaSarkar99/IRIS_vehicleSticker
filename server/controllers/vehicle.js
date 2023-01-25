@@ -3,13 +3,28 @@ const path = require("path")
 const fs = require("fs")
 const { validationResult } = require("express-validator")
 
+const deleteFile = (url) => {
+  const pathArr = url.split("/")
+  let filePath = path.join(
+    __dirname,
+    "../public/files",
+    prop,
+    pathArr[pathArr.length - 1]
+  )
+  console.log(filePath)
+  if (fs.existsSync(filePath)) fs.unlinkSync(filePath)
+}
+
 exports.addVehicle = async (req, res) => {
   const result = validationResult(req)
   const hasErrors = !result.isEmpty()
 
   if (hasErrors) {
+    if (req.file) deleteFile(req.file.filename)
     return res.status(400).json(result)
   }
+
+  if (!req.file) return res.status(400).json({ msg: "RCCopy is not submitted" })
 
   req.body.RCCopy = `http://localhost:5000/files/${req.file.filename}`
   try {
@@ -29,6 +44,7 @@ exports.addVehicle = async (req, res) => {
       user_id: vehicle.userId,
     })
   } catch (error) {
+    deleteFile(req.file.filename)
     res.status(500).json({ err: error })
   }
 }
@@ -153,15 +169,16 @@ exports.updateVehicle = async (req, res) => {
 
     for (const prop in vehicle.dataValues) {
       if (req.body.RCCopy) {
-        const pathArr = vehicle[prop].split("/")
-        let filePath = path.join(
-          __dirname,
-          "../public/files",
-          prop,
-          pathArr[pathArr.length - 1]
-        )
-        console.log(filePath)
-        if (fs.existsSync(filePath)) fs.unlinkSync(filePath)
+        deleteFile(vehicle[prop])
+        // const pathArr = vehicle[prop].split("/")
+        // let filePath = path.join(
+        //   __dirname,
+        //   "../public/files",
+        //   prop,
+        //   pathArr[pathArr.length - 1]
+        // )
+        // console.log(filePath)
+        // if (fs.existsSync(filePath)) fs.unlinkSync(filePath)
       }
     }
 
