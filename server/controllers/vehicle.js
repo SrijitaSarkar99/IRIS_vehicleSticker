@@ -3,7 +3,7 @@ const path = require("path")
 const fs = require("fs")
 const { validationResult } = require("express-validator")
 
-const deleteFile = (url) => {
+const deleteFile = (url, prop) => {
   const pathArr = url.split("/")
   let filePath = path.join(
     __dirname,
@@ -20,7 +20,7 @@ exports.addVehicle = async (req, res) => {
   const hasErrors = !result.isEmpty()
 
   if (hasErrors) {
-    if (req.file) deleteFile(req.file.filename)
+    if (req.file) deleteFile(req.file.filename, req.file.fieldname)
     return res.status(400).json(result)
   }
 
@@ -44,7 +44,7 @@ exports.addVehicle = async (req, res) => {
       user_id: vehicle.userId,
     })
   } catch (error) {
-    deleteFile(req.file.filename)
+    deleteFile(req.file.filename, req.file.fieldname)
     res.status(500).json({ err: error })
   }
 }
@@ -169,7 +169,7 @@ exports.updateVehicle = async (req, res) => {
 
     for (const prop in vehicle.dataValues) {
       if (req.body.RCCopy) {
-        deleteFile(vehicle[prop])
+        deleteFile(vehicle[prop], prop)
         // const pathArr = vehicle[prop].split("/")
         // let filePath = path.join(
         //   __dirname,
