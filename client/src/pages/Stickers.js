@@ -82,8 +82,8 @@ function Stickers() {
       
       const data = {
         "VehicleId": VehicleId,
-        "date": "2022-12-25",
-        "validity": "2023-12-25",
+        "date": dateToday,
+        "validity": dateExpire,
         "dName": "IT"
     }
     try {
@@ -382,3 +382,4 @@ function Stickers() {
 }
 
 export default Stickers
+

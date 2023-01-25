@@ -166,7 +166,7 @@ function SignIn() {
       mt={{ md: "150px", lg: "80px" }}
     >
       <Heading color={titleColor} fontSize="32px" mb="10px">
-        Welcome To Vehicle Sticker Registration Module
+        Vehicle Sticker Registration Module
       </Heading>
       <Text
         mb="36px"
