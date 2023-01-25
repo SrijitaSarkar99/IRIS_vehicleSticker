@@ -501,7 +501,10 @@ function Vehicles() {
               direction="column"
               marginTop={5}
             > */}
-{userVehicles==" " ? (<Text>No Vehicles Registered</Text>):(
+{userVehicles=='' ? (<Text>You do not have any vehicles registered <Link onClick={onOpen}>Add new vehicle here</Link></Text>
+
+
+):(
           <TableContainer>
             <Table variant='striped' colorScheme='blackAlpha'>
               {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
