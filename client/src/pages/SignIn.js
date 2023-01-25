@@ -134,7 +134,8 @@ function SignIn() {
         if (error.response) {
           toast({
             title: "Error!",
-            description: error.response.data.msg,
+            // description: error.response.data.msg,
+            description: "Invalid Credentials.",
             status: "error",
             duration: 3000,
             isClosable: true,
@@ -165,7 +166,7 @@ function SignIn() {
       mt={{ md: "150px", lg: "80px" }}
     >
       <Heading color={titleColor} fontSize="32px" mb="10px">
-        Welcome Back
+        Welcome To Vehicle Sticker Registration Module
       </Heading>
       <Text
         mb="36px"
@@ -174,7 +175,7 @@ function SignIn() {
         fontWeight="bold"
         fontSize="14px"
       >
-        add your credentials
+        Enter your credentials
       </Text>
       <FormControl>
         <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
