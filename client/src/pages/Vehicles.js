@@ -38,12 +38,13 @@ import {
   Tfoot,
   Th,
   Thead,
+  Tooltip,
   Tr,
   useColorModeValue,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { AddIcon, WarningIcon, EditIcon, DeleteIcon } from '@chakra-ui/icons'
+import { AddIcon, WarningIcon, EditIcon, DeleteIcon, InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons'
 import AdminNav from "../components/AdminNav";
 import axios from 'axios';
 
@@ -114,7 +115,44 @@ function Vehicles() {
   const handleSubmit = async (e) => {
     // const isValid = validateInput();
     e.preventDefault();
-    // console.log({ formData });
+ // https://stackoverflow.com/questions/6386300/want-a-regex-for-validating-indian-vehicle-number-format
+     const vehicleNumberPattern =
+   "^[A-Z]{2}[-][0-9]{1,2}[-](?:[A-Z])?(?:[A-Z]*)[-][0-9]{4}$";
+
+     //check if all fields are filled
+     if (invalidInput(formData)) {
+      return toast({
+        title: "Error Occured",
+        description: "Please fill all the fields",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+
+    //check if country is valid
+    if (!/^[a-zA-Z]+$/.test(formData.RCHName)) {
+      return toast({
+        title: "Error!",
+        description: "Please enter a valid Name.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+
+    if (!(formData.VehicleNo).match(vehicleNumberPattern))
+    {
+      return toast({
+        title: "Error!",
+        description: "Please enter a valid Vehicle Number.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+     
+
     const data = new FormData();
     for (const property in formData) {
       data.append(property, formData[property]);
@@ -141,6 +179,13 @@ function Vehicles() {
 
     } catch (error) {
       console.log(error)
+      toast({
+        title: "Error!",
+        description: "Vehicle already exists",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
 
   };
@@ -201,7 +246,8 @@ function Vehicles() {
           <ModalBody pb={6}>
             <FormControl>
               <Box marginTop={3}>
-                <FormLabel>Vehicle Number</FormLabel>
+                <FormLabel>Vehicle Number </FormLabel>
+                {/* <Tooltip label='Hover me'>{<InfoOutlineIcon/>}</Tooltip> */}
                 <Input
                   borderRadius='10px'
                   type="email"
@@ -212,6 +258,7 @@ function Vehicles() {
                   //   setVehicleNumber(e.target.value.toUpperCase());
                   // }}
                   onChange={handleChange}
+                  
                 />
               </Box>
               <Box marginTop={3}>
@@ -454,7 +501,7 @@ function Vehicles() {
               direction="column"
               marginTop={5}
             > */}
-
+{userVehicles==" " ? (<Text>No Vehicles Registered</Text>):(
           <TableContainer>
             <Table variant='striped' colorScheme='blackAlpha'>
               {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
@@ -502,6 +549,7 @@ function Vehicles() {
             </Table>
           </TableContainer>
 
+)}
           {/* </Flex> */}
           {/* </Box> */}
 
@@ -512,3 +560,15 @@ function Vehicles() {
 }
 
 export default Vehicles
+
+
+function invalidInput(formData) {
+  return (
+    !formData.VehicleNo ||
+    !formData.VehicleType ||
+    !formData.model ||
+    !formData.RCHName ||
+    !formData.relation ||
+    !formData.RCCopy
+  );
+}
