@@ -390,7 +390,7 @@ function Vehicles() {
           <ModalCloseButton />
           <ModalBody pb={6}>
             {RCImageLoc && <Image src={RCImageLoc} />}
-            {console.log(RCImageLoc)}
+            {/* {console.log(RCImageLoc)} */}
             {/* <Image >{userVehicles.map((userVehicle) => ( 
               // userVehicle.rc_copy
               console.log(userVehicle.rc_copy)
@@ -501,9 +501,8 @@ function Vehicles() {
               direction="column"
               marginTop={5}
             > */}
-{userVehicles=='' ? (<Text>You do not have any vehicles registered <Link onClick={onOpen}>Add new vehicle here</Link></Text>
-
-
+{userVehicles=='' ? 
+(<Text>You do not have any vehicles registered. Click <Link color={'blue'} onClick={onOpen}>here</Link> to add new vehicle.</Text>
 ):(
           <TableContainer>
             <Table variant='striped' colorScheme='blackAlpha'>

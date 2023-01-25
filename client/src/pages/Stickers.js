@@ -116,7 +116,7 @@ function Stickers() {
             method: "get",
             url: `http://localhost:5000/vehicles?user_id=${currentUser.userId}&limit=${5}&page=${1}`
           }); 
-          console.log(response.data);
+          // console.log(response.data);
           setUserVehicles(response.data);
         } 
         catch(error) {
@@ -136,9 +136,9 @@ function Stickers() {
                 url: `http://localhost:5000/stickers?page=${1}&limit=${5}&user_id=${currentUser.userId}`,
                 headers: { Authorization: `Bearer ${currentUser.token}`},
               }); 
-              console.log(response.data);
+              // console.log(response.data);
               setUserStickers(response.data);
-              console.log(userStickers.vehicle_id);
+              // console.log(userStickers.vehicle_id);
             } 
             
             catch(error) {
@@ -328,7 +328,9 @@ function Stickers() {
               direction="column"
               marginTop={5}
             > */}
-              
+{userStickers=='' ? 
+(<Text>You do not have any stickers. Click<Link color={'blue'} onClick={onOpen}>   here </Link>to apply for a new sticker.</Text>
+):(
               <TableContainer>
   <Table variant='striped' colorScheme='blackAlpha'>
     {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
@@ -371,7 +373,7 @@ function Stickers() {
     </Tfoot> */}
   </Table>
 </TableContainer>
-
+)}
               {/* </Flex> */}
           {/* </Box> */}
           

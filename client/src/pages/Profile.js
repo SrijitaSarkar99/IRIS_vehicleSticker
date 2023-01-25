@@ -51,8 +51,8 @@ function Profile() {
       //   // data.append(property, formData[property]);
       // // }
       try {
-        console.log(currentUser.userId);
-        console.log(currentUser.token);
+        // console.log(currentUser.userId);
+        // console.log(currentUser.token);
         const response = await axios({
           method: "patch",
           url: `http://localhost:5000/users/${currentUser.userId}`,

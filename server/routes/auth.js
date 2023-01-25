@@ -24,7 +24,7 @@ router.post(
     .notEmpty()
     .withMessage("Aadhar Number can't be empty")
     .isLength({ min: 12, max: 12 })
-    .withMessage("Aadhar Number must of 10 char"),
+    .withMessage("Aadhar Number must of 12 char"),
   body("mobileNumber")
     .notEmpty()
     .withMessage("Mobile Number can't be empty")
