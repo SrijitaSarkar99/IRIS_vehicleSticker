@@ -378,7 +378,7 @@ function SignUp() {
               onChange={handleChange}
             />
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-              Email
+              Email Address
             </FormLabel>
             <Input
               fontSize="sm"
@@ -402,7 +402,7 @@ function SignUp() {
               borderRadius="15px"
               id="password"
               type="password"
-              placeholder="Your password"
+              placeholder="Enter password"
               mb="24px"
               size="lg"
               name="password"
@@ -419,7 +419,7 @@ function SignUp() {
               borderRadius="15px"
               id="confirmpassword"
               type="password"
-              placeholder="Confirm password"
+              placeholder="Enter password again"
               mb="24px"
               size="lg"
               name="Confirmpassword"
@@ -428,7 +428,7 @@ function SignUp() {
             />
 
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-              aadhar Number
+              Aadhar Number
             </FormLabel>
             <Input
               fontSize="sm"
@@ -437,7 +437,7 @@ function SignUp() {
               borderRadius="15px"
               id="aadhar"
               type="number"
-              placeholder="12 digit aadhar number"
+              placeholder="12 digit Aadhar Number"
               mb="24px"
               size="lg"
               name="aadharNumber"
@@ -454,7 +454,7 @@ function SignUp() {
               ms="4px"
               borderRadius="15px"
               type="number"
-              placeholder="10 digit phone number"
+              placeholder="10 digit Phone Number"
               mb="24px"
               size="lg"
               name="mobileNumber"
@@ -516,7 +516,7 @@ function SignUp() {
               borderRadius="15px"
               type="text"
               id="address"
-              placeholder="Address line 1"
+              placeholder="Address Line 1"
               mb="24px"
               size="lg"
               name="addressLine1"
@@ -530,7 +530,7 @@ function SignUp() {
               ms="4px"
               borderRadius="15px"
               type="text"
-              placeholder="Address line 2"
+              placeholder="Address Line 2"
               mb="24px"
               size="lg"
               name="addressLine2"
@@ -598,7 +598,7 @@ function SignUp() {
               borderRadius="15px"
               id="pinCode"
               type="number"
-              placeholder="PinCode"
+              placeholder="Pincode"
               mb="24px"
               size="lg"
               name="pinCode"
