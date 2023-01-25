@@ -347,7 +347,9 @@ function Stickers() {
     <Tbody>
       {
         userStickers.map((userStickers) => (
-          <Tr key={userStickers.id} StickersId={userStickers.id}>
+          <Tr key={userStickers.id} 
+          // StickersId={userStickers.id}
+          >
             {/* <Td>{userStickers.stickers_no}</Td> */}
             <Td>{userStickers.vehicle_id}</Td>
             <Td>{userStickers.date}</Td>

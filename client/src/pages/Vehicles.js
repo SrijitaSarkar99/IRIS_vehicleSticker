@@ -521,7 +521,9 @@ function Vehicles() {
               <Tbody>
                 {
                   userVehicles.map((userVehicle) => (
-                    <Tr key={userVehicle.id} vehicleId={userVehicle.id}>
+                    <Tr key={userVehicle.id} 
+                    // vehicleId={userVehicle.id}
+                    >
                       <Td>{userVehicle.vehicle_no}</Td>
                       <Td>{userVehicle.vehicle_type}</Td>
                       <Td>{userVehicle.model}</Td>
