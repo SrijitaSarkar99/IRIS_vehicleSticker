@@ -60,6 +60,7 @@ function Profile() {
           isClosable: true,
         });
         setIsEditing(false)
+        // setuserProfile([...userProfile,response.data]);
         window.location.reload(true)
       } catch (error) {
         toast({
