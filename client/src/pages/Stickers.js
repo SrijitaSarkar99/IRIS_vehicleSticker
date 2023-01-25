@@ -328,7 +328,9 @@ function Stickers() {
               direction="column"
               marginTop={5}
             > */}
-              
+{userStickers=='' ? 
+(<Text>You do not have any stickers. Click<Link color={'blue'} onClick={onOpen}>   here </Link>to apply for a new sticker.</Text>
+):(
               <TableContainer>
   <Table variant='striped' colorScheme='blackAlpha'>
     {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
@@ -371,7 +373,7 @@ function Stickers() {
     </Tfoot> */}
   </Table>
 </TableContainer>
-
+)}
               {/* </Flex> */}
           {/* </Box> */}
           
