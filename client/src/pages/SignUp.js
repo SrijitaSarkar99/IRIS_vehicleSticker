@@ -118,6 +118,17 @@ function SignUp() {
       });
     }
 
+    //check if password length is greater than or equal to 8
+    if (formData.password.length < 8) {
+      return toast({
+        title: "Error Occured",
+        description: "Password must be atleast 8 characters long",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+
     //check if password is strong
     if (!isPasswordStrong(formData.password)) {
       return toast({
