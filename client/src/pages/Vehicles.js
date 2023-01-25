@@ -390,7 +390,7 @@ function Vehicles() {
           <ModalCloseButton />
           <ModalBody pb={6}>
             {RCImageLoc && <Image src={RCImageLoc} />}
-            {console.log(RCImageLoc)}
+            {/* {console.log(RCImageLoc)} */}
             {/* <Image >{userVehicles.map((userVehicle) => ( 
               // userVehicle.rc_copy
               console.log(userVehicle.rc_copy)

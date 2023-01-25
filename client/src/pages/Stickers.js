@@ -116,7 +116,7 @@ function Stickers() {
             method: "get",
             url: `http://localhost:5000/vehicles?user_id=${currentUser.userId}&limit=${5}&page=${1}`
           }); 
-          console.log(response.data);
+          // console.log(response.data);
           setUserVehicles(response.data);
         } 
         catch(error) {
@@ -136,9 +136,9 @@ function Stickers() {
                 url: `http://localhost:5000/stickers?page=${1}&limit=${5}&user_id=${currentUser.userId}`,
                 headers: { Authorization: `Bearer ${currentUser.token}`},
               }); 
-              console.log(response.data);
+              // console.log(response.data);
               setUserStickers(response.data);
-              console.log(userStickers.vehicle_id);
+              // console.log(userStickers.vehicle_id);
             } 
             
             catch(error) {
