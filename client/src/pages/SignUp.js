@@ -14,7 +14,7 @@ import {
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
-import { Link as RouteLink , useNavigate } from "react-router-dom";
+import { Link as RouteLink, useNavigate } from "react-router-dom";
 import HomeNav from "../components/HomeNav";
 import axios from "axios";
 import { useAuth } from "../auth-context/auth.context";
@@ -41,7 +41,6 @@ function SignUp() {
     });
     console.log({ formData });
   };
-
 
   const handleSubmit = async (e) => {
     //       try {
@@ -133,7 +132,7 @@ function SignUp() {
     if (!isPasswordStrong(formData.password)) {
       return toast({
         title: "Error Occured",
-        description: "Password is not strong enough",
+        description: "Password is not strong enough. It must contain atleast 1 uppercase, 1 lowercase, 1 number and 1 special character",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -239,7 +238,7 @@ function SignUp() {
       });
       navigate("/");
     } catch (error) {
-      if(error.response.data.err.original.code === "ER_DUP_ENTRY"){
+      if (error.response.data.err.original.code === "ER_DUP_ENTRY") {
         return toast({
           title: "Error Occured",
           description: "User already exists. Kindly Sign In.",
@@ -728,15 +727,15 @@ function SignUp() {
             <Text color={textColor} fontWeight="medium">
               Already have an account?
               <RouteLink to="/">
-              <Link
-                color={titleColor}
-                ms="5px"
-                // onClick={history('/')}
-                href="/"
-                fontWeight="bold"
-              >
-                Sign In
-              </Link>
+                <Link
+                  color={titleColor}
+                  ms="5px"
+                  // onClick={history('/')}
+                  href="/"
+                  fontWeight="bold"
+                >
+                  Sign In
+                </Link>
               </RouteLink>
             </Text>
           </Flex>

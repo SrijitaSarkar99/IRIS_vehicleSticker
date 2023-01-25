@@ -134,7 +134,8 @@ function SignIn() {
         if (error.response) {
           toast({
             title: "Error!",
-            description: error.response.data.msg,
+            // description: error.response.data.msg,
+            description: "Invalid Credentials.",
             status: "error",
             duration: 3000,
             isClosable: true,
