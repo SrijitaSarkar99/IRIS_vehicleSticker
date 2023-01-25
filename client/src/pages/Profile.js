@@ -158,7 +158,7 @@ function Profile() {
        >
         <HStack spacing='25rem'>
        <Avatar size='2xl' name={userProfile.name} src='https://bit.ly/sage-adebayo' />{' '}
-       
+       {console.log(userProfile.name)}
     <Text colorScheme={'red'}>
     {userProfile.status}
     {userProfile.status === "unverified"

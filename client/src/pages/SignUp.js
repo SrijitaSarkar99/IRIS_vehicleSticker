@@ -417,7 +417,7 @@ function SignUp() {
             />
 
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-              aadhar Number
+              Aadhar Number
             </FormLabel>
             <Input
               fontSize="sm"
