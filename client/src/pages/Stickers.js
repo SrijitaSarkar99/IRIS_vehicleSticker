@@ -329,7 +329,7 @@ function Stickers() {
               marginTop={5}
             > */}
 {userStickers=='' ? 
-(<Text>You do not have any stickers. Click<Link color={'blue'} onClick={onOpen}>   here </Link>to apply for a new sticker.</Text>
+(<Text>You do not have any stickers. Click <Link color={'blue'} onClick={onOpen}>here</Link> to apply for a new sticker.</Text>
 ):(
               <TableContainer>
   <Table variant='striped' colorScheme='blackAlpha'>
@@ -347,9 +347,7 @@ function Stickers() {
     <Tbody>
       {
         userStickers.map((userStickers) => (
-          <Tr key={userStickers.id} 
-          // StickersId={userStickers.id}
-          >
+          <Tr key={userStickers.id} StickersId={userStickers.id}>
             {/* <Td>{userStickers.stickers_no}</Td> */}
             <Td>{userStickers.vehicle_id}</Td>
             <Td>{userStickers.date}</Td>
