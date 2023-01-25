@@ -14,7 +14,7 @@ import {
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
-import { Link as RouteLink , useNavigate } from "react-router-dom";
+import { Link as RouteLink, useNavigate } from "react-router-dom";
 import HomeNav from "../components/HomeNav";
 import axios from "axios";
 import { useAuth } from "../auth-context/auth.context";
@@ -41,7 +41,6 @@ function SignUp() {
     });
     console.log({ formData });
   };
-
 
   const handleSubmit = async (e) => {
     //       try {
@@ -118,11 +117,22 @@ function SignUp() {
       });
     }
 
+    //check if password length is greater than or equal to 8
+    if (formData.password.length < 8) {
+      return toast({
+        title: "Error Occured",
+        description: "Password must be atleast 8 characters long",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+
     //check if password is strong
     if (!isPasswordStrong(formData.password)) {
       return toast({
         title: "Error Occured",
-        description: "Password is not strong enough",
+        description: "Password is not strong enough. It must contain atleast 1 uppercase, 1 lowercase, 1 number and 1 special character",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -228,7 +238,7 @@ function SignUp() {
       });
       navigate("/");
     } catch (error) {
-      if(error.response.data.err.original.code === "ER_DUP_ENTRY"){
+      if (error.response.data.err.original.code === "ER_DUP_ENTRY") {
         return toast({
           title: "Error Occured",
           description: "User already exists. Kindly Sign In.",
@@ -367,7 +377,7 @@ function SignUp() {
               onChange={handleChange}
             />
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-              Email
+              Email Address
             </FormLabel>
             <Input
               fontSize="sm"
@@ -391,7 +401,7 @@ function SignUp() {
               borderRadius="15px"
               id="password"
               type="password"
-              placeholder="Your password"
+              placeholder="Enter password"
               mb="24px"
               size="lg"
               name="password"
@@ -408,7 +418,7 @@ function SignUp() {
               borderRadius="15px"
               id="confirmpassword"
               type="password"
-              placeholder="Confirm password"
+              placeholder="Enter password again"
               mb="24px"
               size="lg"
               name="Confirmpassword"
@@ -426,7 +436,7 @@ function SignUp() {
               borderRadius="15px"
               id="aadhar"
               type="number"
-              placeholder="12 digit aadhar number"
+              placeholder="12 digit Aadhar Number"
               mb="24px"
               size="lg"
               name="aadharNumber"
@@ -443,7 +453,7 @@ function SignUp() {
               ms="4px"
               borderRadius="15px"
               type="number"
-              placeholder="10 digit phone number"
+              placeholder="10 digit Phone Number"
               mb="24px"
               size="lg"
               name="mobileNumber"
@@ -505,7 +515,7 @@ function SignUp() {
               borderRadius="15px"
               type="text"
               id="address"
-              placeholder="Address line 1"
+              placeholder="Address Line 1"
               mb="24px"
               size="lg"
               name="addressLine1"
@@ -519,7 +529,7 @@ function SignUp() {
               ms="4px"
               borderRadius="15px"
               type="text"
-              placeholder="Address line 2"
+              placeholder="Address Line 2"
               mb="24px"
               size="lg"
               name="addressLine2"
@@ -587,7 +597,7 @@ function SignUp() {
               borderRadius="15px"
               id="pinCode"
               type="number"
-              placeholder="PinCode"
+              placeholder="Pincode"
               mb="24px"
               size="lg"
               name="pinCode"
@@ -717,15 +727,15 @@ function SignUp() {
             <Text color={textColor} fontWeight="medium">
               Already have an account?
               <RouteLink to="/">
-              <Link
-                color={titleColor}
-                ms="5px"
-                // onClick={history('/')}
-                href="/"
-                fontWeight="bold"
-              >
-                Sign In
-              </Link>
+                <Link
+                  color={titleColor}
+                  ms="5px"
+                  // onClick={history('/')}
+                  href="/"
+                  fontWeight="bold"
+                >
+                  Sign In
+                </Link>
               </RouteLink>
             </Text>
           </Flex>
