@@ -5,7 +5,7 @@ const { validationResult } = require("express-validator")
 const path = require("path")
 const fs = require("fs")
 
-const deleteFile = (url) => {
+const deleteFile = (url, prop) => {
   const pathArr = url.split("/")
   let filePath = path.join(
     __dirname,
@@ -20,16 +20,20 @@ const deleteFile = (url) => {
 exports.signUp = async (req, res) => {
   // TODO: Implement the function
 
+  // return res.json(req.files)
+
   const result = validationResult(req)
   const hasErrors = !result.isEmpty()
 
   if (hasErrors) {
-    for (file in req.files) deleteFile(req.files[file][0].filename)
+    for (file in req.files)
+      deleteFile(req.files[file][0].filename, req.files[file][0].fieldname)
     return res.status(400).json(result)
   }
 
-  if (!req.files || req.files.size() < 2) {
-    for (file in req.files) deleteFile(req.files[file][0].filename)
+  if (!req.files || Object.keys(req.files).length < 2) {
+    for (file in req.files)
+      deleteFile(req.files[file][0].filename, req.files[file][0].fieldname)
     return res
       .status(400)
       .json({ msg: "One or more required file is not sent" })
@@ -67,7 +71,8 @@ exports.signUp = async (req, res) => {
       iris_id: resp.iris_id,
     })
   } catch (error) {
-    for (file in req.files) deleteFile(req.files[file][0].filename)
+    for (file in req.files)
+      deleteFile(req.files[file][0].filename, req.files[file][0].fieldname)
     res.status(500).json({ err: error })
   }
 }
