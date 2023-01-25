@@ -80,7 +80,7 @@ function SignIn() {
     if (formData.password.length < 8) {
       return toast({
         title: "Error!",
-        description: "Password must be at least 8 character long.",
+        description: "Invalid Credentials.",
         status: "error",
         duration: 3000,
         isClosable: true,
