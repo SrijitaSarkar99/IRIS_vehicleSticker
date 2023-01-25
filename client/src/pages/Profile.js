@@ -39,7 +39,14 @@ function Profile() {
     //     })
 
       const data = new FormData();
+      data.append('mobileNumber',userMobile)
+      data.append('addressLine1',userAddressLine1)
+      data.append('addressLine2',userAddressLine2)
+      data.append('city',userCity)
+      data.append('state',userState)
+      data.append('pinCode',userPincode)
       data.append('country', userCountry)
+      
       // // for (const property in formData) {
       //   // data.append(property, formData[property]);
       // // }
@@ -60,8 +67,15 @@ function Profile() {
           isClosable: true,
         });
         setIsEditing(false)
-        // setuserProfile([...userProfile,response.data]);
-        window.location.reload(true)
+        setuserProfile(response.data);
+      setUserMobile(response.data.mobile_number)
+      setuserAddressLine1(response.data.address_line1)
+      setuserAddressLine2(response.data.address_line2)
+      setUserCity(response.data.city)
+      setUserState(response.data.state)
+      setUserPincode(response.data.pin_code)
+      setUserCountry(response.data.country)
+        // window.location.reload(true)
       } catch (error) {
         toast({
           title: 'Error Occured',
@@ -527,8 +541,10 @@ function Profile() {
         </FormControl>
         </HStack>
     <Divider/>
+    <HStack mt={'1rem'} >
     <Button onClick={handleSubmit} type="submit">Save</Button>
-          <Button onClick={() => setIsEditing(false)}>Cancel</Button>
+    <Button onClick={() => setIsEditing(false)}>Cancel</Button>
+    </HStack>
     </Box>
     </Box>
     </Flex>
