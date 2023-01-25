@@ -32,15 +32,18 @@ import {
   AlertDialogCloseButton,
   AlertDialogBody,
   AlertDialogFooter,
-} from '@chakra-ui/react';
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import AuthApi from '../api/auth';
-import { useAuth } from '../auth-context/auth.context';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { Vehicles } from '../pages/Vehicles'
-import Profile  from '../pages/Profile'
-import React, { Component } from 'react';
+  Image,
+} from "@chakra-ui/react";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import AuthApi from "../api/auth";
+import { useAuth } from "../auth-context/auth.context";
+import { NavLink, useNavigate } from "react-router-dom";
+import { Vehicles } from "../pages/Vehicles";
+import Profile from "../pages/Profile";
+import React, { Component } from "react";
+
+import logo from "../asset/logo.png";
 
 export default function Simple() {
   const { user, setUser } = useAuth();
@@ -48,28 +51,32 @@ export default function Simple() {
   const { colorMode, toggleColorMode } = useColorMode();
   const currentUser = JSON.parse(localStorage.getItem("user"));
   // const { osOpen, onToggle } = useDisclosure()
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   /*For Logout Confirmation */
-  const { isOpen: isLogoutOpen, onOpen: onLogoutOpen, onClose: onLogoutClose} = useDisclosure()
-  const cancelRef = React.useRef()
+  const {
+    isOpen: isLogoutOpen,
+    onOpen: onLogoutOpen,
+    onClose: onLogoutClose,
+  } = useDisclosure();
+  const cancelRef = React.useRef();
   /***************************************/
   const handleLogout = () => {
-    AuthApi.Logout(user)
+    AuthApi.Logout(user);
     setUser(null);
     localStorage.removeItem("user");
     return navigate("/");
-  }
+  };
 
   const handleProfile = () => {
-return navigate("/Profile")
-  }
+    return navigate("/Profile");
+  };
 
   return (
     <>
-     {/* AlertDialog for Logout */}
-     <AlertDialog
-        motionPreset='slideInBottom'
+      {/* AlertDialog for Logout */}
+      <AlertDialog
+        motionPreset="slideInBottom"
         leastDestructiveRef={cancelRef}
         onClose={onLogoutClose}
         isOpen={isLogoutOpen}
@@ -80,38 +87,49 @@ return navigate("/Profile")
         <AlertDialogContent>
           <AlertDialogHeader>Logout ?</AlertDialogHeader>
           <AlertDialogCloseButton />
-          <AlertDialogBody>
-            Are you sure you want to Logout?
-          </AlertDialogBody>
+          <AlertDialogBody>Are you sure you want to Logout?</AlertDialogBody>
           <AlertDialogFooter>
             <Button ref={cancelRef} onClick={onLogoutClose}>
               No
             </Button>
-            <Button colorScheme='red' ml={3} onClick={handleLogout}>
+            <Button colorScheme="red" ml={3} onClick={handleLogout}>
               Yes
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
-     {/* ************************************* */}
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
-        
-        <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-          
+      {/* ************************************* */}
+      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+        <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
-            size={'md'}
+            size={"md"}
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-            aria-label={'Open Menu'}
-            display={{ md: 'none' }}
+            aria-label={"Open Menu"}
+            display={{ md: "none" }}
             onClick={isOpen ? onClose : onOpen}
           />
-          <HStack spacing={8} alignItems={'center'}>
-            <Box>Vehicle Sticker</Box>
+          <HStack spacing={8} alignItems={"center"}>
+            <Flex
+              flex={{ base: 1 }}
+              justify={{ base: "center", md: "start" }}
+              align={"center"}
+            >
+              <Image
+                src="https://cdn.iris.nitk.ac.in//svg/emblem-compressed.svg"
+                alt="logo of National Institute of Technology Karnataka"
+                height="3.5rem"
+                marginX="1rem"
+              />
+              <Text fontFamily={"heading"} fontSize={"2xl"}>
+                Vehicle Sticker
+              </Text>
+            </Flex>
             <HStack
-              as={'nav'}
+              as={"nav"}
               spacing={4}
-              display={{ base: 'none', md: 'flex' }}>
+              display={{ base: "none", md: "flex" }}
+            >
               {/* <Link
                 px={2}
                 py={1}
@@ -147,29 +165,29 @@ return navigate("/Profile")
               <Link
                 px={2}
                 py={1}
-                rounded={'md'}
+                rounded={"md"}
                 _hover={{
-                  textDecoration: 'none',
-                  bg: useColorModeValue('gray.200', 'gray.700'),
+                  textDecoration: "none",
+                  bg: useColorModeValue("gray.200", "gray.700"),
                 }}
                 // onClick={navigate('/newSticker')}
-                 href={'/Vehicles'}
+                href={"/Vehicles"}
                 // onClick={ <newSticker/> }
-                >
+              >
                 My Vehicles
               </Link>
               <Link
                 px={2}
                 py={1}
-                rounded={'md'}
+                rounded={"md"}
                 _hover={{
-                  textDecoration: 'none',
-                  bg: useColorModeValue('gray.200', 'gray.700'),
+                  textDecoration: "none",
+                  bg: useColorModeValue("gray.200", "gray.700"),
                 }}
                 // onClick={navigate('/newSticker')}
-                 href={'/stickers'}
+                href={"/stickers"}
                 // onClick={ <newSticker/> }
-                >
+              >
                 My Stickers
               </Link>
               {/* {Links.map((link) => (
@@ -177,52 +195,39 @@ return navigate("/Profile")
               ))} */}
             </HStack>
           </HStack>
-          
-          
-              
-          <Flex alignItems={'center'} spacing='20'>
+
+          <Flex alignItems={"center"} spacing="20">
             <HStack>
-          <Button onClick={toggleColorMode}>
-                {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+              <Button onClick={toggleColorMode}>
+                {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
               </Button>
-            <Menu>
-              <MenuButton
-                as={Button}
-                rounded={'full'}
-                variant={'unstyled'}
-                
-                cursor={'pointer'}
-                minW={0}>
-                  <HStack>
-                  <Avatar
-                  size={'sm'}
-                  src={
-                    'https://bit.ly/broken-link'
-                  }
-                />
-                  <Text alignContent='baseline'>{currentUser.name}</Text>
-                
-                </HStack>
-              </MenuButton>
-              <MenuList>
-                
-                <MenuItem  
-                onClick={handleProfile}
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rounded={"full"}
+                  variant={"unstyled"}
+                  cursor={"pointer"}
+                  minW={0}
                 >
-                    Profile
-                </MenuItem>
-                {/* <MenuItem>Link 2</MenuItem> */}
-                <MenuDivider />
-                <MenuItem  onClick={onLogoutOpen}>Log Out</MenuItem>
-              </MenuList>
-            </Menu>
+                  <HStack>
+                    <Avatar size={"sm"} src={"https://bit.ly/broken-link"} />
+                    <Text alignContent="baseline">{currentUser.name}</Text>
+                  </HStack>
+                </MenuButton>
+                <MenuList>
+                  <MenuItem onClick={handleProfile}>Profile</MenuItem>
+                  {/* <MenuItem>Link 2</MenuItem> */}
+                  <MenuDivider />
+                  <MenuItem onClick={onLogoutOpen}>Log Out</MenuItem>
+                </MenuList>
+              </Menu>
             </HStack>
           </Flex>
         </Flex>
 
         {isOpen ? (
-          <Box pb={4} display={{ md: 'none' }}>
-            <Stack as={'nav'} spacing={4}>
+          <Box pb={4} display={{ md: "none" }}>
+            <Stack as={"nav"} spacing={4}>
               {/* {Links.map((link) => (
                 <NavLink key={link}>{link}</NavLink>
               ))} */}
@@ -230,6 +235,6 @@ return navigate("/Profile")
           </Box>
         ) : null}
       </Box>
-      </>
+    </>
   );
 }

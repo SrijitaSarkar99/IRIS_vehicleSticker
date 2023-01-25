@@ -77,10 +77,10 @@ function SignIn() {
     }
 
     //check if password is at least 6 characters
-    if (formData.password.length < 6) {
+    if (formData.password.length < 8) {
       return toast({
         title: "Error!",
-        description: "Password must be at least 6 characters.",
+        description: "Invalid Credentials.",
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -134,7 +134,8 @@ function SignIn() {
         if (error.response) {
           toast({
             title: "Error!",
-            description: error.response.data.msg,
+            // description: error.response.data.msg,
+            description: "Invalid Credentials.",
             status: "error",
             duration: 3000,
             isClosable: true,
