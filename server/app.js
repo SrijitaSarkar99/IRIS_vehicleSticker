@@ -29,6 +29,7 @@ async function projSetUp() {
   const sticker = require("./routes/sticker")
   const department = require("./routes/department")
   const file = require("./routes/file")
+  const resetPassword = require("./routes/resetPassword")
   // Routes setup
   app.use("/", auth)
   app.use("/users", user)
@@ -36,6 +37,7 @@ async function projSetUp() {
   app.use("/stickers", sticker)
   app.use("/departments", department)
   app.use("/files", file)
+  app.use("/resetPassword", resetPassword)
 }
 
 projSetUp()

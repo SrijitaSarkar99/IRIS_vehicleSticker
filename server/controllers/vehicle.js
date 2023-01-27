@@ -170,15 +170,6 @@ exports.updateVehicle = async (req, res) => {
     for (const prop in vehicle.dataValues) {
       if (req.body.RCCopy) {
         deleteFile(vehicle[prop], prop)
-        // const pathArr = vehicle[prop].split("/")
-        // let filePath = path.join(
-        //   __dirname,
-        //   "../public/files",
-        //   prop,
-        //   pathArr[pathArr.length - 1]
-        // )
-        // console.log(filePath)
-        // if (fs.existsSync(filePath)) fs.unlinkSync(filePath)
       }
     }
 

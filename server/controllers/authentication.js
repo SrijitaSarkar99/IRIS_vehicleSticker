@@ -48,6 +48,7 @@ exports.signUp = async (req, res) => {
   const user = User.build(req.body)
   try {
     user.password = await bcrypt.hash(user.password, 10)
+    user.email = user.email.toLowerCase()
     const resp = await user.save()
     res.status(201).json({
       id: resp.userId,
@@ -79,7 +80,7 @@ exports.signUp = async (req, res) => {
 
 exports.logIn = async (req, res) => {
   const { email, password } = req.body
-  console.log(email)
+  email = email.toLowerCase()
   let user
   try {
     user = await User.findOne({
