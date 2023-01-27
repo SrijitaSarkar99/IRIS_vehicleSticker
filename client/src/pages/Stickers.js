@@ -80,6 +80,7 @@ function Stickers() {
         // const isValid = validateInput();
         e.preventDefault();
       
+        
       const data = {
         "VehicleId": VehicleId,
         "date": dateToday,
@@ -93,7 +94,7 @@ function Stickers() {
         data: data,
         headers: { "Content-Type": "application/JSON",Authorization: `Bearer ${currentUser.token}` },
       });
-
+      setUserStickers([...userStickers,response.data]);
       toast({
         title: 'Applied for a new Sticker.',
         description: "You have successfully applied for a new sticker. Keep checking the status.",
@@ -165,18 +166,6 @@ function Stickers() {
           <ModalCloseButton />
           <ModalBody pb={6}>
           <FormControl>
-                {/* <Box marginTop={3}>
-                  <FormLabel>Vehicle Type</FormLabel>
-                  <Select
-                  borderRadius='10px'
-                  placeholder='Select Vehicle Type'
-                    name='VehicleType'
-                    onChange={handleChange}
-                  >
-                    <option value="Two Wheeler" >Two Wheeler</option>
-                    <option value="Four Wheeler">Four Wheeler</option>
-                  </Select>
-                </Box> */}
                 <Box marginTop={3}>
                   <FormLabel>Select Vehicle</FormLabel>
                   
@@ -320,7 +309,24 @@ function Stickers() {
         mt='10px'
         mb='26px'
         marginTop={3}>Registered Stickers  </Heading>
-        <Button onClick={onOpen} colorScheme='teal' leftIcon={<AddIcon/>}>New Sticker</Button>
+        <Button 
+        onClick={()=>
+          {
+          userVehicles==''
+          ?(
+            toast({
+              title:"Please add a vehicle first.",
+              status:'warning',
+              duration:3000,
+              variant:'solid',
+              isClosable:true
+            })
+          ):(
+          onOpen()
+          )
+          }
+          }
+        colorScheme='teal' leftIcon={<AddIcon/>}>New Sticker</Button>
         </Flex>
             {/* <Flex
               width="100%"
@@ -329,7 +335,23 @@ function Stickers() {
               marginTop={5}
             > */}
 {userStickers=='' ? 
-(<Text>You do not have any stickers. Click<Link color={'blue'} onClick={onOpen}>   here </Link>to apply for a new sticker.</Text>
+(<Text>You do not have any stickers. Click <Link color={'blue'} onClick={()=>
+{
+userVehicles==''
+?(
+  toast({
+    title:"Please add a vehicle first.",
+    status:'warning',
+    duration:3000,
+    variant:'solid',
+    isClosable:true
+  })
+):(
+onOpen()
+)
+}
+}
+>here</Link> to apply for a new sticker.</Text>
 ):(
               <TableContainer>
   <Table variant='striped' colorScheme='blackAlpha'>

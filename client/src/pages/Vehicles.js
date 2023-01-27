@@ -141,6 +141,16 @@ function Vehicles() {
       });
     }
 
+    if(!(formData.RCCopy)==undefined) {
+      return toast({
+        title: "Error!",
+        description: "Please upload Registration Certificate.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+
     if (!(formData.VehicleNo).match(vehicleNumberPattern))
     {
       return toast({
@@ -350,7 +360,7 @@ function Vehicles() {
                 </Box>
               )}
               <Box marginTop={3}>
-                <FormLabel>Upload Copy of Registration Certificate</FormLabel>
+                <FormLabel>Upload Registration Certificate</FormLabel>
                 <Input borderRadius='10px' pt={1} type="file"
                   name='RCCopy'
                   // onChange={handleRCUpload} 
@@ -521,7 +531,9 @@ function Vehicles() {
               <Tbody>
                 {
                   userVehicles.map((userVehicle) => (
-                    <Tr key={userVehicle.id} vehicleId={userVehicle.id}>
+                    <Tr key={userVehicle.id} 
+                    // vehicleId={userVehicle.id}
+                    >
                       <Td>{userVehicle.vehicle_no}</Td>
                       <Td>{userVehicle.vehicle_type}</Td>
                       <Td>{userVehicle.model}</Td>

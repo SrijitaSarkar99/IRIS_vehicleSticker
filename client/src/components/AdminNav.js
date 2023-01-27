@@ -34,14 +34,15 @@ import {
   AlertDialogFooter,
   Image,
 } from "@chakra-ui/react";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { MoonIcon, SunIcon, TriangleDownIcon } from "@chakra-ui/icons";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import AuthApi from "../api/auth";
 import { useAuth } from "../auth-context/auth.context";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Vehicles } from "../pages/Vehicles";
 import Profile from "../pages/Profile";
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
+import axios from "axios";
 
 import logo from "../asset/logo.png";
 
@@ -50,8 +51,30 @@ export default function Simple() {
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const currentUser = JSON.parse(localStorage.getItem("user"));
+  const [ProfileImage, setProfileImage] = useState();
+  const [ProfileImageLoc, setProfileImageLoc] = useState(undefined); 
   // const { osOpen, onToggle } = useDisclosure()
   const navigate = useNavigate();
+
+  const getFile = async (e) => {
+    setProfileImageLoc(undefined)
+    try {
+      const response = await fetch(e, {
+        method: "GET",
+        headers: {  Authorization: `Bearer ${currentUser.token}`,
+        responseType: "blob"
+      },
+      })
+
+      const data = await response.blob();
+    setProfileImage(data);
+    setProfileImageLoc(URL.createObjectURL(data))
+    }
+
+  catch (error) {
+    console.log(error);
+  } 
+}
 
   /*For Logout Confirmation */
   const {
@@ -71,6 +94,23 @@ export default function Simple() {
   const handleProfile = () => {
     return navigate("/Profile");
   };
+
+  useEffect(() => {
+    async function fetchData(){
+    try {
+      const response = await axios({
+        method: "get",
+        url: `http://localhost:5000/users/${currentUser.userId}`,
+        headers:{Authorization: `Bearer ${currentUser.token}`}
+      }); 
+      await getFile(response.data.photo);
+    } 
+    catch(error) {
+      console.log(error);
+    }
+    }
+    fetchData();
+      }, []);
 
   return (
     <>
@@ -210,13 +250,15 @@ export default function Simple() {
                   minW={0}
                 >
                   <HStack>
-                    <Avatar size={"sm"} src={"https://bit.ly/broken-link"} />
+                    <Avatar size={"sm"} name={currentUser.name} src={ProfileImageLoc} />
                     <Text alignContent="baseline">{currentUser.name}</Text>
+                    <TriangleDownIcon w={3} h={3}/>
                   </HStack>
                 </MenuButton>
                 <MenuList>
                   <MenuItem onClick={handleProfile}>Profile</MenuItem>
-                  {/* <MenuItem>Link 2</MenuItem> */}
+                  {/* <MenuItem>Change Password</MenuItem> */}
+
                   <MenuDivider />
                   <MenuItem onClick={onLogoutOpen}>Log Out</MenuItem>
                 </MenuList>
