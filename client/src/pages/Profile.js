@@ -643,7 +643,7 @@ setIdImageLoc(undefined)
    >
     <HStack spacing='25rem'>
    {ProfileImageLoc && 
-       <Avatar size='2xl'  name={userProfile.name} src={ProfileImageLoc} onClick={onProfileImgOpen} />
+        <Avatar size='2xl' name={userProfile.name} src={ProfileImageLoc} onClick={onProfileImgOpen} />
     }
 
 {userProfile.status === "unverified"

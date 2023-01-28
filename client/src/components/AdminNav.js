@@ -250,7 +250,7 @@ export default function Simple() {
                   minW={0}
                 >
                   <HStack>
-                    <Avatar size={"sm"} name={currentUser.name} src={ProfileImageLoc} />
+                    <Avatar size={"sm"} name={currentUser.name} src={ProfileImageLoc} borderColor='blackAlpha.400' />
                     <Text alignContent="baseline">{currentUser.name}</Text>
                     <TriangleDownIcon w={3} h={3}/>
                   </HStack>

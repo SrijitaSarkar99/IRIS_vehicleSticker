@@ -51,6 +51,7 @@ function Stickers() {
     const [VehicleId, setVehicleId] = useState();
     const [userVehicles, setUserVehicles] = useState([]);
     const [userStickers, setUserStickers] = useState([]);
+    const [department, setDepartment] = useState();
     const [userStickersVehicle, setUserStickersVehicle] = useState([]);
     const [alertMessage, setAlertMessage] = useState("");
     let dateToday=new Date().getFullYear()+"-"+new Date().getMonth()+1+"-"+new Date().getDate();
@@ -85,7 +86,7 @@ function Stickers() {
         "VehicleId": VehicleId,
         "date": dateToday,
         "validity": dateExpire,
-        "dName": "IT"
+        "dName": department
     }
     try {
       const response = await axios({
@@ -117,7 +118,6 @@ function Stickers() {
             method: "get",
             url: `http://localhost:5000/vehicles?user_id=${currentUser.userId}&limit=${5}&page=${1}`
           }); 
-          // console.log(response.data);
           setUserVehicles(response.data);
         } 
         catch(error) {
@@ -137,9 +137,8 @@ function Stickers() {
                 url: `http://localhost:5000/stickers?page=${1}&limit=${5}&user_id=${currentUser.userId}`,
                 headers: { Authorization: `Bearer ${currentUser.token}`},
               }); 
-              // console.log(response.data);
+              console.log(response.data);
               setUserStickers(response.data);
-              // console.log(userStickers.vehicle_id);
             } 
             
             catch(error) {
@@ -149,6 +148,25 @@ function Stickers() {
     
             fetchData();
               }, []);
+
+              useEffect(() => {
+                async function fetchData(){
+                try {
+                  const response = await axios({
+                    method: "get",
+                    url: `http://localhost:5000/users/${currentUser.userId}`,
+                    headers: { Authorization: `Bearer ${currentUser.token}`},
+                  }); 
+                  setDepartment(response.data.department);
+                } 
+                
+                catch(error) {
+                  console.log(error);
+                }
+                }
+        
+                fetchData();
+                  }, []);
   return (
     <>
     <AdminNav/>
@@ -210,7 +228,6 @@ function Stickers() {
           
             {/* <Image >{userVehicles.map((userVehicle) => ( 
               // userVehicle.rc_copy
-              console.log(userVehicle.rc_copy)
             )
             )}</Image> */}
           </ModalBody>
