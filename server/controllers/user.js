@@ -111,7 +111,7 @@ exports.updateUser = async (req, res) => {
       where: { userId: req.params.id },
     })
     if (resp[0] == 0)
-      return res.status(404).json({ msg: "User not updated. Try again" })
+      return res.status(500).json({ msg: "User not updated. Try again" })
     // return res.status(200).json({ msg: "User Updated" })
     user = await User.findByPk(req.params.id, {
       attributes: [

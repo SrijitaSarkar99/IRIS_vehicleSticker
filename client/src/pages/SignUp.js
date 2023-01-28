@@ -183,8 +183,8 @@ function SignUp() {
       });
     }
 
-    //check if state is valid
-    if (!/^[a-zA-Z]+$/.test(formData.state)) {
+    //check if state has no numbers it can have spaces
+    if (!/^[a-zA-Z ]+$/.test(formData.state)) {
       return toast({
         title: "Error!",
         description: "Please enter a valid State.",
