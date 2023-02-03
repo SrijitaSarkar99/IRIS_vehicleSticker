@@ -15,15 +15,15 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" exact element={<HomePage />} />
-        {/* <Route path="/SignIn" element={<SignIn />} /> */}
-        <Route path="/forgot-password" exact element={<ForgotPassword />} />
-        <Route path="/SignUp" exact element={<SignUp />} />
+        <Route path="auth/signin" element={<SignIn />} />
+        <Route path="auth/forgot-password" exact element={<ForgotPassword />} />
+        <Route path="auth/signup" exact element={<SignUp />} />
         {/* <Route path="/Test" exact element={<Test />} /> */}
         <Route element={<PrivateRoutes />}>
-          <Route path="/Dashboard" exact element={<Dashboard />} />
+          <Route path="/dashboard" exact element={<Dashboard />} />
           <Route path="/vehicles" exact element={<Vehicles />} />
           <Route path="/stickers" exact element={<Stickers />} />
-          <Route path="/Profile" exact element={<Profile />} />
+          <Route path="/profile" exact element={<Profile />} />
           
         </Route>
         //TODO: Handle not found routes

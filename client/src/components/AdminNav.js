@@ -155,14 +155,16 @@ export default function Simple() {
               justify={{ base: "center", md: "start" }}
               align={"center"}
             >
+              
               <Image
                 src="https://cdn.iris.nitk.ac.in//svg/emblem-compressed.svg"
                 alt="logo of National Institute of Technology Karnataka"
-                height="3.5rem"
+                height="3rem"
                 marginX="1rem"
+                
               />
-              <Text fontFamily={"heading"} fontSize={"2xl"}>
-                Vehicle Sticker
+              <Text fontFamily={"heading"} fontSize={"xl"} fontWeight='bold'>
+                NITK Surathkal
               </Text>
             </Flex>
             <HStack
@@ -211,7 +213,7 @@ export default function Simple() {
                   bg: useColorModeValue("gray.200", "gray.700"),
                 }}
                 // onClick={navigate('/newSticker')}
-                href={"/Vehicles"}
+                href={"/vehicles"}
                 // onClick={ <newSticker/> }
               >
                 My Vehicles
@@ -238,7 +240,7 @@ export default function Simple() {
 
           <Flex alignItems={"center"} spacing="20">
             <HStack>
-              <Button onClick={toggleColorMode}>
+              <Button onClick={toggleColorMode} variant='unstyled'>
                 {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
               </Button>
               <Menu>

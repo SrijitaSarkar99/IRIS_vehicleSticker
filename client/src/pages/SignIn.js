@@ -161,7 +161,7 @@ function SignIn() {
     user = JSON.stringify(user);
     setUser(user);
     localStorage.setItem("user", user);
-    return navigate("/Vehicles");
+    return navigate("/vehicles");
   };
 
   
@@ -270,7 +270,7 @@ function SignIn() {
                 </Text>
               </NavLink> */}
 <Flex justifyContent={'flex-end'}>
-              <Link color="blue.500" fontSize="sm" href="/forgot-password">
+              <Link color="blue.500" fontSize="sm" href="auth/forgot-password">
               Forgot Password?
             </Link>
             </Flex>
@@ -318,7 +318,7 @@ function SignIn() {
         <Text color={titleColor} fontWeight="medium">
           Don't have an account?
         </Text>
-        <RouteLink to="/SignUp">
+        <RouteLink to="/auth/signup">
           <Text fontWeight="medium" ms="4px" color={textColor}>
             <Link>Sign Up</Link>
           </Text>

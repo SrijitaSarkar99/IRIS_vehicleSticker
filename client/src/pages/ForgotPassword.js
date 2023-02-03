@@ -361,7 +361,7 @@ align="center" justify='center' minW='100vh' maxW="1000vh"
         <Text color={titleColor} fontWeight="medium">
           Already have an account?
         </Text>
-        <RouteLink to="/">
+        <RouteLink to="/auth/signin">
           <Text fontWeight="medium" ms="4px" color={textColor}>
             <Link>Sign In</Link>
           </Text>
@@ -377,7 +377,7 @@ align="center" justify='center' minW='100vh' maxW="1000vh"
         <Text color={titleColor} fontWeight="medium">
           Don't have an account?
         </Text>
-        <RouteLink to="/SignUp">
+        <RouteLink to="/auth/signup">
           <Text fontWeight="medium" ms="4px" color={textColor}>
             <Link>Sign Up</Link>
           </Text>

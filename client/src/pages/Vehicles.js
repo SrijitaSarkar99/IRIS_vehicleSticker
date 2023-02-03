@@ -130,7 +130,7 @@ function Vehicles() {
       });
     }
 
-    //check if country is valid
+    //check if name is valid
     if (!/^[a-zA-Z]+$/.test(formData.RCHName)) {
       return toast({
         title: "Error!",
@@ -261,7 +261,6 @@ function Vehicles() {
                 <Input
                   borderRadius='10px'
                   type="email"
-                  // value={vehicleNumber}
                   name='VehicleNo'
                   placeholder="KA-11-AB-1234"
                   // onChange={(e) => {
@@ -283,17 +282,6 @@ function Vehicles() {
                   <option value="Four Wheeler">Four Wheeler</option>
                 </Select>
 
-                {/* <RadioGroup 
-                  // value={vehicleType} 
-                  name='VehicleType'
-                  // onChange={setVehicleType}
-                  onChange={handleChange}
-                  >
-                    <HStack spacing="48px">
-                      <Radio value="two_wheeler">2 Wheeler</Radio>
-                      <Radio value="four_wheeler">4 Wheeler</Radio>
-                    </HStack>
-                  </RadioGroup> */}
 
               </Box>
               <Box marginTop={3}>
@@ -301,12 +289,8 @@ function Vehicles() {
                 <Input
                   borderRadius='10px'
                   type="text"
-                  // value={vehicleModel}
                   name='model'
                   placeholder="Ex: Honda Activa"
-                  // onChange={(e) => {
-                  //   setVehicleModel(e.target.value);
-                  // }}
                   onChange={handleChange}
                 />
               </Box>
@@ -315,12 +299,8 @@ function Vehicles() {
                 <Input
                   borderRadius='10px'
                   type="text"
-                  // value={rcHolderName}
                   name='RCHName'
                   placeholder="Enter Holder's Name Here"
-                  // onChange={(e) => {
-                  //   setRCHolderName(e.target.value);
-                  // }}
                   onChange={handleChange}
                 />
               </Box>
@@ -328,12 +308,8 @@ function Vehicles() {
                 <FormLabel>Relationship with the RC Holder</FormLabel>
                 <Select
                   borderRadius='10px'
-                  // value={relationship}
                   placeholder='Select Here'
                   name='relation'
-                  // onChange={(e) => {
-                  //   setRelationship(e.target.value);
-                  // }}
                   onChange={handleChange}
                 >
                   {/* <option value="default">Select Here</option> */}
@@ -351,7 +327,7 @@ function Vehicles() {
                   <Input
                     borderRadius='10px'
                     type="text"
-                    // value={othersRelationship}
+                    name='relation'
                     // onChange={(e) => {
                     //   setOthersRelationship(e.target.value);
                     // }}
@@ -363,19 +339,9 @@ function Vehicles() {
                 <FormLabel>Upload Registration Certificate</FormLabel>
                 <Input borderRadius='10px' pt={1} type="file"
                   name='RCCopy'
-                  // onChange={handleRCUpload} 
                   onChange={handleChange}
                 />
               </Box>
-              {/* <Box marginTop={3}>
-                  <Flex justify="space-evenly">
-                    <Button 
-                    colorScheme="teal" 
-                    onClick={handleSubmit}>
-                      Submit Application
-                    </Button>
-                  </Flex>
-                </Box> */}
             </FormControl>
 
 
@@ -400,18 +366,9 @@ function Vehicles() {
           <ModalCloseButton />
           <ModalBody pb={6}>
             {RCImageLoc && <Image src={RCImageLoc} />}
-            {/* {console.log(RCImageLoc)} */}
-            {/* <Image >{userVehicles.map((userVehicle) => ( 
-              // userVehicle.rc_copy
-              console.log(userVehicle.rc_copy)
-            )
-            )}</Image> */}
           </ModalBody>
 
           <ModalFooter>
-            {/* <Button colorScheme='blue' mr={3}>
-              Save
-            </Button> */}
             <Button onClick={onImgClose}>Close</Button>
           </ModalFooter>
         </ModalContent>
@@ -460,33 +417,7 @@ function Vehicles() {
       </AlertDialog>
       {/* ********************************************** */}
       <Flex width="100%" justify="center">
-        {/* <Box >
-        {alertMessage && (
-            // toast(
-            //     {
-            //         title:'Incorrect Details.',
-            //         description:<AlertDescription>{alertMessage}</AlertDescription>,
-            //         status:'error',
-            //         position:'bottom-right',
-            //         duration:3000,
-            //         isClosable:true
-                    
-            //     }
-            // )
-            <Box marginTop={5}>
-        
-              <Alert status="error">
-                <AlertIcon />
-                <AlertTitle>Incorrect Details</AlertTitle>
-                <AlertDescription >{alertMessage}</AlertDescription>
-              </Alert>
-            </Box>
-          )} */}
-
-
-
-
-
+       
         <Box
           // border="1px"
           borderColor="gray.200"
@@ -553,13 +484,6 @@ function Vehicles() {
                 }
 
               </Tbody>
-              {/* <Tfoot>
-      <Tr>
-        <Th>To convert</Th>Table
-        <Th>into</Th>
-        <Th isNumeric>multiply by</Th>
-      </Tr>
-    </Tfoot> */}
             </Table>
           </TableContainer>
 
