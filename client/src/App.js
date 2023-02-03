@@ -7,6 +7,8 @@ import Dashboard from "./pages/Dashboard/Dashboard"
 import Vehicles from "./pages/Vehicles"
 import Stickers from "./pages/Stickers"
 import Profile from "./pages/Profile"
+import ForgotPassword from "./pages/ForgotPassword"
+// import Test from "./pages/Test"
 import PrivateRoutes from "./components/util/PrivateRoutes"
 function App() {
   return (
@@ -14,12 +16,15 @@ function App() {
       <Routes>
         <Route path="/" exact element={<HomePage />} />
         {/* <Route path="/SignIn" element={<SignIn />} /> */}
+        <Route path="/forgot-password" exact element={<ForgotPassword />} />
         <Route path="/SignUp" exact element={<SignUp />} />
+        {/* <Route path="/Test" exact element={<Test />} /> */}
         <Route element={<PrivateRoutes />}>
           <Route path="/Dashboard" exact element={<Dashboard />} />
           <Route path="/vehicles" exact element={<Vehicles />} />
           <Route path="/stickers" exact element={<Stickers />} />
           <Route path="/Profile" exact element={<Profile />} />
+          
         </Route>
         //TODO: Handle not found routes
         {/* <Route path="*" element={`<div>404 Not found<div/>`} /> */}

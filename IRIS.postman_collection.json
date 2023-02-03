@@ -1,0 +1,898 @@
+{
+	"info": {
+		"_postman_id": "942afe26-711d-41e7-85ae-7cc792970587",
+		"name": "IRIS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7104865"
+	},
+	"item": [
+		{
+			"name": "ADD DEPARTMENT",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.SGlkZGVuIFBheWxvYWQ.TkxVi46qqODBBrWtbWnIlozo5V2EwtzEPLY9hN31pms",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dName\": \"MACS\",\r\n    \"HODorHOS\": \"R. Madhusudhan\",\r\n    \"iris_id\": 123456\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/departments",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"departments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SIGNUP",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "XYZU",
+							"type": "text"
+						},
+						{
+							"key": "aadharNumber",
+							"value": "123456789011",
+							"type": "text"
+						},
+						{
+							"key": "mobileNumber",
+							"value": "1234567899",
+							"type": "text"
+						},
+						{
+							"key": "department",
+							"value": "MACS",
+							"type": "text"
+						},
+						{
+							"key": "pinCode",
+							"value": "823001",
+							"type": "default"
+						},
+						{
+							"key": "country",
+							"value": "India",
+							"type": "text"
+						},
+						{
+							"key": "photo",
+							"type": "file",
+							"src": "/C:/Users/aayus/OneDrive/Pictures/Screenshots/GRADECARD.png"
+						},
+						{
+							"key": "idProof",
+							"type": "file",
+							"src": "/C:/Users/aayus/OneDrive/Pictures/Screenshots/GETUSERVEHICLES.png"
+						},
+						{
+							"key": "gender",
+							"value": "Male",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "Student",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456789",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "Aayushranjanjha.214ca001@nitk.edu.in",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/signup",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOGIN",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"aayush@gmail.com\",\r\n    \"password\": \"123456789\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "LOGIN",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"aayush@gmail.com\",\r\n    \"password\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/login",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "332"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"14c-jKlDcPFCq+EJB60JCDCvbtWu/UA\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 25 Jan 2023 18:03:07 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"user\": {\n        \"userId\": \"88f527a3-402d-41d4-b03a-22e363973814\",\n        \"name\": \"XYZ\",\n        \"email\": \"aayush@gmail.com\"\n    },\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4OGY1MjdhMy00MDJkLTQxZDQtYjAzYS0yMmUzNjM5NzM4MTQiLCJuYW1lIjoiWFlaIiwiZW1haWwiOiJhYXl1c2hAZ21haWwuY29tIiwiaWF0IjoxNjc0NjY5Nzg3fQ.rswGg25efwyw8_CjxKEBWRP5o7Ik2uss0Rhe0PUmHU0\"\n}"
+				}
+			]
+		},
+		{
+			"name": "LOGOUT",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/logout",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETUSERBYID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDFmZDk5My03NGQxLTRiYzEtOTg1OC03YjNiMzk2YTQ0ZDYiLCJuYW1lIjoiUmFuZG9tMiIsImlhdCI6MTY3MjI3NTcwNX0.DOGRT5V3FT1SKaeSQBTSQ_gYjIONKL8pcd-C0PZovN0",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:5000/users/001fd993-74d1-4bc1-9858-7b3b396a44d6",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"users",
+						"001fd993-74d1-4bc1-9858-7b3b396a44d6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETALLDEPARTMENTS",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.SGlkZGVuIFBheWxvYWQ.TkxVi46qqODBBrWtbWnIlozo5V2EwtzEPLY9hN31pms",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost:5000/departments?page=1&limit=5",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"departments"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETDEPARTMENTBYID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.SGlkZGVuIFBheWxvYWQ.TkxVi46qqODBBrWtbWnIlozo5V2EwtzEPLY9hN31pms",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost:5000/departments/4e3c3cf6-43d8-4601-aa1c-e3aed53c33c8",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"departments",
+						"4e3c3cf6-43d8-4601-aa1c-e3aed53c33c8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETDEPARTMENTUSERS",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.SGlkZGVuIFBheWxvYWQ.TkxVi46qqODBBrWtbWnIlozo5V2EwtzEPLY9hN31pms",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost:5000/users?department_id=4e3c3cf6-43d8-4601-aa1c-e3aed53c33c8&page=1&limit=5",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "department_id",
+							"value": "4e3c3cf6-43d8-4601-aa1c-e3aed53c33c8"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADDVEHICLE",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4OGY1MjdhMy00MDJkLTQxZDQtYjAzYS0yMmUzNjM5NzM4MTQiLCJuYW1lIjoiWFlaIiwiZW1haWwiOiJhYXl1c2hAZ21haWwuY29tIiwiaWF0IjoxNjc0NjY5Nzg3fQ.rswGg25efwyw8_CjxKEBWRP5o7Ik2uss0Rhe0PUmHU0",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "VehicleNo",
+							"value": "964byy",
+							"type": "text"
+						},
+						{
+							"key": "VehicleType",
+							"value": "ABAA",
+							"type": "text"
+						},
+						{
+							"key": "model",
+							"value": "syzuYA",
+							"type": "text"
+						},
+						{
+							"key": "RCHName",
+							"value": "random",
+							"type": "text"
+						},
+						{
+							"key": "relation",
+							"value": "XYZ",
+							"type": "text"
+						},
+						{
+							"key": "RCCopy",
+							"type": "file",
+							"src": "/C:/Users/aayus/OneDrive/Pictures/Screenshots/Screenshot_20230106_111653.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/vehicles",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"vehicles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETVEHICLEBYID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDFmZDk5My03NGQxLTRiYzEtOTg1OC03YjNiMzk2YTQ0ZDYiLCJuYW1lIjoiUmFuZG9tMiIsImlhdCI6MTY3MjI3NTcwNX0.DOGRT5V3FT1SKaeSQBTSQ_gYjIONKL8pcd-C0PZovN0",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost:5000/vehicles/0326d8ca-d41b-4dc2-8623-bbc5e7e9ef82",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"vehicles",
+						"0326d8ca-d41b-4dc2-8623-bbc5e7e9ef82"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETSTICKER",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.SGlkZGVuIFBheWxvYWQ.TkxVi46qqODBBrWtbWnIlozo5V2EwtzEPLY9hN31pms",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "localhost:5000/stickers?page=1&limit=5",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"stickers"
+					],
+					"query": [
+						{
+							"key": "evaluation_by",
+							"value": "FIC",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADDSTICKER",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDFmZDk5My03NGQxLTRiYzEtOTg1OC03YjNiMzk2YTQ0ZDYiLCJuYW1lIjoiUmFuZG9tMiIsImlhdCI6MTY3MjI3NTcwNX0.DOGRT5V3FT1SKaeSQBTSQ_gYjIONKL8pcd-C0PZovN0",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"VehicleId\": \"0326d8ca-d41b-4dc2-8623-bbc5e7e9ef82\",\r\n    \"date\": \"2022-12-25\",\r\n    \"validity\": \"2023-12-25\",\r\n    \"dName\": \"MACS\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/stickers",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"stickers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETSTICKERBYID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMTMwZGZlNS0zNzg2LTQ2MDEtOWUzNi0wMGViNzM0YWQwZmMiLCJuYW1lIjoiQWF5dXNoIiwiYWFkaGFyTnVtYmVyIjoiMTIzNDU2Nzg5MCIsImlhdCI6MTY3MTg0Njc4NH0.vptBVg5FYNPJQ4O6mDKrzJ2idjyjmo4h61pO0-sqNi8",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost:5000/stickers/97064401-aa54-46b7-a4e6-a41cd3e61ec6",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"stickers",
+						"97064401-aa54-46b7-a4e6-a41cd3e61ec6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETVEHICLESTICKER",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMTMwZGZlNS0zNzg2LTQ2MDEtOWUzNi0wMGViNzM0YWQwZmMiLCJuYW1lIjoiQWF5dXNoIiwiYWFkaGFyTnVtYmVyIjoiMTIzNDU2Nzg5MCIsImlhdCI6MTY3MTg0Njc4NH0.vptBVg5FYNPJQ4O6mDKrzJ2idjyjmo4h61pO0-sqNi8",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost:5000/stickers?page=1&limit=5&vehicle_id=0326d8ca-d41b-4dc2-8623-bbc5e7e9ef82",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"stickers"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "vehicle_id",
+							"value": "0326d8ca-d41b-4dc2-8623-bbc5e7e9ef82"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETUSERVEHICLE",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDFmZDk5My03NGQxLTRiYzEtOTg1OC03YjNiMzk2YTQ0ZDYiLCJuYW1lIjoiUmFuZG9tMiIsImlhdCI6MTY3MjI3NTcwNX0.DOGRT5V3FT1SKaeSQBTSQ_gYjIONKL8pcd-C0PZovN0",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost:5000/vehicles?page=1&limit=5&user_id=001fd993-74d1-4bc1-9858-7b3b396a44d6",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"vehicles"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "user_id",
+							"value": "001fd993-74d1-4bc1-9858-7b3b396a44d6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE USER",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDFmZDk5My03NGQxLTRiYzEtOTg1OC03YjNiMzk2YTQ0ZDYiLCJuYW1lIjoiUmFuZG9tMiIsImlhdCI6MTY3MjI3NTcwNX0.DOGRT5V3FT1SKaeSQBTSQ_gYjIONKL8pcd-C0PZovN0",
+						"type": "default"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "country",
+							"value": "India",
+							"type": "text"
+						},
+						{
+							"key": "photo",
+							"type": "file",
+							"src": "/C:/Users/aayus/OneDrive/Pictures/Screenshots/GETVEHICLESTICKER.png"
+						},
+						{
+							"key": "idProof",
+							"type": "file",
+							"src": "/C:/Users/aayus/OneDrive/Pictures/Screenshots/STICKERUPDATED.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/users/001fd993-74d1-4bc1-9858-7b3b396a44d6/",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"users",
+						"001fd993-74d1-4bc1-9858-7b3b396a44d6",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATEDEPARTMENT",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.SGlkZGVuIFBheWxvYWQ.TkxVi46qqODBBrWtbWnIlozo5V2EwtzEPLY9hN31pms",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HODorHOS\": \"R. Madhusudhan\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/departments/4e3c3cf6-43d8-4601-aa1c-e3aed53c33c8",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"departments",
+						"4e3c3cf6-43d8-4601-aa1c-e3aed53c33c8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATEVEHICLE",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDFmZDk5My03NGQxLTRiYzEtOTg1OC03YjNiMzk2YTQ0ZDYiLCJuYW1lIjoiUmFuZG9tMiIsImlhdCI6MTY3MjI3NTcwNX0.DOGRT5V3FT1SKaeSQBTSQ_gYjIONKL8pcd-C0PZovN0",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "model",
+							"value": "bsvv",
+							"type": "text"
+						},
+						{
+							"key": "RCCopy",
+							"type": "file",
+							"src": "/C:/Users/aayus/OneDrive/Pictures/Screenshots/GETUSERVEHICLES.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/vehicles/0326d8ca-d41b-4dc2-8623-bbc5e7e9ef82",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"vehicles",
+						"0326d8ca-d41b-4dc2-8623-bbc5e7e9ef82"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATESTICKER",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.SGlkZGVuIFBheWxvYWQ.TkxVi46qqODBBrWtbWnIlozo5V2EwtzEPLY9hN31pms",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"evaluatedBy\": \"FIC\",\r\n    \"status\": \"approved\",\r\n    \"reason\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/stickers/97064401-aa54-46b7-a4e6-a41cd3e61ec6",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"stickers",
+						"97064401-aa54-46b7-a4e6-a41cd3e61ec6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETFILE",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.SGlkZGVuIFBheWxvYWQ.TkxVi46qqODBBrWtbWnIlozo5V2EwtzEPLY9hN31pms",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:5000/file/photo-fb8478d7-1983-4994-8ea0-705ba3ef61b2.png",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"file",
+						"photo-fb8478d7-1983-4994-8ea0-705ba3ef61b2.png"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETUSERSTICKERS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/stickers?page=1&limit=5&user_id=42e5c527-dc7e-46c2-a9ab-41925ce95d9f",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"stickers"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "user_id",
+							"value": "42e5c527-dc7e-46c2-a9ab-41925ce95d9f"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "resetPassword",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/resetPassword?email=Aayushranjanjha.214ca001@nitk.edu.in",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"resetPassword"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "Aayushranjanjha.214ca001@nitk.edu.in"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "resetPassword",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\": \"4620c1fb-ab65-4bce-aab5-bb775758d637\",\r\n    \"otp_val\": \"906347\",\r\n    \"new_password\": \"987654322\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/resetPassword",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"resetPassword"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

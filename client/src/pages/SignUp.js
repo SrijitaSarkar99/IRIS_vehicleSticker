@@ -3,14 +3,20 @@ import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
+  Divider,
   Flex,
   FormControl,
   FormLabel,
+  Heading,
+  HStack,
+  Image,
   // Icon,
   Input,
   Link,
   Select,
+  Stack,
   Text,
+  useColorMode,
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
@@ -18,6 +24,7 @@ import { Link as RouteLink, useNavigate } from "react-router-dom";
 import HomeNav from "../components/HomeNav";
 import axios from "axios";
 import { useAuth } from "../auth-context/auth.context";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 function SignUp() {
   const [formData, setFormData] = useState({});
@@ -29,6 +36,7 @@ function SignUp() {
   const titleColor = useColorModeValue("teal.300", "teal.200");
   const textColor = useColorModeValue("gray.700", "white");
   const bgColor = useColorModeValue("white", "gray.700");
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const handleChange = (e) => {
     setFormData({
@@ -282,8 +290,30 @@ function SignUp() {
       justifySelf="center"
       overflow="hidden"
     >
-      <HomeNav />
-      <Box
+      {/* <HomeNav /> */}
+      <Flex justifyContent={'flex-end'} minW='full'>
+      <Button  onClick={toggleColorMode} variant='unstyled'>
+            {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+          </Button>
+        </Flex>
+
+    <Flex align="center" justify="center" >
+      <Stack>
+      <HStack>
+      <Image
+            src="https://cdn.iris.nitk.ac.in//svg/emblem-compressed.svg"
+            alt="logo of National Institute of Technology Karnataka"
+            height="3.5rem"
+            marginRight="10px"
+          />
+      <Heading color={titleColor} mb="10px" fontSize="32px">NITK Surathkal</Heading>
+      </HStack>
+      <Text color={textColor} fontSize="28px" pl="80px" >
+        Vehicle Sticker Registration Module
+      </Text>
+      </Stack>
+      </Flex>
+      {/* <Box
         position="absolute"
         minH={{ base: "70vh", md: "50vh" }}
         w={{ md: "calc(100vw - 50px)" }}
@@ -296,9 +326,9 @@ function SignUp() {
         top="0"
         bgSize="cover"
         mx={{ md: "auto" }}
-        mt={{ md: "14px" }}
-      ></Box>
-      <Flex
+        mt={{ md: "auto" }}
+      ></Box> */}
+      {/* <Flex
         direction="column"
         textAlign="center"
         justifyContent="center"
@@ -319,8 +349,8 @@ function SignUp() {
         >
           Vehicle Sticker Registration
         </Text>
-      </Flex>
-      <Flex alignItems="center" justifyContent="center" mb="60px" mt="0px">
+      </Flex> */}
+      <Flex alignItems="center" justifyContent="center" mb="4vh" mt="0px">
         {/* {user && user.token ? ( */}
         {/* <Text
           fontSize='xl'
@@ -331,35 +361,47 @@ function SignUp() {
             You are already signed in.
         </Text>
       ) : ( */}
-        <Flex
-          direction="column"
-          w="800px"
+        <Box
+          // direction="column"
+          // w="800px"
           background="transparent"
-          borderRadius="15px"
+          borderRadius="10px"
           p="40px"
-          mx={{ base: "100px" }}
-          bg={bgColor}
-          boxShadow="0 20px 27px 0 rgb(0 0 0 / 5%)"
+          w='half'
+          // mx={{ base: "100px" }}
+          // bg={bgColor}
+          // boxShadow="0 20px 27px 0 rgb(0 0 0 / 5%)"
+          boxShadow="lg"
         >
+          <form onSubmit={handleSubmit}>
           <Text
             fontSize="xl"
             color={textColor}
             fontWeight="bold"
             textAlign="center"
-            mb="22px"
+            mb="10px"
           >
-            Register
+            Registration Form
           </Text>
-          <Text
+          {/* <Text
             fontSize="lg"
             color="gray.400"
             fontWeight="bold"
             textAlign="center"
-            mb="22px"
+            mb="10px"
           >
             Fill your credentials
-          </Text>
+          </Text> */}
+          <Heading
+    size={'sm'}
+    color={titleColor}
+    mt='1rem'
+    mb={'2rem'}
+    >
+      Personal Details
+    </Heading>
           <FormControl>
+            <HStack mb={'3vh'}>
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
               Name
             </FormLabel>
@@ -377,7 +419,7 @@ function SignUp() {
               onChange={handleChange}
             />
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-              Email Address
+              Email
             </FormLabel>
             <Input
               fontSize="sm"
@@ -392,6 +434,8 @@ function SignUp() {
               // onChange={(e)=>setEmail(e.target.value)}
               onChange={handleChange}
             />
+            </HStack>
+            <HStack mb={'3vh'}>
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
               Password
             </FormLabel>
@@ -425,7 +469,8 @@ function SignUp() {
               // onChange={(e)=>setConfirmpassword(e.target.value)}
               onChange={handleChange}
             />
-
+</HStack>
+<HStack mb={'3vh'}>
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
               Aadhar Number
             </FormLabel>
@@ -461,7 +506,8 @@ function SignUp() {
               // onChange={(e)=>setMobile(e.target.value)}
               onChange={handleChange}
             />
-
+</HStack>
+<HStack mb={'3vh'}>
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
               Type of applicant
             </FormLabel>
@@ -505,10 +551,78 @@ function SignUp() {
               {/* <option value='MACS'>MACS</option>
              <option value='CSE'>CSE</option> */}
             </Select>
-
+            </HStack>
+<HStack mb={'3vh'}>
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-              Address
+              Gender
             </FormLabel>
+            <Select
+              fontSize="sm"
+              w={'48vh'}
+              ms="4px"
+              borderRadius="15px"
+              placeholder="Select your gender"
+              mb="24px"
+              id="gender"
+              size="lg"
+              name="gender"
+              // onChange={(e)=>setGender(e.target.value)}
+              onChange={handleChange}
+            >
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </Select>
+            </HStack>
+            <HStack mb={'3vh'}>
+            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+              Upload your Picture
+            </FormLabel>
+            <Input
+              fontSize="sm"
+              ms="4px"
+              borderRadius="15px"
+              id="picture"
+              type="file"
+              accept="image/*"
+              pt={2}
+              mb="24px"
+              size="lg"
+              name="photo"
+              // onChange={(e)=>postDetails(e.target.files[0])}
+              onChange={handleChange}
+            />
+            
+            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+              Upload your Id proof
+            </FormLabel>
+            <Input
+              fontSize="sm"
+              ms="4px"
+              id="idproof"
+              borderRadius="15px"
+              type="file"
+              accept="image/*"
+              pt={2}
+              mb="24px"
+              size="lg"
+              name="idProof"
+              // onChange={(e)=>postIdentity(e.target.files[0])}
+              onChange={handleChange}
+            />
+</HStack>
+            <Divider/>
+    <Heading
+    size={'sm'}
+    color={titleColor}
+    mt='1rem'
+    mb={'2rem'}
+    >
+      Permanent Address 
+    </Heading>
+            {/* <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+              Address
+            </FormLabel> */}
             <Input
               fontSize="sm"
               ms="4px"
@@ -536,7 +650,7 @@ function SignUp() {
               // onChange={(e)=>setAddressline2(e.target.value)}
               onChange={handleChange}
             />
-
+<HStack mb={'3vh'}>
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
               City
             </FormLabel>
@@ -546,7 +660,7 @@ function SignUp() {
               borderRadius="15px"
               id="city"
               type="text"
-              placeholder="City"
+              // placeholder="City"
               mb="24px"
               size="lg"
               name="city"
@@ -563,14 +677,15 @@ function SignUp() {
               borderRadius="15px"
               id="state"
               type="text"
-              placeholder="State"
+              // placeholder="State"
               mb="24px"
               size="lg"
               name="state"
               // onChange={(e)=>setState(e.target.value)}
               onChange={handleChange}
             />
-
+            </HStack>
+<HStack mb={'3vh'}>
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
               Country
             </FormLabel>
@@ -580,7 +695,7 @@ function SignUp() {
               borderRadius="15px"
               id="country"
               type="text"
-              placeholder="Country"
+              // placeholder="Country"
               mb="24px"
               size="lg"
               name="country"
@@ -597,51 +712,21 @@ function SignUp() {
               borderRadius="15px"
               id="pinCode"
               type="number"
-              placeholder="Pincode"
+              // placeholder="Pincode"
               mb="24px"
               size="lg"
               name="pinCode"
               // onChange={(e)=>setCountry(e.target.value)}
               onChange={handleChange}
             />
+</HStack>
 
-            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-              Gender
-            </FormLabel>
-            <Select
-              fontSize="sm"
-              ms="4px"
-              borderRadius="15px"
-              placeholder="Select your gender"
-              mb="24px"
-              id="gender"
-              size="lg"
-              name="gender"
-              // onChange={(e)=>setGender(e.target.value)}
-              onChange={handleChange}
-            >
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </Select>
 
-            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-              Upload your Picture
-            </FormLabel>
-            <Input
-              fontSize="sm"
-              ms="4px"
-              borderRadius="15px"
-              id="picture"
-              type="file"
-              accept="image/*"
-              pt={2}
-              mb="24px"
-              size="lg"
-              name="photo"
-              // onChange={(e)=>postDetails(e.target.files[0])}
-              onChange={handleChange}
-            />
+
+<Divider/>
+            
+
+            
 
             {/* <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
             Upload your Picture
@@ -662,23 +747,7 @@ function SignUp() {
             onChange={handleChange}
           /> */}
 
-            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-              Upload your Id proof
-            </FormLabel>
-            <Input
-              fontSize="sm"
-              ms="4px"
-              id="idproof"
-              borderRadius="15px"
-              type="file"
-              accept="image/*"
-              pt={2}
-              mb="24px"
-              size="lg"
-              name="idProof"
-              // onChange={(e)=>postIdentity(e.target.files[0])}
-              onChange={handleChange}
-            />
+            
 
             {/* <FormControl display='flex' alignItems='center' mb='24px'>
             <Switch id='remember-login' colorScheme='teal' me='10px' />
@@ -697,14 +766,15 @@ function SignUp() {
                 {/* {error} */}
               </Text>
             </Flex>
+            <Flex justifyContent={'center'}>
             <Button
-              onClick={handleSubmit}
+              // onClick={handleSubmit}
               type="submit"
               bg="teal.300"
               fontSize="10px"
               color="white"
               fontWeight="bold"
-              w="100%"
+              w="25%"
               h="45"
               mb="24px"
               _hover={{
@@ -716,7 +786,9 @@ function SignUp() {
             >
               SIGN UP
             </Button>
+            </Flex>
           </FormControl>
+          </form>
           <Flex
             flexDirection="column"
             justifyContent="center"
@@ -739,7 +811,7 @@ function SignUp() {
               </RouteLink>
             </Text>
           </Flex>
-        </Flex>
+        </Box>
         {/* )} */}
       </Flex>
     </Flex>

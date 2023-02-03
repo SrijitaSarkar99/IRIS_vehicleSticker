@@ -79,7 +79,7 @@ exports.signUp = async (req, res) => {
 }
 
 exports.logIn = async (req, res) => {
-  const { email, password } = req.body
+  let { email, password } = req.body
   email = email.toLowerCase()
   let user
   try {
