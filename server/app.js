@@ -7,7 +7,7 @@ const initializeDB = require("./models/db")
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (origin === "http://localhost:3000" || !origin) {
+      if (origin === `http://${process.env.Host}` || !origin) {
         callback(null, true)
       } else {
         callback(new Error("Not allowed by CORS"))

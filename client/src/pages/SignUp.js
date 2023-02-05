@@ -25,6 +25,7 @@ import HomeNav from "../components/HomeNav";
 import axios from "axios";
 import { useAuth } from "../auth-context/auth.context";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import API_SERVER from "../config/constant"
 
 function SignUp() {
   const [formData, setFormData] = useState({});
@@ -232,7 +233,7 @@ function SignUp() {
     try {
       const response = await axios({
         method: "post",
-        url: `http://localhost:5000/signup`,
+        url: `http://${API_SERVER}/signup`,
         data: data,
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -271,7 +272,7 @@ function SignUp() {
       try {
         const response = await axios({
           method: "get",
-          url: `http://localhost:5000/departments`,
+          url: `http://${API_SERVER}/departments`,
         });
         console.log(response.data);
         setDepartments(response.data);

@@ -5,6 +5,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Form, useNavigate } from 'react-router-dom';
 import AdminNav from "../components/AdminNav"
+import API_SERVER from "../config/constant"
 
 function Profile() {
   
@@ -108,7 +109,7 @@ setIdImageLoc(undefined)
         // console.log(currentUser.token);
         const response = await axios({
           method: "patch",
-          url: `http://localhost:5000/users/${currentUser.userId}`,
+          url: `http://${API_SERVER}/users/${currentUser.userId}`,
           data: data,
           headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${currentUser.token}`},
         });
@@ -146,7 +147,7 @@ setIdImageLoc(undefined)
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:5000/users/${currentUser.userId}`,
+        url: `http://${API_SERVER}/users/${currentUser.userId}`,
         headers:{Authorization: `Bearer ${currentUser.token}`}
       }); 
       setuserProfile(response.data);

@@ -47,7 +47,7 @@ import {
 import { AddIcon, WarningIcon, EditIcon, DeleteIcon, InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons'
 import AdminNav from "../components/AdminNav";
 import axios from 'axios';
-
+import API_SERVER from "../config/constant"
 function Vehicles() {
   const [formData, setFormData] = useState({});
   const [RCImage, setRCImage] = useState();
@@ -170,7 +170,7 @@ function Vehicles() {
     try {
       const response = await axios({
         method: "post",
-        url: `http://localhost:5000/vehicles`,
+        url: `http://${API_SERVER}/vehicles`,
         data: data,
 
         headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${currentUser.token}` },
@@ -224,7 +224,7 @@ function Vehicles() {
       try {
         const response = await axios({
           method: "get",
-          url: `http://localhost:5000/vehicles?user_id=${currentUser.userId}&limit=${5}&page=${1}`,
+          url: `http://${API_SERVER}/vehicles?user_id=${currentUser.userId}&limit=${5}&page=${1}`,
           headers: {  Authorization: `Bearer ${currentUser.token}` },
         });
         // console.log(response.data);

@@ -5,13 +5,13 @@ const db = require("./dbInfo")
 
 module.exports = async () => {
   const connection = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
+    host: process.env.dbHost,
+    user: process.env.dbUser,
     password: process.env.dbPassword,
   })
   await connection.query(`CREATE DATABASE IF NOT EXISTS iris;`)
-  const sequelize = new Sequelize("iris", "root", "", {
-    host: "localhost",
+  const sequelize = new Sequelize(process.env.dbName, process.env.dbUser, "", {
+    host: process.env.dbHost,
     dialect: "mysql",
     password: process.env.dbPassword,
   })

@@ -43,6 +43,7 @@ import { Vehicles } from "../pages/Vehicles";
 import Profile from "../pages/Profile";
 import React, { Component, useEffect, useState } from "react";
 import axios from "axios";
+import API_SERVER from "../config/constant"
 
 import logo from "../asset/logo.png";
 
@@ -100,7 +101,7 @@ export default function Simple() {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:5000/users/${currentUser.userId}`,
+        url: `http://${API_SERVER}/users/${currentUser.userId}`,
         headers:{Authorization: `Bearer ${currentUser.token}`}
       }); 
       await getFile(response.data.photo);

@@ -1,0 +1,48 @@
+version: '3'
+name: 'vehicles'
+
+services:
+  client:
+    build: ./client
+    depends_on:
+      - server
+    ports:
+      - 3001:3000
+    links:
+      - server:server
+    restart: unless-stopped 
+
+  server:
+    build: ./server
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 5001:5000
+    links:
+      - db:db
+    restart: unless-stopped
+  
+  db:
+    image: mysql:latest
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./data/backup/mysql:/var/lib/mysql
+      - ./configs/docker.cnf:/etc/mysql/conf.d/docker.cnf
+    environment:
+      MYSQL_DATABASE: iris
+      MYSQL_USER: vehicles
+      MYSQL_PASSWORD: irisvehicles123
+      MYSQL_ROOT_PASSWORD: irisvehiclesroot123
+      MYSQL_ROOT_HOST: "%"
+
+    healthcheck:
+      test: ["CMD", 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-p$MYSQL_ROOT_PASSWORD' ]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 15s
+
+    ports:
+      - 3307:3306
+    restart: unless-stopped

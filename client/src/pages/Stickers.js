@@ -46,6 +46,7 @@ import {
 import {  AddIcon, WarningIcon, EditIcon, DeleteIcon } from '@chakra-ui/icons'
 import AdminNav from "../components/AdminNav";
 import axios from 'axios';
+import API_SERVER from "../config/constant"
 
 function Stickers() {
     const [VehicleId, setVehicleId] = useState();
@@ -93,7 +94,7 @@ function Stickers() {
     try {
       const response = await axios({
         method: "post",
-        url: `http://localhost:5000/stickers`,
+        url: `http://${API_SERVER}/stickers`,
         data: data,
         headers: { "Content-Type": "application/JSON",Authorization: `Bearer ${currentUser.token}` },
       });
@@ -120,7 +121,7 @@ function Stickers() {
         try {
           const response = await axios({
             method: "get",
-            url: `http://localhost:5000/vehicles?user_id=${currentUser.userId}`
+            url: `${API_SERVER}/vehicles?user_id=${currentUser.userId}`
           }); 
           setUserVehicles(response.data);
           // console.log(response.data);
@@ -139,7 +140,7 @@ function Stickers() {
             try {
               const response = await axios({
                 method: "get",
-                url: `http://localhost:5000/stickers?user_id=${currentUser.userId}`,
+                url: `${API_SERVER}/stickers?user_id=${currentUser.userId}`,
                 headers: { Authorization: `Bearer ${currentUser.token}`},
               }); 
               // console.log(response.data);
@@ -159,7 +160,7 @@ function Stickers() {
                 try {
                   const response = await axios({
                     method: "get",
-                    url: `http://localhost:5000/users/${currentUser.userId}`,
+                    url: `http://${API_SERVER}/users/${currentUser.userId}`,
                     headers: { Authorization: `Bearer ${currentUser.token}`},
                   }); 
                   setDepartment(response.data.department);
