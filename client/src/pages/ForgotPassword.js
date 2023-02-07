@@ -49,6 +49,7 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import { RiEyeCloseLine } from 'react-icons/ri';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
+import API_SERVER from '../config/constant';
 
 
 function ForgotPassword() {
@@ -107,7 +108,7 @@ function ForgotPassword() {
     try {
         const response = await axios({
           method: "get",
-          url: `http://localhost:5000/resetPassword?email=${email}`,
+          url: `${API_SERVER}/resetPassword?email=${email}`,
         });
         console.log(response.data);
         setUserDetails(response.data.user_id);
@@ -142,7 +143,7 @@ function ForgotPassword() {
     try {
         const response = await axios({
           method: "post",
-          url: `http://localhost:5000/resetPassword`,
+          url: `${API_SERVER}/resetPassword`,
           data: data,
           headers: { "Content-Type": "application/json" },
         });

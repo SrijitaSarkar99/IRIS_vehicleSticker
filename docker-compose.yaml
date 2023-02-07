@@ -7,7 +7,7 @@ services:
     depends_on:
       - server
     ports:
-      - 3001:3000
+      - 3000:3000
     links:
       - server:server
     restart: unless-stopped 
@@ -18,7 +18,7 @@ services:
       db:
         condition: service_healthy
     ports:
-      - 5001:5000
+      - 5000:5000
     links:
       - db:db
     restart: unless-stopped
@@ -43,6 +43,6 @@ services:
       retries: 30
       start_period: 15s
 
-    ports:
-      - 3307:3306
+    expose:
+      - 3306
     restart: unless-stopped

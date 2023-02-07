@@ -94,7 +94,7 @@ function Stickers() {
     try {
       const response = await axios({
         method: "post",
-        url: `http://${API_SERVER}/stickers`,
+        url: `${API_SERVER}/stickers`,
         data: data,
         headers: { "Content-Type": "application/JSON",Authorization: `Bearer ${currentUser.token}` },
       });
@@ -160,7 +160,7 @@ function Stickers() {
                 try {
                   const response = await axios({
                     method: "get",
-                    url: `http://${API_SERVER}/users/${currentUser.userId}`,
+                    url: `${API_SERVER}/users/${currentUser.userId}`,
                     headers: { Authorization: `Bearer ${currentUser.token}`},
                   }); 
                   setDepartment(response.data.department);
