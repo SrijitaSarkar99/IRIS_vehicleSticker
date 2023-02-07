@@ -176,8 +176,8 @@ function Vehicles() {
         headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${currentUser.token}` },
       });
 
-      setUserVehicles([...userVehicles,response.data]);
-
+      // setUserVehicles([...userVehicles,response.data]);
+      setUserVehicles([response.data,...userVehicles]);
       toast({
         title: 'New vehicle added.',
         description: "Your Vehicle added successfully to the database",

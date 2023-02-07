@@ -55,7 +55,9 @@ function Stickers() {
     const [userStickersVehicle, setUserStickersVehicle] = useState([]);
     const [alertMessage, setAlertMessage] = useState("");
     let dateToday=new Date().getFullYear()+"-"+new Date().getMonth()+1+"-"+new Date().getDate();
-    let dateExpire=new Date().getFullYear()+2+"-"+new Date().getMonth()+1+"-"+new Date().getDate();
+    let dateExpire=new Date().getFullYear()+"-"+new Date().getMonth()+1+"-"+new Date().getDate();
+    
+    
     const toast = useToast();
      /*For Add New Vehicle Modal Popup Button*/
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -95,7 +97,9 @@ function Stickers() {
         data: data,
         headers: { "Content-Type": "application/JSON",Authorization: `Bearer ${currentUser.token}` },
       });
-      setUserStickers([...userStickers,response.data]);
+      // setUserStickers([...userStickers,response.data]);
+      // console.log(response.data);
+      setUserStickers([response.data,...userStickers]);
       toast({
         title: 'Applied for a new Sticker.',
         description: "You have successfully applied for a new sticker. Keep checking the status.",
@@ -116,9 +120,10 @@ function Stickers() {
         try {
           const response = await axios({
             method: "get",
-            url: `http://localhost:5000/vehicles?user_id=${currentUser.userId}&limit=${5}&page=${1}`
+            url: `http://localhost:5000/vehicles?user_id=${currentUser.userId}`
           }); 
           setUserVehicles(response.data);
+          // console.log(response.data);
         } 
         catch(error) {
           console.log(error);
@@ -134,10 +139,10 @@ function Stickers() {
             try {
               const response = await axios({
                 method: "get",
-                url: `http://localhost:5000/stickers?page=${1}&limit=${5}&user_id=${currentUser.userId}`,
+                url: `http://localhost:5000/stickers?user_id=${currentUser.userId}`,
                 headers: { Authorization: `Bearer ${currentUser.token}`},
               }); 
-              console.log(response.data);
+              // console.log(response.data);
               setUserStickers(response.data);
             } 
             
@@ -386,7 +391,9 @@ onOpen()
     <Tbody>
       {
         userStickers.map((userStickers) => (
-          <Tr key={userStickers.id} StickersId={userStickers.id}>
+          <Tr key={userStickers.id} 
+          // StickersId={userStickers.id}
+          >
             {/* <Td>{userStickers.stickers_no}</Td> */}
             <Td>{userStickers.vehicle_id}</Td>
             <Td>{userStickers.date}</Td>
