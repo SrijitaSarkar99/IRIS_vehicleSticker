@@ -109,7 +109,7 @@ setIdImageLoc(undefined)
         // console.log(currentUser.token);
         const response = await axios({
           method: "patch",
-          url: `http://${API_SERVER}/users/${currentUser.userId}`,
+          url: `${API_SERVER}/users/${currentUser.userId}`,
           data: data,
           headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${currentUser.token}`},
         });
@@ -147,7 +147,7 @@ setIdImageLoc(undefined)
     try {
       const response = await axios({
         method: "get",
-        url: `http://${API_SERVER}/users/${currentUser.userId}`,
+        url: `${API_SERVER}/users/${currentUser.userId}`,
         headers:{Authorization: `Bearer ${currentUser.token}`}
       }); 
       setuserProfile(response.data);

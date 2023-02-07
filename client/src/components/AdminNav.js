@@ -101,7 +101,7 @@ export default function Simple() {
     try {
       const response = await axios({
         method: "get",
-        url: `http://${API_SERVER}/users/${currentUser.userId}`,
+        url: `${API_SERVER}/users/${currentUser.userId}`,
         headers:{Authorization: `Bearer ${currentUser.token}`}
       }); 
       await getFile(response.data.photo);

@@ -2,7 +2,7 @@ import Axios from "axios";
 import API_SERVER from "../config/constant";
 
 const axios = Axios.create({
-  baseURL: `http://${API_SERVER}/`,
+  baseURL: `${API_SERVER}/`,
   headers: {"Content-Type": "multipart/form-data" },
   headers: { "Content-Type": "application/json" },
   // headers: { "Content-Type": "multipart/form-data" },

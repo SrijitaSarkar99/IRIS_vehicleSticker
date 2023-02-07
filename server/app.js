@@ -31,13 +31,13 @@ async function projSetUp() {
   const file = require("./routes/file")
   const resetPassword = require("./routes/resetPassword")
   // Routes setup
-  app.use("/", auth)
-  app.use("/users", user)
-  app.use("/vehicles", vehicle)
-  app.use("/stickers", sticker)
-  app.use("/departments", department)
-  app.use("/files", file)
-  app.use("/resetPassword", resetPassword)
+  app.use("/api", auth)
+  app.use("/api/users", user)
+  app.use("/api/vehicles", vehicle)
+  app.use("/api/stickers", sticker)
+  app.use("/api/departments", department)
+  app.use("/api/files", file)
+  app.use("/api/resetPassword", resetPassword)
 }
 
 projSetUp()

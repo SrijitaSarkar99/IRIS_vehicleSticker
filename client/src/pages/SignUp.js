@@ -233,7 +233,7 @@ function SignUp() {
     try {
       const response = await axios({
         method: "post",
-        url: `http://${API_SERVER}/signup`,
+        url: `${API_SERVER}/signup`,
         data: data,
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -272,7 +272,7 @@ function SignUp() {
       try {
         const response = await axios({
           method: "get",
-          url: `http://${API_SERVER}/departments`,
+          url: `${API_SERVER}/departments`,
         });
         console.log(response.data);
         setDepartments(response.data);
