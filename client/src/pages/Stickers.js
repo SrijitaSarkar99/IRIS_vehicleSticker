@@ -44,6 +44,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import {  AddIcon, WarningIcon, EditIcon, DeleteIcon } from '@chakra-ui/icons'
+import AuthApi from "../api/auth";
 import AdminNav from "../components/AdminNav";
 import axios from 'axios';
 
@@ -55,7 +56,9 @@ function Stickers() {
     const [userStickersVehicle, setUserStickersVehicle] = useState([]);
     const [alertMessage, setAlertMessage] = useState("");
     let dateToday=new Date().getFullYear()+"-"+new Date().getMonth()+1+"-"+new Date().getDate();
-    let dateExpire=new Date().getFullYear()+2+"-"+new Date().getMonth()+1+"-"+new Date().getDate();
+    let dateExpire=new Date().getFullYear()+"-"+new Date().getMonth()+1+"-"+new Date().getDate();
+    
+    
     const toast = useToast();
      /*For Add New Vehicle Modal Popup Button*/
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -88,14 +91,12 @@ function Stickers() {
         "validity": dateExpire,
         "dName": department
     }
-    try {
-      const response = await axios({
-        method: "post",
-        url: `http://localhost:5000/stickers`,
-        data: data,
-        headers: { "Content-Type": "application/JSON",Authorization: `Bearer ${currentUser.token}` },
-      });
-      setUserStickers([...userStickers,response.data]);
+
+    AuthApi.ADDSTICKER(data, currentUser)
+      .then((response) => {
+        
+        // console.log(response.data);
+        setUserStickers([response.data,...userStickers]);
       toast({
         title: 'Applied for a new Sticker.',
         description: "You have successfully applied for a new sticker. Keep checking the status.",
@@ -104,68 +105,130 @@ function Stickers() {
         isClosable: true,
       });
       onClose();
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error);
+        }
+      });
+
+    // try {
+    //   const response = await axios({
+    //     method: "post",
+    //     url: `http://localhost:5000/stickers`,
+    //     data: data,
+    //     headers: { "Content-Type": "application/JSON",Authorization: `Bearer ${currentUser.token}` },
+    //   });
+    //   // setUserStickers([...userStickers,response.data]);
+    //   // console.log(response.data);
+    //   setUserStickers([response.data,...userStickers]);
+    //   toast({
+    //     title: 'Applied for a new Sticker.',
+    //     description: "You have successfully applied for a new sticker. Keep checking the status.",
+    //     status: 'success',
+    //     duration: 5000,
+    //     isClosable: true,
+    //   });
+    //   onClose();
       
-    } catch(error) {
-      console.log(error)
-    }
+    // } catch(error) {
+    //   console.log(error)
+    // }
       
       };
 
       useEffect(() => {
-        async function fetchData(){
-        try {
-          const response = await axios({
-            method: "get",
-            url: `http://localhost:5000/vehicles?user_id=${currentUser.userId}&limit=${5}&page=${1}`
-          }); 
-          setUserVehicles(response.data);
-        } 
-        catch(error) {
+        AuthApi.GETUSERVEHICLE(currentUser)
+      .then((response) => {
+        
+        // console.log(response.data);
+        setUserVehicles(response.data);
+      })
+      .catch((error) => {
+        if (error.response) {
           console.log(error);
         }
-        }
+      });
+        
+      // TODO: REMOVE HARDCODED CODE
+        // async function fetchData(){
+        // try {
+        //   const response = await axios({
+        //     method: "get",
+        //     url: `http://localhost:5000/vehicles?user_id=${currentUser.userId}`
+        //   }); 
+        //   setUserVehicles(response.data);
+        //   // console.log(response.data);
+        // } 
+        // catch(error) {
+        //   console.log(error);
+        // }
+        // }
 
-        fetchData();
+        // fetchData();
           }, []);
 
 
           useEffect(() => {
-            async function fetchData(){
-            try {
-              const response = await axios({
-                method: "get",
-                url: `http://localhost:5000/stickers?page=${1}&limit=${5}&user_id=${currentUser.userId}`,
-                headers: { Authorization: `Bearer ${currentUser.token}`},
-              }); 
-              console.log(response.data);
-              setUserStickers(response.data);
-            } 
+            AuthApi.GETUSERSTICKERS(currentUser)
+      .then((response) => {
+        
+        // console.log(response.data);
+        setUserStickers(response.data);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error);
+        }
+      });
+            // async function fetchData(){
+            // try {
+            //   const response = await axios({
+            //     method: "get",
+            //     url: `http://localhost:5000/stickers?user_id=${currentUser.userId}`,
+            //     headers: { Authorization: `Bearer ${currentUser.token}`},
+            //   }); 
+            //   // console.log(response.data);
+            //   setUserStickers(response.data);
+            // } 
             
-            catch(error) {
-              console.log(error);
-            }
-            }
+            // catch(error) {
+            //   console.log(error);
+            // }
+            // }
     
-            fetchData();
+            // fetchData();
               }, []);
 
               useEffect(() => {
-                async function fetchData(){
-                try {
-                  const response = await axios({
-                    method: "get",
-                    url: `http://localhost:5000/users/${currentUser.userId}`,
-                    headers: { Authorization: `Bearer ${currentUser.token}`},
-                  }); 
-                  setDepartment(response.data.department);
-                } 
-                
-                catch(error) {
-                  console.log(error);
-                }
-                }
+                AuthApi.GETUSERBYID(currentUser)
+      .then((response) => {
+        // console.log(response.data);
+        setDepartment(response.data.department);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error);
+        }
         
-                fetchData();
+      });
+      // TODO: REMOVE HARDCODED CODE
+                // async function fetchData(){
+                // try {
+                //   const response = await axios({
+                //     method: "get",
+                //     url: `http://localhost:5000/users/${currentUser.userId}`,
+                //     headers: { Authorization: `Bearer ${currentUser.token}`},
+                //   }); 
+                //   setDepartment(response.data.department);
+                // } 
+                
+                // catch(error) {
+                //   console.log(error);
+                // }
+                // }
+        
+                // fetchData();
                   }, []);
   return (
     <>
@@ -386,7 +449,9 @@ onOpen()
     <Tbody>
       {
         userStickers.map((userStickers) => (
-          <Tr key={userStickers.id} StickersId={userStickers.id}>
+          <Tr key={userStickers.id} 
+          // StickersId={userStickers.id}
+          >
             {/* <Td>{userStickers.stickers_no}</Td> */}
             <Td>{userStickers.vehicle_id}</Td>
             <Td>{userStickers.date}</Td>
