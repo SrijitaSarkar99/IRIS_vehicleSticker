@@ -46,6 +46,7 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon, WarningIcon, EditIcon, DeleteIcon, InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons'
 import AdminNav from "../components/AdminNav";
+import AuthApi from "../api/auth";
 import axios from 'axios';
 
 function Vehicles() {
@@ -167,16 +168,11 @@ function Vehicles() {
     for (const property in formData) {
       data.append(property, formData[property]);
     }
-    try {
-      const response = await axios({
-        method: "post",
-        url: `http://localhost:5000/vehicles`,
-        data: data,
 
-        headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${currentUser.token}` },
-      });
-
-      // setUserVehicles([...userVehicles,response.data]);
+    AuthApi.ADDVEHICLE(data, currentUser)
+    .then((response) => {
+      
+      // console.log(response.data);
       setUserVehicles([response.data,...userVehicles]);
       toast({
         title: 'New vehicle added.',
@@ -186,9 +182,10 @@ function Vehicles() {
         isClosable: true,
       });
       onClose();
-
-    } catch (error) {
-      console.log(error)
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.log(error)
       toast({
         title: "Error!",
         description: "Vehicle already exists",
@@ -196,7 +193,39 @@ function Vehicles() {
         duration: 3000,
         isClosable: true,
       });
-    }
+      }
+    });
+
+    // try {
+    //   const response = await axios({
+    //     method: "post",
+    //     url: `http://localhost:5000/vehicles`,
+    //     data: data,
+
+    //     headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${currentUser.token}` },
+    //   });
+
+    //   // setUserVehicles([...userVehicles,response.data]);
+    //   setUserVehicles([response.data,...userVehicles]);
+    //   toast({
+    //     title: 'New vehicle added.',
+    //     description: "Your Vehicle added successfully to the database",
+    //     status: 'success',
+    //     duration: 5000,
+    //     isClosable: true,
+    //   });
+    //   onClose();
+
+    // } catch (error) {
+    //   console.log(error)
+    //   toast({
+    //     title: "Error!",
+    //     description: "Vehicle already exists",
+    //     status: "error",
+    //     duration: 3000,
+    //     isClosable: true,
+    //   });
+    // }
 
   };
 
@@ -220,22 +249,33 @@ function Vehicles() {
   }
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios({
-          method: "get",
-          url: `http://localhost:5000/vehicles?user_id=${currentUser.userId}&limit=${5}&page=${1}`,
-          headers: {  Authorization: `Bearer ${currentUser.token}` },
-        });
-        // console.log(response.data);
-        setUserVehicles(response.data);
-      }
-      catch (error) {
+    AuthApi.GETUSERVEHICLE(currentUser)
+    .then((response) => {
+      
+      // console.log(response.data);
+      setUserVehicles(response.data);
+    })
+    .catch((error) => {
+      if (error.response) {
         console.log(error);
       }
-    }
+    });
+    // async function fetchData() {
+    //   try {
+    //     const response = await axios({
+    //       method: "get",
+    //       url: `http://localhost:5000/vehicles?user_id=${currentUser.userId}&limit=${5}&page=${1}`,
+    //       headers: {  Authorization: `Bearer ${currentUser.token}` },
+    //     });
+    //     // console.log(response.data);
+    //     setUserVehicles(response.data);
+    //   }
+    //   catch (error) {
+    //     console.log(error);
+    //   }
+    // }
 
-    fetchData();
+    // fetchData();
   }, []);
   return (
     <>

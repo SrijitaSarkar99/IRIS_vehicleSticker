@@ -16,7 +16,7 @@ function Homepage() {
     window.location.href = '/vehicles'
     ):(<>
       <Container centerContent>
-        <SignIn />
+      {window.location.href = '/auth/signin'}
       </Container>
     </>) }
      

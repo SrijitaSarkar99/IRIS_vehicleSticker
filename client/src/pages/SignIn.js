@@ -124,7 +124,8 @@ function SignIn() {
 
     AuthApi.Login(formData)
       .then((response) => {
-        // if(response.data.success) {
+        // console.log(response.status)
+        if(response.status=="200") {
         // navigate('/dashboard');
         toast({
           title: "Login Successfully.",
@@ -133,7 +134,7 @@ function SignIn() {
           duration: 3000,
           isClosable: true,
         });
-        return setProfile(response);
+        return setProfile(response);}
         // }
         // else {
         //   setError(response.data.msg)
@@ -270,7 +271,7 @@ function SignIn() {
                 </Text>
               </NavLink> */}
 <Flex justifyContent={'flex-end'}>
-              <Link color="blue.500" fontSize="sm" href="auth/forgot-password">
+              <Link color="blue.500" fontSize="sm" href="../auth/forgot-password">
               Forgot Password?
             </Link>
             </Flex>

@@ -798,7 +798,7 @@ function SignUp() {
           >
             <Text color={textColor} fontWeight="medium">
               Already have an account?
-              <RouteLink to="/">
+              <RouteLink to="/auth/signin">
                 <Link
                   color={titleColor}
                   ms="5px"
