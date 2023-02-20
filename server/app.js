@@ -7,7 +7,7 @@ const initializeDB = require("./models/db")
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (origin === "http://localhost:3000" || !origin) {
+      if (origin === process.env.ORIGIN || !origin) {
         callback(null, true)
       } else {
         callback(new Error("Not allowed by CORS"))
@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }))
 
 async function projSetUp() {
   // DB INITIALIZATION
-  await initializeDB()
+  initializeDB()
 
   // Importing Routes
   const auth = require("./routes/auth")

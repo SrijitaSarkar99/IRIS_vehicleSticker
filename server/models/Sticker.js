@@ -56,4 +56,6 @@ const Sticker = sequelize.define("Sticker", {
     },
 })
 
+Sticker.sync()
+
 module.exports = Sticker
