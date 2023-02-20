@@ -1,19 +1,18 @@
 //DATABASE CONNECTION
-const mysql = require("mysql2/promise")
 const { Sequelize } = require("sequelize")
 const db = require("./dbInfo")
 
 module.exports = async () => {
-  const connection = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: process.env.dbPassword,
-  })
-  await connection.query(`CREATE DATABASE IF NOT EXISTS iris;`)
   const sequelize = new Sequelize("iris", "root", "", {
     host: "localhost",
     dialect: "mysql",
-    password: process.env.dbPassword,
+    password: process.env.DBPASSWORD,
+    pool: {
+      max: 200,
+      min: 0,
+      acquire: 60000,
+      idle: 30000
+    }
   })
   try {
     await sequelize.authenticate()
@@ -21,12 +20,11 @@ module.exports = async () => {
     return console.log(`DB ERROR: ${error}`)
   }
 
-  db.Sequelize = Sequelize
+  // db.Sequelize = Sequelize
   db.sequelize = sequelize
   db.Department = require("./Department")
   db.User = require("./User")
   db.Vehicle = require("./Vehicle")
   db.Sticker = require("./Sticker")
   db.Otp = require("./Otp")
-  db.sequelize.sync()
 }

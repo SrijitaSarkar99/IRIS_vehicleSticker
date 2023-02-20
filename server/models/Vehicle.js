@@ -45,4 +45,6 @@ const Vehicle = sequelize.define("Vehicle", {
     },
 })
 
+Vehicle.sync()
+
 module.exports = Vehicle
