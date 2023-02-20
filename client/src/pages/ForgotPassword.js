@@ -207,7 +207,7 @@ align="center" justify='center' minW='100vh' maxW="1000vh"
           OTP
         </FormLabel>
           <HStack>
-    <PinInput size={'md'} value={OTP} onChange={handleOTPChange} onComplete={handleOTPComplete}>
+    <PinInput size={'md'} value={OTP} onChange={handleOTPChange} onComplete={handleOTPComplete} placeholder="">
         <PinInputField />
         <PinInputField />
         <PinInputField />
