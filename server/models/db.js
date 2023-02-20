@@ -20,7 +20,6 @@ module.exports = async () => {
     return console.log(`DB ERROR: ${error}`)
   }
 
-  // db.Sequelize = Sequelize
   db.sequelize = sequelize
   db.Department = require("./Department")
   db.User = require("./User")

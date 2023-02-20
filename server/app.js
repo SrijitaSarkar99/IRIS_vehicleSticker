@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }))
 
 async function projSetUp() {
   // DB INITIALIZATION
-  initializeDB()
+  await  initializeDB()
 
   // Importing Routes
   const auth = require("./routes/auth")
