@@ -41,6 +41,15 @@ class AuthApi {
     return axios.patch(`/users/${user.userId}`, data, { headers: { Authorization: `Bearer ${user.token}` } });
   };
 
+  static ResetPassword = (data, user) => {
+    return axios.post(`/resetPassword`, data, { headers: { "Content-Type": "application/json"}});
+  };
+
+  static ForgotPassword = (data) => {
+    return axios.get(`/resetPassword?email=${data}`);
+  };
+
+
 }
 
 
