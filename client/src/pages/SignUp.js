@@ -10,7 +10,6 @@ import {
   Heading,
   HStack,
   Image,
-  // Icon,
   Input,
   Link,
   Select,
@@ -21,22 +20,16 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Link as RouteLink, useNavigate } from "react-router-dom";
-import HomeNav from "../components/HomeNav";
-import axios from "axios";
 import AuthApi from "../api/auth";
-import { useAuth } from "../auth-context/auth.context";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 function SignUp() {
   const [formData, setFormData] = useState({});
-  const { user } = useAuth();
   const toast = useToast();
   const [departments, setDepartments] = useState([]);
-  const [error, setError] = useState("");
   const navigate = useNavigate();
   const titleColor = useColorModeValue("teal.300", "teal.200");
   const textColor = useColorModeValue("gray.700", "white");
-  const bgColor = useColorModeValue("white", "gray.700");
   const { colorMode, toggleColorMode } = useColorMode();
 
   const handleChange = (e) => {
@@ -52,33 +45,6 @@ function SignUp() {
   };
 
   const handleSubmit = async (e) => {
-    //       try {
-    //         const config = {
-    //           headers:{
-    //             "Content-type": "application/json",
-    //           },
-    //         };
-    //         const { data } = await axios.post("localhost:5000/signup",{email,name,aadhaar,mobile,department,pincode,country
-    //           ,gender,type,password, },config)
-    //         toast({
-    //           title: 'Account created.',
-    //           description: "We've created your account for you.",
-    //           status: 'success',
-    //           duration: 9000,
-    //           isClosable: true,
-    //         });
-    // history.push("/Dashboard");
-    //         localStorage.setItem('userInfo',JSON.stringify(data))
-    //       } catch (error) {
-    //         toast({
-    //           title: 'Error Occured!',
-    //           description: error.response.data.message,
-    //           status: 'error',
-    //           duration: 9000,
-    //           isClosable: true,
-    //         });
-    //       }
-    // const data = new FormData(formData)
     e.preventDefault();
 
     //check if all fields are filled
@@ -209,7 +175,6 @@ function SignUp() {
 
     AuthApi.Register(data)
       .then((response) => {
-        
         // console.log(response.data);
         toast({
           title: "Account created.",
@@ -244,42 +209,6 @@ function SignUp() {
           });
         }
       });
-
-    // try {
-    //   const response = await axios({
-    //     method: "post",
-    //     url: `http://localhost:5000/signup`,
-    //     data: data,
-    //     headers: { "Content-Type": "multipart/form-data" },
-    //   });
-    //   toast({
-    //     title: "Account created.",
-    //     description:
-    //       "We've created your account for you. Redirecting to Login Page",
-    //     status: "success",
-    //     duration: 9000,
-    //     isClosable: true,
-    //   });
-    //   navigate("/auth/signin");
-    // } catch (error) {
-    //   if (error.response.data.err.original.code === "ER_DUP_ENTRY") {
-    //     return toast({
-    //       title: "Error Occured",
-    //       description: "User already exists. Kindly Sign In.",
-    //       status: "error",
-    //       duration: 5000,
-    //       isClosable: true,
-    //     });
-    //   }
-
-    //   toast({
-    //     title: "Error Occured",
-    //     description: error.response.data.message,
-    //     status: "error",
-    //     duration: 5000,
-    //     isClosable: true,
-    //   });
-    // }
   };
 
   useEffect(() => {
@@ -294,30 +223,15 @@ function SignUp() {
         }
         
       });
-    // async function fetchData() {
-    //   try {
-    //     const response = await axios({
-    //       method: "get",
-    //       url: `http://localhost:5000/departments`,
-    //     });
-    //     console.log(response.data);
-    //     setDepartments(response.data);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
-    // fetchData();
   }, []);
 
   return (
     <Flex
-      // bgImage={BgSignUp}
       direction="column"
       alignSelf="center"
       justifySelf="center"
       overflow="hidden"
     >
-      {/* <HomeNav /> */}
       <Flex justifyContent={'flex-end'} minW='full'>
       <Button  onClick={toggleColorMode} variant='unstyled'>
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
@@ -410,15 +324,6 @@ function SignUp() {
           >
             Registration Form
           </Text>
-          {/* <Text
-            fontSize="lg"
-            color="gray.400"
-            fontWeight="bold"
-            textAlign="center"
-            mb="10px"
-          >
-            Fill your credentials
-          </Text> */}
           <Heading
     size={'sm'}
     color={titleColor}
@@ -442,7 +347,6 @@ function SignUp() {
               mb="24px"
               size="lg"
               name="name"
-              // onChange={(e)=>setName(e.target.value)}
               onChange={handleChange}
             />
             <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
@@ -458,7 +362,6 @@ function SignUp() {
               mb="24px"
               size="lg"
               name="email"
-              // onChange={(e)=>setEmail(e.target.value)}
               onChange={handleChange}
             />
             </HStack>
@@ -476,7 +379,6 @@ function SignUp() {
               mb="24px"
               size="lg"
               name="password"
-              // onChange={(e)=>setPassword(e.target.value)}
               onChange={handleChange}
             />
 
@@ -493,7 +395,6 @@ function SignUp() {
               mb="24px"
               size="lg"
               name="Confirmpassword"
-              // onChange={(e)=>setConfirmpassword(e.target.value)}
               onChange={handleChange}
             />
 </HStack>
@@ -512,7 +413,6 @@ function SignUp() {
               mb="24px"
               size="lg"
               name="aadharNumber"
-              // onChange={(e)=>setaadhar(e.target.value)}
               onChange={handleChange}
             />
 
@@ -530,7 +430,6 @@ function SignUp() {
               size="lg"
               name="mobileNumber"
               maxLength={10}
-              // onChange={(e)=>setMobile(e.target.value)}
               onChange={handleChange}
             />
 </HStack>
@@ -547,7 +446,6 @@ function SignUp() {
               mb="24px"
               size="lg"
               name="type"
-              // onChange={(e)=>setType(e.target.value)}>
               onChange={handleChange}
             >
               <option value="Student">Student</option>
@@ -568,15 +466,11 @@ function SignUp() {
               mb="24px"
               size="lg"
               name="department"
-              // onChange={(e)=>setDepartment(e.target.value)}>
               onChange={handleChange}
             >
-              {/* TODO: Implement auto department fetch */}
               {departments.map((departments) => (
                 <option value={departments.d_name}>{departments.d_name}</option>
               ))}
-              {/* <option value='MACS'>MACS</option>
-             <option value='CSE'>CSE</option> */}
             </Select>
             </HStack>
 <HStack mb={'3vh'}>
@@ -593,7 +487,6 @@ function SignUp() {
               id="gender"
               size="lg"
               name="gender"
-              // onChange={(e)=>setGender(e.target.value)}
               onChange={handleChange}
             >
               <option value="Male">Male</option>
@@ -616,7 +509,6 @@ function SignUp() {
               mb="24px"
               size="lg"
               name="photo"
-              // onChange={(e)=>postDetails(e.target.files[0])}
               onChange={handleChange}
             />
             
@@ -634,7 +526,6 @@ function SignUp() {
               mb="24px"
               size="lg"
               name="idProof"
-              // onChange={(e)=>postIdentity(e.target.files[0])}
               onChange={handleChange}
             />
 </HStack>
@@ -660,7 +551,6 @@ function SignUp() {
               mb="24px"
               size="lg"
               name="addressLine1"
-              // onChange={(e)=>setAddressline1(e.target.value)}
               onChange={handleChange}
               // TODO: to be set
             />
@@ -674,7 +564,6 @@ function SignUp() {
               mb="24px"
               size="lg"
               name="addressLine2"
-              // onChange={(e)=>setAddressline2(e.target.value)}
               onChange={handleChange}
             />
 <HStack mb={'3vh'}>
@@ -687,11 +576,9 @@ function SignUp() {
               borderRadius="15px"
               id="city"
               type="text"
-              // placeholder="City"
               mb="24px"
               size="lg"
               name="city"
-              // onChange={(e)=>setCity(e.target.value)}
               onChange={handleChange}
             />
 
@@ -704,11 +591,9 @@ function SignUp() {
               borderRadius="15px"
               id="state"
               type="text"
-              // placeholder="State"
               mb="24px"
               size="lg"
               name="state"
-              // onChange={(e)=>setState(e.target.value)}
               onChange={handleChange}
             />
             </HStack>
@@ -722,11 +607,9 @@ function SignUp() {
               borderRadius="15px"
               id="country"
               type="text"
-              // placeholder="Country"
               mb="24px"
               size="lg"
               name="country"
-              // onChange={(e)=>setCountry(e.target.value)}
               onChange={handleChange}
             />
 
@@ -739,49 +622,14 @@ function SignUp() {
               borderRadius="15px"
               id="pinCode"
               type="number"
-              // placeholder="Pincode"
               mb="24px"
               size="lg"
               name="pinCode"
-              // onChange={(e)=>setCountry(e.target.value)}
               onChange={handleChange}
             />
 </HStack>
 
-
-
 <Divider/>
-            
-
-            
-
-            {/* <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-            Upload your Picture
-          </FormLabel>
-          <Input
-            fontSize='sm'
-            ms='4px'
-            borderRadius='15px'
-            id='picture'
-            type='file'
-            accept='image/*'
-            pt={2}
-            mb='24px'
-            size='lg'
-            name="photo"
-            // onChange={(e)=>postDetails(e.target.files[0])}
-            // onChange={(e)=> console.log(e.target.value)}
-            onChange={handleChange}
-          /> */}
-
-            
-
-            {/* <FormControl display='flex' alignItems='center' mb='24px'>
-            <Switch id='remember-login' colorScheme='teal' me='10px' />
-            <FormLabel htmlFor='remember-login' mb='0' fontWeight='normal'>
-              Remember me
-            </FormLabel>
-          </FormControl> */}
             <Flex
               flexDirection="column"
               justifyContent="center"
@@ -829,8 +677,7 @@ function SignUp() {
                 <Link
                   color={titleColor}
                   ms="5px"
-                  // onClick={history('/')}
-                  href="/"
+                  // href="/"
                   fontWeight="bold"
                 >
                   Sign In
@@ -839,7 +686,6 @@ function SignUp() {
             </Text>
           </Flex>
         </Box>
-        {/* )} */}
       </Flex>
     </Flex>
   );

@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import {
-  Alert,
-  AlertDescription,
   AlertDialog,
   AlertDialogBody,
   AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
-  AlertIcon,
-  AlertTitle,
   Box,
   Button,
   Flex,
@@ -17,7 +13,6 @@ import {
   FormLabel,
   Heading,
   HStack,
-  Icon,
   Image,
   Input,
   Link,
@@ -30,15 +25,12 @@ import {
   ModalOverlay,
   Select,
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
   Text,
-  Tfoot,
   Th,
   Thead,
-  Tooltip,
   Tr,
   useColorModeValue,
   useDisclosure,
@@ -47,7 +39,6 @@ import {
 import { AddIcon, WarningIcon, EditIcon, DeleteIcon, InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons'
 import AdminNav from "../components/AdminNav";
 import AuthApi from "../api/auth";
-import axios from 'axios';
 
 function Vehicles() {
   const [formData, setFormData] = useState({});
@@ -55,7 +46,6 @@ function Vehicles() {
   const [RCImageLoc, setRCImageLoc] = useState(undefined);
   const [relationship, setRelationship] = useState("default");
   const [userVehicles, setUserVehicles] = useState([]);
-  const [alertMessage, setAlertMessage] = useState("");
 
   const toast = useToast();
 
@@ -75,36 +65,7 @@ function Vehicles() {
   /***************************************/
 
   const titleColor = useColorModeValue("teal.300", "teal.200");
-
   const currentUser = JSON.parse(localStorage.getItem("user"));
-
-  //TODO: Data Validation
-  // const validateInput = () => {
-  //   // https://stackoverflow.com/questions/6386300/want-a-regex-for-validating-indian-vehicle-number-format
-  //   const vehicleNumberPattern =
-  //     "^[A-Z]{2}[-][0-9]{1,2}[-](?:[A-Z])?(?:[A-Z]*)[-][0-9]{4}$";
-
-  //   console.log(!vehicleNumber.match(vehicleNumberPattern));
-
-  //   if (vehicleNumber === "") setAlertMessage("Vehicle Number is not filled.");
-  //   else if (vehicleModel === "")
-  //     setAlertMessage("Vehicle Model is not filled.");
-  //   else if (rcHolderName === "")
-  //     setAlertMessage("RC Holder Name is not filled.");
-  //   else if (relationship === "default")
-  //     setAlertMessage("Kindly select Relationship with RC Holder.");
-  //   else if (relationship === "others" && othersRelationship == "")
-  //     setAlertMessage("Relationship with RC Holder is not filled.");
-  //   else if (copyOfRC === undefined) setAlertMessage("Kindly upload RC Copy.");
-  //   else if (!vehicleNumber.match(vehicleNumberPattern))
-  //     setAlertMessage("Invalid Vehicle Number Format.");
-  //   else {
-  //     setAlertMessage("");
-  //     return true;
-  //   }
-  //   return false;
-  // };
-
   const handleChange = e => {
     setFormData({
       ...formData,
@@ -195,38 +156,6 @@ function Vehicles() {
       });
       }
     });
-
-    // try {
-    //   const response = await axios({
-    //     method: "post",
-    //     url: `http://localhost:5000/vehicles`,
-    //     data: data,
-
-    //     headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${currentUser.token}` },
-    //   });
-
-    //   // setUserVehicles([...userVehicles,response.data]);
-    //   setUserVehicles([response.data,...userVehicles]);
-    //   toast({
-    //     title: 'New vehicle added.',
-    //     description: "Your Vehicle added successfully to the database",
-    //     status: 'success',
-    //     duration: 5000,
-    //     isClosable: true,
-    //   });
-    //   onClose();
-
-    // } catch (error) {
-    //   console.log(error)
-    //   toast({
-    //     title: "Error!",
-    //     description: "Vehicle already exists",
-    //     status: "error",
-    //     duration: 3000,
-    //     isClosable: true,
-    //   });
-    // }
-
   };
 
   const getFile = async (e) => {
@@ -251,7 +180,6 @@ function Vehicles() {
   useEffect(() => {
     AuthApi.GETUSERVEHICLE(currentUser)
     .then((response) => {
-      
       // console.log(response.data);
       setUserVehicles(response.data);
     })
@@ -260,22 +188,6 @@ function Vehicles() {
         console.log(error);
       }
     });
-    // async function fetchData() {
-    //   try {
-    //     const response = await axios({
-    //       method: "get",
-    //       url: `http://localhost:5000/vehicles?user_id=${currentUser.userId}&limit=${5}&page=${1}`,
-    //       headers: {  Authorization: `Bearer ${currentUser.token}` },
-    //     });
-    //     // console.log(response.data);
-    //     setUserVehicles(response.data);
-    //   }
-    //   catch (error) {
-    //     console.log(error);
-    //   }
-    // }
-
-    // fetchData();
   }, []);
   return (
     <>
@@ -297,15 +209,11 @@ function Vehicles() {
             <FormControl>
               <Box marginTop={3}>
                 <FormLabel>Vehicle Number </FormLabel>
-                {/* <Tooltip label='Hover me'>{<InfoOutlineIcon/>}</Tooltip> */}
                 <Input
                   borderRadius='10px'
                   type="email"
                   name='VehicleNo'
                   placeholder="KA-11-AB-1234"
-                  // onChange={(e) => {
-                  //   setVehicleNumber(e.target.value.toUpperCase());
-                  // }}
                   onChange={handleChange}
                   
                 />
@@ -368,9 +276,6 @@ function Vehicles() {
                     borderRadius='10px'
                     type="text"
                     name='relation'
-                    // onChange={(e) => {
-                    //   setOthersRelationship(e.target.value);
-                    // }}
                     onChange={handleChange}
                   />
                 </Box>
@@ -437,16 +342,6 @@ function Vehicles() {
               </Button>
               <Button
                 colorScheme='red'
-                // onClick={()=>
-
-                //   toast({
-                //     title: 'Vehicle Deleted',
-                //     status: 'info',
-                //     duration:3000,
-                //     isClosable: true,
-                //   });
-                //   onVehicleDeleteClose;
-                // }
                 onClick={onVehicleDeleteClose}
                 ml={3}>
                 Delete
@@ -476,18 +371,11 @@ function Vehicles() {
               marginTop={3}>Registered Vehicle  </Heading>
             <Button onClick={onOpen} colorScheme='teal' leftIcon={<AddIcon />}>New Vehicle</Button>
           </Flex>
-          {/* <Flex
-              width="100%"
-              justify="center"
-              direction="column"
-              marginTop={5}
-            > */}
 {userVehicles=='' ? 
 (<Text>You do not have any vehicles registered. Click <Link color={'blue'} onClick={onOpen}>here</Link> to add new vehicle.</Text>
 ):(
           <TableContainer>
             <Table variant='striped' colorScheme='blackAlpha'>
-              {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
               <Thead>
                 <Tr>
                   <Th>Vehicle Number</Th>
@@ -495,7 +383,6 @@ function Vehicles() {
                   <Th>Model</Th>
                   <Th>RC Holder Name</Th>
                   <Th>Relationship with RC Holder</Th>
-                  {/* TODO: Change name later */}
                   <Th>RC Copy</Th>
                 </Tr>
               </Thead>
@@ -528,9 +415,6 @@ function Vehicles() {
           </TableContainer>
 
 )}
-          {/* </Flex> */}
-          {/* </Box> */}
-
         </Box>
       </Flex>
     </>

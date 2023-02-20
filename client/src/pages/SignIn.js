@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { NavLink } from "react-router-dom";
 // Chakra imports
 import {
   Box,
@@ -28,7 +27,7 @@ import { useAuth } from "../auth-context/auth.context";
 // Assets
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
-import { Link as RouteLink, NavLink, useNavigate } from "react-router-dom";
+import { Link as RouteLink, useNavigate } from "react-router-dom";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 function SignIn() {
@@ -44,23 +43,10 @@ function SignIn() {
   const textColor = useColorModeValue("teal.300", "teal.200");
   const titleColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
-  const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
-  const textColorBrand = useColorModeValue("brand.500", "white");
-  const brandStars = useColorModeValue("brand.500", "brand.400");
   const { colorMode, toggleColorMode } = useColorMode();
-  const googleBg = useColorModeValue("secondaryGray.300", "whiteAlpha.200");
-  const googleText = useColorModeValue("navy.700", "white");
-  const googleHover = useColorModeValue(
-    { bg: "gray.200" },
-    { bg: "whiteAlpha.300" }
-  );
-  const googleActive = useColorModeValue(
-    { bg: "secondaryGray.300" },
-    { bg: "whiteAlpha.200" }
-  );
   const [show, setShow] = React.useState(null);
   const handleClick = () => setShow(!show);
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
   const { user, setUser } = useAuth();
 
   const handleChange = (e) => {
@@ -71,7 +57,6 @@ function SignIn() {
   };
 
   const handleSubmit = (e) => {
-    // navigate('/dashboard');
     e.preventDefault();
 
     //validate
@@ -135,10 +120,7 @@ function SignIn() {
           isClosable: true,
         });
         return setProfile(response);}
-        // }
-        // else {
-        //   setError(response.data.msg)
-        // }
+        
       })
       .catch((error) => {
         if (error.response) {
@@ -150,9 +132,7 @@ function SignIn() {
             duration: 3000,
             isClosable: true,
           });
-          // return setError(error.response.data.msg);
         }
-        // return setError("There has been an error.");
       });
   };
 
@@ -250,26 +230,6 @@ function SignIn() {
             />
           </InputRightElement>
         </InputGroup>
-        {/* <FormControl display='flex' alignItems='center'>
-        <Route id='remember-login' colorScheme='teal' me='10px' />
-        <FormLabel
-          htmlFor='remember-login'
-          mb='0'
-          ms='1'
-          fontWeight='normal'>
-          Remember me
-        </FormLabel>
-      </FormControl> */}
-
- {/* <NavLink to='forgot-password'>
- <Text
-                  color={textColorBrand}
-                  fontSize='sm'
-                  w='124px'
-                  fontWeight='500'>
-                  Forgot password?
-                </Text>
-              </NavLink> */}
 <Flex justifyContent={'flex-end'}>
               <Link color="blue.500" fontSize="sm" href="../auth/forgot-password">
               Forgot Password?
@@ -282,9 +242,9 @@ function SignIn() {
           maxW="100%"
           mt="0px"
         >
-          <Text color="red" marginTop="10px" fontWeight="medium">
+          {/* <Text color="red" marginTop="10px" fontWeight="medium">
             {error}
-          </Text>
+          </Text> */}
         </Flex>
 
         <Button

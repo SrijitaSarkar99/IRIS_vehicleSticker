@@ -1,8 +1,7 @@
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
-import { Box, Icon, Button, Container, Flex, FormControl, FormLabel, Heading, HStack, Image, Input, InputGroup, InputRightElement, Link, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, PinInput, PinInputField, Stack, Text, Toast, useColorMode, useColorModeValue, useDisclosure, useToast, VStack } from '@chakra-ui/react'
+import { Box, Icon, Button, Flex, FormControl, FormLabel, Heading, HStack, Image, Input, InputGroup, InputRightElement, Link, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, PinInput, PinInputField, Stack, Text, Toast, useColorMode, useColorModeValue, useDisclosure, useToast, VStack } from '@chakra-ui/react'
 import { Link as RouteLink } from "react-router-dom";
 import React, { useState } from 'react'
-import axios from 'axios';
 import { RiEyeCloseLine } from 'react-icons/ri';
 import AuthApi from '../api/auth';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
@@ -26,7 +25,7 @@ function ForgotPassword() {
   /***************************************/
 
   const [show, setShow] = React.useState(null);
-  const [showc, setShowC] = React.useState(null);
+  // const [showc, setShowC] = React.useState(null);
   const handleClick = () => setShow(!show);
   const toast = useToast();
 
@@ -85,36 +84,7 @@ function ForgotPassword() {
             isClosable: true,
           });
         }
-        
       });
-
-
-    // try {
-    //     const response = await axios({
-    //       method: "get",
-    //       url: `http://localhost:5000/resetPassword?email=${email}`,
-    //     });
-    //     // console.log(response.data);
-    //     setUserDetails(response.data.user_id);
-    //     toast({
-    //         title: "OTP Sent",
-    //         description: "Please check the OTP sent to you on your email",
-    //         status: "success",
-    //         duration: 5000,
-    //         isClosable: true,
-    //       });
-    //       onOpen()
-    //   }
-    //   catch (error) {
-    //     console.log(error)
-    //      toast({
-    //         title: "Error Occured",
-    //         description:error.response.data.msg,
-    //         status: "error",
-    //         duration: 5000,
-    //         isClosable: true,
-    //       });
-    //   }
   }
 
   const handleResetPassword = async (e) => {
@@ -127,7 +97,6 @@ function ForgotPassword() {
 
     AuthApi.ResetPassword(data)
       .then((response) => {
-        // console.log(response.data);
         toast({
           title: "Password changed.",
           // description:response.data.msg,
@@ -154,35 +123,6 @@ function ForgotPassword() {
         }
         
       });
-
-  //   try {
-  //       const response = await axios({
-  //         method: "post",
-  //         url: `http://localhost:5000/resetPassword`,
-  //         data: data,
-  //         headers: { "Content-Type": "application/json" },
-  //       });
-  //       toast({
-  //         title: "Password changed.",
-  //         description:response.data.msg,
-  //         status: "success",
-  //         duration: 5000,
-  //         isClosable: true,
-  //       });
-  //       onClose()
-  //       setConfirmPassword("")
-  //       setPassword("")
-  //       setOTP("")
-  //   } catch (error) {
-  //       console.log(error);
-  //       toast({
-  //           title: "Error !",
-  //           description:error.response.data.msg,
-  //           status: "error",
-  //           duration: 5000,
-  //           isClosable: true,
-  //         });
-  // }
 }
 
   return (

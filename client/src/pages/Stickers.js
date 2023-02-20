@@ -1,24 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import {
-    Alert,
-    AlertDescription,
   AlertDialog,
   AlertDialogBody,
   AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
-  AlertIcon,
-  AlertTitle,
   Box,
   Button,
   Flex,
   FormControl,
   FormLabel,
   Heading,
-  HStack,
-  Icon,
-  Image,
   Input,
   Link,
   Modal,
@@ -30,12 +23,10 @@ import {
   ModalOverlay,
   Select,
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
   Text,
-  Tfoot,
   Th,
   Thead,
   Tr,
@@ -46,7 +37,6 @@ import {
 import {  AddIcon, WarningIcon, EditIcon, DeleteIcon } from '@chakra-ui/icons'
 import AuthApi from "../api/auth";
 import AdminNav from "../components/AdminNav";
-import axios from 'axios';
 
 function Stickers() {
     const [VehicleId, setVehicleId] = useState();
@@ -54,7 +44,7 @@ function Stickers() {
     const [userStickers, setUserStickers] = useState([]);
     const [department, setDepartment] = useState();
     const [userStickersVehicle, setUserStickersVehicle] = useState([]);
-    const [alertMessage, setAlertMessage] = useState("");
+    // const [alertMessage, setAlertMessage] = useState("");
     let dateToday=new Date().getFullYear()+"-"+new Date().getMonth()+1+"-"+new Date().getDate();
     let dateExpire=new Date().getFullYear()+"-"+new Date().getMonth()+1+"-"+new Date().getDate();
     
@@ -112,29 +102,7 @@ function Stickers() {
         }
       });
 
-    // try {
-    //   const response = await axios({
-    //     method: "post",
-    //     url: `http://localhost:5000/stickers`,
-    //     data: data,
-    //     headers: { "Content-Type": "application/JSON",Authorization: `Bearer ${currentUser.token}` },
-    //   });
-    //   // setUserStickers([...userStickers,response.data]);
-    //   // console.log(response.data);
-    //   setUserStickers([response.data,...userStickers]);
-    //   toast({
-    //     title: 'Applied for a new Sticker.',
-    //     description: "You have successfully applied for a new sticker. Keep checking the status.",
-    //     status: 'success',
-    //     duration: 5000,
-    //     isClosable: true,
-    //   });
-    //   onClose();
-      
-    // } catch(error) {
-    //   console.log(error)
-    // }
-      
+    
       };
 
       useEffect(() => {
@@ -150,22 +118,7 @@ function Stickers() {
         }
       });
         
-      // TODO: REMOVE HARDCODED CODE
-        // async function fetchData(){
-        // try {
-        //   const response = await axios({
-        //     method: "get",
-        //     url: `http://localhost:5000/vehicles?user_id=${currentUser.userId}`
-        //   }); 
-        //   setUserVehicles(response.data);
-        //   // console.log(response.data);
-        // } 
-        // catch(error) {
-        //   console.log(error);
-        // }
-        // }
-
-        // fetchData();
+      
           }, []);
 
 
@@ -181,23 +134,7 @@ function Stickers() {
           console.log(error);
         }
       });
-            // async function fetchData(){
-            // try {
-            //   const response = await axios({
-            //     method: "get",
-            //     url: `http://localhost:5000/stickers?user_id=${currentUser.userId}`,
-            //     headers: { Authorization: `Bearer ${currentUser.token}`},
-            //   }); 
-            //   // console.log(response.data);
-            //   setUserStickers(response.data);
-            // } 
-            
-            // catch(error) {
-            //   console.log(error);
-            // }
-            // }
-    
-            // fetchData();
+          
               }, []);
 
               useEffect(() => {
@@ -212,24 +149,7 @@ function Stickers() {
         }
         
       });
-      // TODO: REMOVE HARDCODED CODE
-                // async function fetchData(){
-                // try {
-                //   const response = await axios({
-                //     method: "get",
-                //     url: `http://localhost:5000/users/${currentUser.userId}`,
-                //     headers: { Authorization: `Bearer ${currentUser.token}`},
-                //   }); 
-                //   setDepartment(response.data.department);
-                // } 
-                
-                // catch(error) {
-                //   console.log(error);
-                // }
-                // }
-        
-                // fetchData();
-                  }, []);
+     }, []);
   return (
     <>
     <AdminNav/>
@@ -326,16 +246,6 @@ function Stickers() {
                 Cancel
               </Button>
               <Button colorScheme='red' 
-              // onClick={()=>
-                
-              //   toast({
-              //     title: 'Vehicle Deleted',
-              //     status: 'info',
-              //     duration:3000,
-              //     isClosable: true,
-              //   });
-              //   onVehicleDeleteClose;
-              // }
               onClick={onVehicleDeleteClose} 
               ml={3}>
                 Delete
@@ -346,33 +256,7 @@ function Stickers() {
       </AlertDialog>
 {/* ********************************************** */}
     <Flex width="100%" justify="center">
-        {/* <Box >
-        {alertMessage && (
-            // toast(
-            //     {
-            //         title:'Incorrect Details.',
-            //         description:<AlertDescription>{alertMessage}</AlertDescription>,
-            //         status:'error',
-            //         position:'bottom-right',
-            //         duration:3000,
-            //         isClosable:true
-                    
-            //     }
-            // )
-            <Box marginTop={5}>
         
-              <Alert status="error">
-                <AlertIcon />
-                <AlertTitle>Incorrect Details</AlertTitle>
-                <AlertDescription >{alertMessage}</AlertDescription>
-              </Alert>
-            </Box>
-          )} */}
-
-
-
-
-
           <Box
             // border="1px"
             borderColor="gray.200"
@@ -408,12 +292,7 @@ function Stickers() {
           }
         colorScheme='teal' leftIcon={<AddIcon/>}>New Sticker</Button>
         </Flex>
-            {/* <Flex
-              width="100%"
-              justify="center"
-              direction="column"
-              marginTop={5}
-            > */}
+            
 {userStickers=='' ? 
 (<Text>You do not have any stickers. Click <Link color={'blue'} onClick={()=>
 {
@@ -435,22 +314,18 @@ onOpen()
 ):(
               <TableContainer>
   <Table variant='striped' colorScheme='blackAlpha'>
-    {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
     <Thead>
       <Tr>
-        {/* <Th>Sticker Number</Th> */}
         <Th>Vehicle Number</Th>
         <Th>date</Th>
         <Th>validity</Th>
         <Th>status</Th>
-        {/* TODO: Change name later */}
       </Tr>
     </Thead>
     <Tbody>
       {
         userStickers.map((userStickers) => (
           <Tr key={userStickers.id} 
-          // StickersId={userStickers.id}
           >
             {/* <Td>{userStickers.stickers_no}</Td> */}
             <Td>{userStickers.vehicle_id}</Td>
@@ -468,19 +343,9 @@ onOpen()
       }
       
     </Tbody>
-    {/* <Tfoot>
-      <Tr>
-        <Th>To convert</Th>Table
-        <Th>into</Th>
-        <Th isNumeric>multiply by</Th>
-      </Tr>
-    </Tfoot> */}
   </Table>
 </TableContainer>
 )}
-              {/* </Flex> */}
-          {/* </Box> */}
-          
         </Box>
       </Flex>
     </>

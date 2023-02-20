@@ -1,7 +1,6 @@
 import { CheckIcon, CloseIcon, EditIcon } from '@chakra-ui/icons';
 import { BsFillPatchExclamationFill, BsPatchCheck, BsPatchExclamation, IconName } from "react-icons/bs";
 import { Avatar, Box, Button, ButtonGroup, Divider, Editable, EditableInput, EditablePreview, Flex, FormControl, FormLabel, Heading, HStack, IconButton, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, Tooltip, useColorModeValue, useDisclosure, useEditableControls, useToast, VStack } from '@chakra-ui/react'
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Form, useNavigate } from 'react-router-dom';
 import AuthApi from '../api/auth';
@@ -22,7 +21,6 @@ function Profile() {
   const [IdImageLoc, setIdImageLoc] = useState(undefined); 
 
   const toast = useToast();
-  const navigate = useNavigate();
   const [userMobile, setUserMobile] = useState([]);
   const [userAddressLine1, setuserAddressLine1] = useState([]);
   const [userAddressLine2, setuserAddressLine2] = useState([]);
@@ -84,14 +82,6 @@ setIdImageLoc(undefined)
   }
   const handleSubmit = async (e)=>{
     e.preventDefault();
-    // e.preventDefault();
-
-    // axios.patch(`http://localhost:5000/users/${currentUser.userId}`,user,{Authorization: `Bearer ${currentUser.token}`})
-    //     .then(response => {
-    //       console.log(response)
-    //       setIsEditing(false)
-    //     })
-
       const data = new FormData();
       data.append('mobileNumber',userMobile)
       data.append('addressLine1',userAddressLine1)
@@ -100,14 +90,9 @@ setIdImageLoc(undefined)
       data.append('state',userState)
       data.append('pinCode',userPincode)
       data.append('country', userCountry)
-      
-      // // for (const property in formData) {
-      //   // data.append(property, formData[property]);
-      // // }
 
       AuthApi.UpdateUser(data,currentUser)
       .then((response) => {
-        // console.log(response.data);
         toast({
           title: 'Profile Updated.',
           // description: "",
@@ -140,41 +125,7 @@ setIdImageLoc(undefined)
         
       });
 
-      // try {
-        
-      //   const response = await axios({
-      //     method: "patch",
-      //     url: `http://localhost:5000/users/${currentUser.userId}`,
-      //     data: data,
-      //     headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${currentUser.token}`},
-      //   });
-      //   toast({
-      //     title: 'Profile Updated.',
-      //     // description: "",
-      //     status: 'success',
-      //     duration: 9000,
-      //     isClosable: true,
-      //   });
-      //   setIsEditing(false)
-      //   setuserProfile(response.data);
-      // setUserMobile(response.data.mobile_number)
-      // setuserAddressLine1(response.data.address_line1)
-      // setuserAddressLine2(response.data.address_line2)
-      // setUserCity(response.data.city)
-      // setUserState(response.data.state)
-      // setUserPincode(response.data.pin_code)
-      // setUserCountry(response.data.country)
-      //   // window.location.reload(true)
-      // } catch (error) {
-      //   toast({
-      //     title: 'Error Occured',
-      //     description: error.response.data.message,
-      //     status: 'error',
-      //     duration: 5000,
-      //     isClosable: true,
-      //   });
-      //   console.log(error.response)
-      // }
+      
     }
   
   useEffect(() => {
@@ -198,30 +149,6 @@ setIdImageLoc(undefined)
         }
         
       });
-
-    // async function fetchData(){
-    // try {
-    //   const response = await axios({
-    //     method: "get",
-    //     url: `http://localhost:5000/users/${currentUser.userId}`,
-    //     headers:{Authorization: `Bearer ${currentUser.token}`}
-    //   }); 
-    //   setuserProfile(response.data);
-    //   setUserMobile(response.data.mobile_number)
-    //   setuserAddressLine1(response.data.address_line1)
-    //   setuserAddressLine2(response.data.address_line2)
-    //   setUserCity(response.data.city)
-    //   setUserState(response.data.state)
-    //   setUserPincode(response.data.pin_code)
-    //   setUserCountry(response.data.country)
-    //   await getFile(response.data.photo);
-    //   // setUserIdProof(response.data.id_proof)
-    // } 
-    // catch(error) {
-    //   console.log(error);
-    // }
-    // }
-    // fetchData();
       }, []);
       
   return (
@@ -296,10 +223,7 @@ setIdImageLoc(undefined)
        
        {ProfileImageLoc && 
        <Avatar size='2xl' name={userProfile.name} src={ProfileImageLoc} onClick={onProfileImgOpen} />
-      //  {' '}
     }
-       {/* {console.log(userProfile.name)} */}
-
 
     {userProfile.status === "unverified"
               ? <Text color={'red'}><BsPatchExclamation/></Text>
@@ -401,8 +325,6 @@ setIdImageLoc(undefined)
         size="lg"
         name="mobile_number"
         value={userMobile}
-        // onChange={e => setUser({ ...user, mobile_number: e.target.value })}
-        // value={userMobile}
         onChange={(e) => {
             setUserMobile(e.target.value);
           }}
@@ -494,7 +416,6 @@ setIdImageLoc(undefined)
         mb="24px"
         size="lg"
         name="idproof"
-        // onChange={e => setUser({ ...user, idproof: e.target.files[0] })}
         value={userIdProof}
         onChange={(e) => {
             setUserIdProof(e.target.files[0]);
@@ -527,8 +448,6 @@ setIdImageLoc(undefined)
         mb="24px"
         size="lg"
         name="address_line1"
-        // value={user.address_line1}
-        // onChange={e => setUser({ ...user, address_line1: e.target.value })}
         value={userAddressLine1}
         onChange={(e) => {
             setuserAddressLine1(e.target.value);
@@ -552,8 +471,6 @@ setIdImageLoc(undefined)
         mb="24px"
         size="lg"
         name="address_line2"
-        // value={user.address_line2}
-        // onChange={e => setUser({ ...user, address_line2: e.target.value })}
         value={userAddressLine2}
         onChange={(e) => {
             setuserAddressLine2(e.target.value);
@@ -578,8 +495,6 @@ setIdImageLoc(undefined)
         mb="24px"
         size="lg"
         name="city"
-        // value={user.city}
-        // onChange={e => setUser({ ...user, city: e.target.value })}
         value={userCity}
         onChange={(e) => {
             setUserCity(e.target.value);
@@ -603,8 +518,6 @@ setIdImageLoc(undefined)
         mb="24px"
         size="lg"
         name="state"
-        // value={user.state}
-        // onChange={e => setUser({ ...user, state: e.target.value })}
         value={userState}
         onChange={(e) => {
             setUserState(e.target.value);
@@ -630,8 +543,6 @@ setIdImageLoc(undefined)
         mb="24px"
         size="lg"
         name="pin_code"
-        // value={user.pin_code}
-        // onChange={e => setUser({ ...user, pin_code: e.target.value })}
         value={userPincode}
         onChange={(e) => {
             setUserPincode(e.target.value);
@@ -655,8 +566,6 @@ setIdImageLoc(undefined)
         mb="24px"
         size="lg"
         name="country"
-        // value={user.country}
-        // onChange={e => setUser({ ...user, country: e.target.value })}
         value={userCountry}
         onChange={(e) => {
             setUserCountry(e.target.value);
@@ -675,11 +584,9 @@ setIdImageLoc(undefined)
     </Flex>
     </Box>
     </Flex>
-          // <EditForm user={userProfile} setUser={setuserProfile} setIsEditing={setIsEditing} />
         ) : (
           <Flex direction="column" align="center" justify="center">
       <Box w="80%" mb={4}>
-        {/* <Image src='https://bit.ly/sage-adebayo' rounded="full" size="2px" /> */}
       </Box>
       <Box w="80%">
       <Flex width="full" align="center" justifyContent="center">
@@ -896,21 +803,7 @@ mt='1rem'
       onImgOpen();
     }}
     >Show</Button>
-    {/* <Input
-    fontSize="sm"
-    width='auto'
-    pt={'3'}
-    ms="4px"
-    // borderRadius="15px"
-    type='file'
-    accept='image/*'
-    id="idproof"
-    mb="24px"
-    size="lg"
-    name="idproof"
-    
-    /> */}
-    </HStack>
+        </HStack>
     </FormControl>
     </HStack>
 

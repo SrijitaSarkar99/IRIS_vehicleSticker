@@ -30,7 +30,7 @@ class AuthApi {
   };
 
   static ADDSTICKER = (data, user) => {
-    return axios.post(`/stickers`, data, { headers: { Authorization: `Bearer ${user.token}` } });
+    return axios.post(`/stickers`, data, { headers: { "Content-Type": `application/json`,Authorization: `Bearer ${user.token}` } });
   };
 
   static GETALLDEPARTMENTS = () => {
