@@ -2,7 +2,7 @@ import axios from "./index";
 
 class AuthApi {
   static Login = (data) => {
-    return axios.post(`/login`, data);
+    return axios.post(`/login`, data ,{ headers : { "Content-Type" : `application/json`}});
   };
  // return axios.post(`${base}/login`, data);
   static Register = (data) => {
@@ -32,6 +32,15 @@ class AuthApi {
   static ADDSTICKER = (data, user) => {
     return axios.post(`/stickers`, data, { headers: { Authorization: `Bearer ${user.token}` } });
   };
+
+  static GETALLDEPARTMENTS = () => {
+    return axios.get(`/departments`)
+  }
+
+  static UpdateUser = (data,user) => {
+    return axios.patch(`/users/${user.userId}`, data, { headers: { Authorization: `Bearer ${user.token}` } });
+  };
+
 }
 
 
