@@ -23,6 +23,7 @@ import {
 import { Link as RouteLink, useNavigate } from "react-router-dom";
 import HomeNav from "../components/HomeNav";
 import axios from "axios";
+import AuthApi from "../api/auth";
 import { useAuth } from "../auth-context/auth.context";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
@@ -47,7 +48,7 @@ function SignUp() {
           ? e.target.files[0]
           : e.target.value,
     });
-    console.log({ formData });
+    // console.log({ formData });
   };
 
   const handleSubmit = async (e) => {
@@ -78,29 +79,6 @@ function SignUp() {
     //         });
     //       }
     // const data = new FormData(formData)
-
-    // TODO: Add later
-    // console.log(formData)
-    //   e.preventDefault();
-    //   const data = new FormData();
-    // for (const property in formData) {
-    //   data.append(property, formData[property]);
-    // }
-    //   // AuthApi.Register(formData).then(response => {
-    //   AuthApi.Register(data).then(response => {
-    //     history("/");
-    //     if(response.data.success) {
-
-    //       return history("/");
-    //     } else {
-    //       setError(response.data.msg)
-    //     }
-    //   }).catch(error => {
-    //     if (error.response) {
-    //       return setError(error.response.data.msg);
-    //     }
-    //     return setError("There has been an error.");
-    //   })
     e.preventDefault();
 
     //check if all fields are filled
@@ -228,58 +206,107 @@ function SignUp() {
     for (const property in formData) {
       data.append(property, formData[property]);
     }
-    console.log({ formData });
-    try {
-      const response = await axios({
-        method: "post",
-        url: `http://localhost:5000/signup`,
-        data: data,
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      toast({
-        title: "Account created.",
-        description:
-          "We've created your account for you. Redirecting to Login Page",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
-      navigate("/");
-    } catch (error) {
-      if (error.response.data.err.original.code === "ER_DUP_ENTRY") {
-        return toast({
-          title: "Error Occured",
-          description: "User already exists. Kindly Sign In.",
-          status: "error",
-          duration: 5000,
+
+    AuthApi.Register(data)
+      .then((response) => {
+        
+        // console.log(response.data);
+        toast({
+          title: "Account created.",
+          description:
+            "We've created your account for you. Redirecting to Login Page",
+          status: "success",
+          duration: 9000,
           isClosable: true,
         });
-      }
-
-      toast({
-        title: "Error Occured",
-        description: error.response.data.message,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
+        navigate("/auth/signin");
+        
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error);
+          if (error.response.data.err.original.code === "ER_DUP_ENTRY") {
+            return toast({
+              title: "Error Occured",
+              description: "User already exists. Kindly Sign In.",
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+            });
+          }
+    
+          toast({
+            title: "Error Occured",
+            description: error.response.data.message,
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+          });
+        }
       });
-    }
+
+    // try {
+    //   const response = await axios({
+    //     method: "post",
+    //     url: `http://localhost:5000/signup`,
+    //     data: data,
+    //     headers: { "Content-Type": "multipart/form-data" },
+    //   });
+    //   toast({
+    //     title: "Account created.",
+    //     description:
+    //       "We've created your account for you. Redirecting to Login Page",
+    //     status: "success",
+    //     duration: 9000,
+    //     isClosable: true,
+    //   });
+    //   navigate("/auth/signin");
+    // } catch (error) {
+    //   if (error.response.data.err.original.code === "ER_DUP_ENTRY") {
+    //     return toast({
+    //       title: "Error Occured",
+    //       description: "User already exists. Kindly Sign In.",
+    //       status: "error",
+    //       duration: 5000,
+    //       isClosable: true,
+    //     });
+    //   }
+
+    //   toast({
+    //     title: "Error Occured",
+    //     description: error.response.data.message,
+    //     status: "error",
+    //     duration: 5000,
+    //     isClosable: true,
+    //   });
+    // }
   };
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios({
-          method: "get",
-          url: `http://localhost:5000/departments`,
-        });
-        console.log(response.data);
+    AuthApi.GETALLDEPARTMENTS()
+      .then((response) => {
+        // console.log(response.data);
         setDepartments(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchData();
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error);
+        }
+        
+      });
+    // async function fetchData() {
+    //   try {
+    //     const response = await axios({
+    //       method: "get",
+    //       url: `http://localhost:5000/departments`,
+    //     });
+    //     console.log(response.data);
+    //     setDepartments(response.data);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
+    // fetchData();
   }, []);
 
   return (

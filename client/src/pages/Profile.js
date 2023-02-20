@@ -4,6 +4,7 @@ import { Avatar, Box, Button, ButtonGroup, Divider, Editable, EditableInput, Edi
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Form, useNavigate } from 'react-router-dom';
+import AuthApi from '../api/auth';
 import AdminNav from "../components/AdminNav"
 
 function Profile() {
@@ -103,15 +104,10 @@ setIdImageLoc(undefined)
       // // for (const property in formData) {
       //   // data.append(property, formData[property]);
       // // }
-      try {
-        // console.log(currentUser.userId);
-        // console.log(currentUser.token);
-        const response = await axios({
-          method: "patch",
-          url: `http://localhost:5000/users/${currentUser.userId}`,
-          data: data,
-          headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${currentUser.token}`},
-        });
+
+      AuthApi.UpdateUser(data,currentUser)
+      .then((response) => {
+        // console.log(response.data);
         toast({
           title: 'Profile Updated.',
           // description: "",
@@ -128,28 +124,65 @@ setIdImageLoc(undefined)
       setUserState(response.data.state)
       setUserPincode(response.data.pin_code)
       setUserCountry(response.data.country)
-        // window.location.reload(true)
-      } catch (error) {
-        toast({
-          title: 'Error Occured',
-          description: error.response.data.message,
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        });
-        console.log(error.response)
-      }
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error);
+          toast({
+            title: 'Error Occured',
+            description: error.response.data.message,
+            status: 'error',
+            duration: 5000,
+            isClosable: true,
+          });
+          console.log(error.response)
+        }
+        
+      });
+
+      // try {
+        
+      //   const response = await axios({
+      //     method: "patch",
+      //     url: `http://localhost:5000/users/${currentUser.userId}`,
+      //     data: data,
+      //     headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${currentUser.token}`},
+      //   });
+      //   toast({
+      //     title: 'Profile Updated.',
+      //     // description: "",
+      //     status: 'success',
+      //     duration: 9000,
+      //     isClosable: true,
+      //   });
+      //   setIsEditing(false)
+      //   setuserProfile(response.data);
+      // setUserMobile(response.data.mobile_number)
+      // setuserAddressLine1(response.data.address_line1)
+      // setuserAddressLine2(response.data.address_line2)
+      // setUserCity(response.data.city)
+      // setUserState(response.data.state)
+      // setUserPincode(response.data.pin_code)
+      // setUserCountry(response.data.country)
+      //   // window.location.reload(true)
+      // } catch (error) {
+      //   toast({
+      //     title: 'Error Occured',
+      //     description: error.response.data.message,
+      //     status: 'error',
+      //     duration: 5000,
+      //     isClosable: true,
+      //   });
+      //   console.log(error.response)
+      // }
     }
   
   useEffect(() => {
-    async function fetchData(){
-    try {
-      const response = await axios({
-        method: "get",
-        url: `http://localhost:5000/users/${currentUser.userId}`,
-        headers:{Authorization: `Bearer ${currentUser.token}`}
-      }); 
-      setuserProfile(response.data);
+
+    AuthApi.GETUSERBYID(currentUser)
+      .then((response) => {
+        // console.log(response.data);
+        setuserProfile(response.data);
       setUserMobile(response.data.mobile_number)
       setuserAddressLine1(response.data.address_line1)
       setuserAddressLine2(response.data.address_line2)
@@ -157,14 +190,38 @@ setIdImageLoc(undefined)
       setUserState(response.data.state)
       setUserPincode(response.data.pin_code)
       setUserCountry(response.data.country)
-      await getFile(response.data.photo);
-      // setUserIdProof(response.data.id_proof)
-    } 
-    catch(error) {
-      console.log(error);
-    }
-    }
-    fetchData();
+      getFile(response.data.photo);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error);
+        }
+        
+      });
+
+    // async function fetchData(){
+    // try {
+    //   const response = await axios({
+    //     method: "get",
+    //     url: `http://localhost:5000/users/${currentUser.userId}`,
+    //     headers:{Authorization: `Bearer ${currentUser.token}`}
+    //   }); 
+    //   setuserProfile(response.data);
+    //   setUserMobile(response.data.mobile_number)
+    //   setuserAddressLine1(response.data.address_line1)
+    //   setuserAddressLine2(response.data.address_line2)
+    //   setUserCity(response.data.city)
+    //   setUserState(response.data.state)
+    //   setUserPincode(response.data.pin_code)
+    //   setUserCountry(response.data.country)
+    //   await getFile(response.data.photo);
+    //   // setUserIdProof(response.data.id_proof)
+    // } 
+    // catch(error) {
+    //   console.log(error);
+    // }
+    // }
+    // fetchData();
       }, []);
       
   return (
@@ -241,7 +298,7 @@ setIdImageLoc(undefined)
        <Avatar size='2xl' name={userProfile.name} src={ProfileImageLoc} onClick={onProfileImgOpen} />
       //  {' '}
     }
-       {console.log(userProfile.name)}
+       {/* {console.log(userProfile.name)} */}
 
 
     {userProfile.status === "unverified"
