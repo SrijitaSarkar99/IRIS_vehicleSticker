@@ -1,8 +1,17 @@
 //DATABASE CONNECTION
+const mysql = require("mysql2/promise")
 const { Sequelize } = require("sequelize")
 const db = require("./dbInfo")
 
 module.exports = async () => {
+
+  const connection = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: process.env.dbPassword,
+  })
+  await connection.query(`CREATE DATABASE IF NOT EXISTS iris;`)
+
   const sequelize = new Sequelize("iris", "root", "", {
     host: "localhost",
     dialect: "mysql",
